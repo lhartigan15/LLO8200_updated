@@ -5,10 +5,11 @@ This is the course website for Professor Hartigan's sections of LLO 8200 Introdu
 While there are files on the "Files" section of the LMS, you should use the files from THIS page to ensure you have the most up to date information. Additionally, please reference this syllabus for information. You are responsible for reviewing and ensuring you are following the schedule included in this syllabus, found here: [Hartigan's Summer 2021 LLO8200 Syllabus](./Hartigan_LLO8200_syllabus_summer2021.pdf). 
 
 ### Async/Sync RStudio (.Rmd) Files
-These are the RStudio files and datasets that you will use in tandem with the async videos each week, listed by class week and LMS Module number.
+These are the RStudio files and datasets that you will use in tandem with the async videos each week, listed by class week and LMS Module number. The first file below (Week 0) is a general setup file that provides a good structure for setting up your .Rmd files.
+* Week 0 - [.Rmd File Setup](./00_setup.Rmd)
 * Week 1 - [LMS Mod1 - Introduction Rmd File](./01_Intro.Rmd), [College dataset](./college.Rdata)
 
-### Known Corrections to Async Questions
+#### Known Corrections to Async Questions
 * Week 1 - UNC Chapel Hill admit rate = 0.34
 
 ### Assignments
@@ -22,7 +23,9 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
-| [Assignment 1 placeholder](./01_Assignment.pdf) | 1/25/21 |
+| [Assignment 1 placeholder](./01_Assignment.pdf) | 5/25/21 |
+
+### Final Project Materials (forthcoming)
 
 ### Additional Resources
 There are a multitude of resources re. RStudio and RMarkdown on the web. Here is where I'll save some of my favorites. 
@@ -30,5 +33,3 @@ There are a multitude of resources re. RStudio and RMarkdown on the web. Here is
 * [R Markdown Cheat Sheet](./rmarkdown-cheatsheet.pdf)
 * [R Color Palette Cheat Sheet](./colorPaletteCheatsheet.pdf)
 * [GGplot Cheat Sheet](./ggplot2-cheatsheet.pdf)
-
-### Final Project Examples (in no particular order)
