@@ -1,4 +1,4 @@
-## Welcome to Data Science (LLO8200), Summer 2021
+## Welcome to Data Science!
 
 This is the course website for Professor Hartigan's sections of LLO 8200 Introduction to Data Science. Make sure you bookmark and check this page frequently for the most up-to-date files to use for both async and assignments. Over the course of the term code may be optimized or corrected, so please alert me if you’re going to be working ahead. (_If you do work ahead, you will be responsible for updating your work if the assignments are updated._) You should have R, RStudio, and Tidyverse installed prior to the first day of class. Instructions for installing R and Rstudio can be found [here](./Installing R and RStudio.pdf). Instructions for updating R and Rstudio can be found [here](./Updating R and RStudio.pdf).
 
