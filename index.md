@@ -7,27 +7,18 @@ While there are files on the "Files" section of the LMS, you should use the file
 ### Async/Sync RStudio (.Rmd) Files
 These are the RStudio files and datasets that you will use in tandem with the async videos each week, listed by class week and LMS Module number.
 * Week 1 - [LMS Mod1 - Introduction Rmd File](./01_Intro.Rmd), [College dataset](./college.Rdata)
-* Week 2 - [LMS Mod2 - Conditional Means Rmd File](./02_conditional_means.Rmd), [Student Debt dataset](./sc_debt.Rdata), Videos: First, watch 2.1 in the LMS; then, watch "conditional means part 1" (posted to course wall) and then "conditional means part 2" (posted to course wall). These videos will direct you when to watch LMS sections 2.7 and 2.8. (Note: The two conditional means videos replace sections 2.2-2.6 and 2.9 in the LMS)
-    * Additional helpful code for working with continuous data: [Creating Ntiles](./02_Creating_Ntiles.Rmd)
-* Weeks 3 & 4 - [LMS Mod3 - Plotting Conditional Means Rmd File](./03_DescriptivePlots.Rmd), [Attrition dataset](./attrition.Rdata)
-* Week 5 - [LMS Mod4 - Reading in Flat (and other) Data](./04_flatdata.Rmd)
-* Week 6 - [LMS Mod5 - Using Regression for Prediction](./05_regression.Rmd), [ELS training dataset](./els_train.Rdata), [ELS testing dataset](./els_test.Rdata)
-* Week 7 - [LMS Mod6 - Scatterplots](./06_scatterplots.Rmd), [ELS dataset - full](./els.Rdata)
-* Week 8 - [LMS Mod7 - Webscraping](./07_webscraping_2020.Rmd), [Optional Code - Twitter API](./07_twitterAPI.Rmd)
-* Week 9 - [LMS Mod8 - Classification](./08_classification.Rmd), [Za training dataset](./za_train.RData), [Za testing dataset](./za_test.RData), [Interpreting Logistic Regression Output](./LogisticRegression_11-17-20.pptx)
-* Week 10 - [LMS Mod9 - Plots for Classification](./09_plots_classification.Rmd), [Za dataset](./za.RData)
-* Week 11 - [LMS Mod10 - Cross Validation - UPDATED](./10m_cross_validation_inclass.Rmd), [pd dataset](./pd.Rdata), [Additional code for validating a logistic regression](./cross_validate_logit.Rmd)
 
 ### Known Corrections to Async Questions
 * Week 1 - UNC Chapel Hill admit rate = 0.34
 
 ### Assignments
-Each assignment (problem set) is worth 100 points. The problem sets should be uploaded to the LMS BEFORE we meet for live session on the given due date. All assignment submissions must include two files to receive credit:
+Each assignment (problem set) is worth 100 points. The problem sets should be uploaded to the LMS _BEFORE_ we meet for live session on the given due date. All assignment submissions must include two files to receive credit:
 1. .Rmd code file.
 2. "Knit" assignment file. The knit file can be in pdf or html (pdf is preferred). 
-Note that you must drag/drop (or upload) both files at the same time in order for the LMS to accept the submission. Also, you are responsible for reviewing the files before uploading. Be sure your submission is ready before uploading; I will not accept submissions via email (unless there are extenuating circumstances).
 
-There will be a penalty for submissions not meeting these requirements.
+Note that you must drag/drop (or upload) both files at the same time in order for the LMS to accept the submission; if you try to do them one at a time, it will only accept one. Also, you are responsible for reviewing the files before uploading. Be sure your submission is ready to upload before uploading; I will not accept submissions via email (unless there are extenuating circumstances). **There will be a penalty for submissions not meeting these requirements.**
+
+All assignments are graded on a 100-point scale. Corrections can be submitted for any assignment and you can earn up to half of the deducted points back. You have one week from the time you receive feedback on the assignment to submit corrections.
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
