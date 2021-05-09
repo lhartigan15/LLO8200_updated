@@ -13,7 +13,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
 * Week 1 - UNC Chapel Hill admit rate = 0.34
 
 ### Assignments
-Each assignment (problem set) should be uploaded to the LMS _BEFORE_ we meet for live session on the given due date. All assignment submissions must include two files to receive credit:
+Each assignment (problem set) should be uploaded to the LMS _before_ we meet for live session on the given due date. All assignment submissions must include two files to receive credit:
 1. .Rmd code file.
 2. "Knit" assignment file. The knit file can be in pdf or html (pdf is preferred). 
 
