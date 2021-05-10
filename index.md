@@ -28,7 +28,7 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 ### Final Project Materials (forthcoming)
 
 ### Additional Resources
-Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool I built to help you do so. This properly weights the different course requirements (note that you'll need to put in some "estimated" data for the final products to populate an average). 
+Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool to help you do so. This properly weights the different course requirements (note that you'll need to put in some "estimated" data for the final products to populate an average). 
 * [Data Science Average Calculator](./Student Average Calculator.xlsx)
 
 There are a multitude of resources re. RStudio and RMarkdown on the web. Here is where I'll save some of my favorites. 
