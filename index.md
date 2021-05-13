@@ -13,7 +13,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * LMS Section 2.1 - view on LMS
     * [LMS Section 2.2 through 2.5 Replacement Video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
     * LMS Section 2.7 and 2.8 - view on LMS
-    * [LMS Section 2.6 and 2.9](https://www.youtube.com/watch?v=K3f-5fb-lL0)
+    * [LMS Section 2.6 and 2.9 Replacement Video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
 
 #### Known Corrections to Async Questions
 * Week 1 - UNC Chapel Hill admit rate = 0.34
