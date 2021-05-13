@@ -9,7 +9,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
 * Week 0 - [.Rmd File Setup](./00_setup.Rmd)
 * Week 1 - [LMS Mod1 - Introduction Rmd File](./01_Intro.Rmd), [College dataset](./college.Rdata)
 * Week 2 - [LMS Mod2 - Conditional Means Rmd File](./02_Conditional Means.Rmd), [College debt dataset](./sc_debt.Rdata)
-*    Replacement videos (listed by section #)
+*    Async Video Locations (listed by section #)
 *         LMS Section 2.1 - view on LMS
 *         [LMS Section 2.2 through 2.5 Replacement Video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
 *         LMS Section 2.7 and 2.8 - view on LMS
