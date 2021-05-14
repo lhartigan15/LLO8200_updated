@@ -22,6 +22,7 @@ For this assignment, you'll be working with the College Scorecard (debt) dataset
 ```{r}
 knitr::opts_chunk$set(echo = TRUE)
 
+library(yardstick)
 library(tidyverse)
 ```
 
