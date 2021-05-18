@@ -16,7 +16,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * [LMS Section 2.6 and 2.9 Replacement Video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
 
 ### Synchronous (.Rmd) Files (only uploaded when substantively different than async files)
-* Week 2 - [Conditional Means .Rmd File - added Ntiles code)(./02_Conditional Means_inclass.Rmd)
+* Week 2 - [Conditional Means .Rmd File - added Ntiles code](./02_Conditional Means_inclass.Rmd)
 
 #### Known Corrections to Async Questions
 * Week 1 - UNC Chapel Hill admit rate = 0.34
