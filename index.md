@@ -16,7 +16,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * [LMS Section 2.6 and 2.9 Replacement Video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
 
 ### Synchronous (.Rmd) Files
-These files will only be uploaded when there are substantive code changes/additions from the async .Rmd files.
+These files will only be uploaded when there are substantive code changes/additions to the async .Rmd files.
 * Week 2 - [Conditional Means .Rmd File - added Ntiles code](./02_Conditional Means_inclass.Rmd)
 
 #### Known Corrections to Async Questions
