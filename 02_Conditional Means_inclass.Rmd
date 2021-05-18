@@ -1,0 +1,304 @@
+---
+title: "Week 2: Conditional Means"
+author: "Lacey Hartigan"
+date: "5/13/21"
+
+output: pdf_document
+---
+
+# Analyzing Data: Conditional Means
+
+The conditional mean will be our first predictive algorithm. Conditional means answer the question: "Given what we know about a certain case, what can expect to see, on average?" The conditional mean is a powerful tool that is typically quite easy to explain to decision-makers. 
+
+We'll go through the following steps:
+
+1. Computing and plotting unconditional means
+2. Computing and plotting conditional means using a single predictor.
+3. Computing and plotting conditional means using multiple predictors. 
+
+## Motivating Example
+
+Suppose you're talking to a high school senior about college choice and student debt. They want to know which types of colleges have graduates
+with higher and lower levels of debt. They're concerned about the amount of debt they will incur on the path to graduation. Essentially they're asking for a prediction: based on the characteristics of the college they attend, what will be the likely amount of debt? 
+
+We'll use data from the [college scorecard](https://collegescorecard.ed.gov/) to answer these questions. 
+
+## Libraries
+
+We'll use `tidyverse` as usual, and we'll need the `yardstick` library for some calculations. 
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(yardstick)
+```
+
+## Dataset for this week
+
+This week we'll use another dataset from the college scorecard, this one focused on student debt. Here are the variable names and definitions:
+
+```{r}
+df <- readRDS("sc_debt.Rdata") #read RDS reads in R datafiles
+names(df) #provides list of variable names from dataset
+
+#LOOK AT THE DATA!
+```
+
+# Here is the codebook for this dataset (provided by Dr. Doyle)
+| Name | Definition |
+| ------- | --------- |
+| unitid | Unit ID|
+| instnm| Institution Name|
+| stabbr| State Abbreviation|
+| grad_debt_mdn| Median Debt of Graduates|
+| control| Control Public or Private|
+| region | Census Region|
+| preddeg | Predominant Degree Offered: Associates or Bachelors |
+| openadmp| Open Admissions Policy: 1= Yes, 2=NO, 3=No 1st time students|
+| selective| Institution admits fewer than 10 % of applicants, 1=Yes, 0=No |
+| research_u | Institution is a research university 1=Yes, 0=No| 
+
+
+## Dependent Variable
+
+The dependent variable for us will be *institutional-level* median debt for graduates, as reported by the college scorecard. 
+
+## Unconditional Means
+
+If you were asked to predict the level of debt for this student without any information about the college itself, the best guess would be the overall average, or what we're going to call the unconditional mean. 
+
+```{r}
+df%>%
+  summarize(mean_debt_uncond=mean(grad_debt_mdn, na.rm=TRUE))
+```
+
+This gives us the overall average, and would be our prediction about the level of college debt the student could expect, if we didn't have any other information about the college. 
+
+## Unconditional Mean as a Predictor
+
+Using the mean of a variable as a predictor is something we do all the time. In this example, our best guess for the level of debt incurred by a graduate is just the average level of debt across all institutions. We're going to add this guess to the dataset as our first prediction, using the `mutate` command. 
+
+```{r}
+df <- df%>%
+  mutate(mean_debt_uncond=mean(grad_debt_mdn, na.rm=TRUE))
+#LOOK at the dataset after you run mutate -- did the new variable get added? What do you notice about this variable? Make sure it looks how it should. Just because R doesn't give us an error, doesn't mean it did exactly what we wanted. We may have miscoded something - so we always check!
+```
+
+Notice how this code is the same as above, except for the overwrite `df<-df%>%` and the use of `mutate` as opposed to `summarize.`
+
+This is of course a terrible prediction. In the absence of any other information, it's many times the best we can do, but we really ought to be able to do better. 
+
+## Root Mean Squared Error
+To understand how far off we are, we need to summarize our errors. We will use different ways of doing this this semester, but let's start with a very standard one, Root Mean Squared Error, or RMSE. An error term is the distance between each point and its prediction. We square the errors, take the average, then take the square root of the result. The name RMSE is exactly what RMSE is-- neat, huh?
+
+$$RMSE(\hat{Y})=\sqrt{ 1/n \sum_{i=1}^n(Y_i-\hat{Y_i})^2}$$
+
+Luckily we have an r function that can do this for us. The `rmse` function from the `yardstick` library will calculate the rmse for a dataset. We need to give it the dataset and the two columns we're interested, in this case actual debt `grad_debt_mdn` and our prediction `mean_debt_uncond`. 
+```{r}
+rmse_uncond<-df%>%
+  rmse(grad_debt_mdn, mean_debt_uncond)
+rmse_uncond
+```
+
+This tells us that if we use the unconditional mean, we'll be off by an average of `r round(rmse_uncond$.estimate)`. Is that good or bad? We don't know! RMSE does not have a scale that tells us what it means. We have to understand it in the context of the problem we're working on. Lower is always better when it comes to RMSE, as a lower RMSE means a more accurate prediction. 
+
+## Conditional Mean With One Predictor
+
+Public and private colleges in the US charge very different prices, and so it's plausible that graduates of these two types of institutions would have different levels of debt. We can calculate the conditional mean by first grouping by control using `group_by(control)` and then calculating the mean for each of the two groups: public or private. 
+
+```{r}
+#code for obtaining a county of each type of institution; you could also use table()
+df%>%
+  group_by(control)%>%
+  count()%>%
+  ungroup()
+
+#now let's look at the average debt by each type of institution
+df%>%
+  group_by(control)%>%
+  summarize(mean_debt_control=mean(grad_debt_mdn, na.rm=TRUE))%>%
+  arrange(control)%>%
+  ungroup()
+```
+
+We can see that graduates of private institutions have higher debt levels than graduates of public institutions. We'll follow the same steps as we did with the unconditional mean and add the conditional mean to the dataset as a predictor. 
+
+```{r}
+df<-df%>%
+  group_by(control)%>%
+  mutate(mean_debt_control=mean(grad_debt_mdn, na.rm=TRUE))%>%
+  ungroup()
+#LOOK at the dataset ANY time you add/change variables.
+#What does this new variable show us? How many unique values does our new variable have? 
+#Does this make sense? 
+```
+
+I added one more step: I ungrouped the dataset using `ungroup()`. It's good practice to do this at the end of an code chunk that uses the group function, otherwise other steps might be grouped in ways that were unintended. 
+
+We can then calculate the RMSE using our new prediction based on the conditional mean:
+
+```{r}
+rmse_control<-df%>%
+  rmse(grad_debt_mdn, mean_debt_control)
+rmse_control
+#make sure you're calculating your RMSE based on the right variables (it's always between the prediction and the raw data). 
+```
+
+Using the predictor increased our predictive accuracy considerably, from `r round(rmse_uncond$.estimate)`  to `r round(rmse_control$.estimate)`! 
+
+## Conditional Mean With Two Predictors
+
+It's also probably the case that the degree level for the institution matters. It takes longer to get a bachelor's degree than an associate degree, so we could expect that institutions that mostly give bachelor's degrees would have higher debt levels. To figure this out we need to group by control and predominant degree level. 
+
+Grouping with multiple predictors works exactly the same way as with one predictor. We just add the additional variable to the `group_by` command, like so:
+
+```{r}
+df%>%
+  group_by(control, preddeg)%>%
+  summarize(mean_debt_control_degree=mean(grad_debt_mdn, na.rm=TRUE))%>%
+  arrange(mean_debt_control_degree)%>%
+  ungroup()
+#How could we arrange this in descending order instead? 
+```
+
+Notice that I used `arrange` which will sort the dataset in descending order based on the variable selected, in this case average debt levels by control and degree awarded. We can see the very different levels of debt incurred at these four different types of institutions. Now let's add this conditional mean to our dataset as a prediction.
+
+```{r}
+df<-df%>%
+  group_by(control, preddeg)%>%
+  mutate(mean_debt_control_degree=mean(grad_debt_mdn,na.rm=TRUE))%>%
+  ungroup() #when you're doing something that CHANGES your dataset (e.g., mutate), you want to ungroup when you're done - just so that you don't accidentally carry that grouping forward to the next set of commands.
+```
+
+```{r}
+rmse_control_degree<-df%>%
+  rmse(grad_debt_mdn, mean_debt_control_degree)
+rmse_control_degree #is this RMSE better than the 1-predictor estimate? 
+```
+
+Adding this variable has again improved our estimate. 
+
+## Conditional Mean With Three Predictors
+
+We can continue this logic indefinitely, but let's focus on one more variable: the region of the country. Unlike the previous two variables, this one has eight different levels. Adding it as another grouping variable means we're going to end up with 2x2x8=32 different conditional means, one for each type of institution (public or private, 2 year or 4 year) in each region of the country
+
+```{r}
+df%>%
+  group_by(control, preddeg, region)%>%
+  summarize(mean_debt_control_degree_region=mean(grad_debt_mdn, na.rm=TRUE))%>%
+  arrange(mean_debt_control_degree_region)%>%
+  print(n=100)%>%
+  ungroup()
+
+#NOTE - when you look at the data - do you see anything wrong here with our regions? 
+#Let's take a minute and clean this up (Note - this happens SO often! This is good practice)
+df$region[df$region == "Soutwest"] <- "Southwest"
+
+#Now that it's cleaned up, I want to rerun my code above to see the proper regions
+df%>%
+  group_by(control, preddeg, region)%>%
+  summarize(mean_debt_control_degree_region=mean(grad_debt_mdn, na.rm=TRUE))%>%
+  arrange(mean_debt_control_degree_region)%>%
+  print(n=100)%>%
+  ungroup()
+```
+
+Because it's so many more conditional means, I added the `print(n=100)` to the code chunk, so we can see all of the results. 
+
+Let's add these as predictors to the dataset:
+```{r}
+df<-df%>%
+  group_by(control, preddeg, region)%>%
+  mutate(mean_debt_control_degree_region=mean(grad_debt_mdn, na.rm=TRUE))%>%
+  ungroup()
+```
+
+And calculate the RMSE:
+```{r}
+rmse_control_degree_region<-df%>%
+  rmse(grad_debt_mdn, mean_debt_control_degree_region)
+rmse_control_degree_region
+```
+
+This is a much better RMSE than what we started with. Is it good enough? Who knows? Again this depends on the context. But we can imagine the high school senior would have much more accurate information with which to make their decision. 
+
+## Applications of the Conditional Mean
+
+When might we use the conditional mean?
+
+- Calculating average sales for a retail location by day of the week and month.
+- Calculating yield rate (proportion of admitted students who attend) by geographic region and income level for a college. 
+- Calculating average employee turnover by level of education and gender.
+
+### Using conditional means based on continuous predictors
+
+All the examples above focus on categorical predictors (which lend themselves easily to conditional means). We can also calculate conditional means based on continuous predictors; however, in order to make sense of them (and eventually plot them), it helps to group our continuous predictor. Let's read in another dataset for this new example.  
+```{r}
+load("college.Rdata") 
+```
+
+Let's revisit our outcome from last week: median earnings (md_earn_wne_p6). And let's say we want to use admission rate as a potential predictor. First, let's look at it using the table command (NOTE - the table() function isn't great for continuous data - I'm about to show you why).
+```{r}
+table(sc$adm_rate)
+```
+Table shows you a frequency table for the values of the variable... you see that these are mostly unique values and so, if we try to use them to create a conditional mean, we're going to have a mean for EVERY one of these entries... not ideal (it's too much to look at and your audience won't understand it). Also, do we think that each of these is really unique? For instance, is an admission rate of .3734 really different than .3738? 
+
+If we want to use continuous predictors to create conditional means, we just need to group them into substantively similar categories before doing so. You could do this manually (if you have cut points in mind) OR you can use R to create them for you using just the information from the data. 
+
+Because I don't have information that tells me a priori how I should group these admission rates, I'm going to use R's ntiles() function. What this does is it allows you to break a continuous variable into percentiles (quartiles, deciles, etc.). 
+
+Let's summarize admission rate to see what it "looks" like (since our table above isn't all that telling). 
+```{r}
+summary(sc$adm_rate)
+```
+Admission rates in this data range from 0% (which I'm assuming means these are special programs that only take continuing students, or it's incorrect data) to just under 40%. I want to group this data into quartiles, where my first group is the lowest 25% of the distribution (in terms of admission rate), then next is the next 25% of the distribution, and so on and so forth. Keep in mind that a LOW admission rate means MORE selective (this will be important when interpreting what we see in the data).
+
+Here's how I create the 4-group variable (and add it to my dataset):
+```{r}
+sc<-sc%>%
+  mutate(adm_quartiles=ntile(adm_rate, 4)) #the 4 is the number of groups I want, so if I wanted quintiles instead, this number would be 5; if I wanted deciles, this number would be 10.
+```
+
+Let's look at our new variable to be sure it created what we think it did. We should have four equally distributed categories (quartiles).
+```{r}
+table(sc$adm_quartiles)
+```
+See how I have 4 equally sized groups? Group 1 represents the 25% with the lowest admissions rates (most selective); group 4 represents the 25% of schools who have the highest admissions rates (least selective). LOOK at the dataset and you'll see what I mean. 
+
+```{r}
+#now let's look at our median earnings by these admission rate groups
+sc%>%
+  group_by(adm_quartiles)%>%
+  summarize(mean_earnings=mean(md_earn_wne_p6, na.rm=T))%>%
+  arrange(adm_quartiles)%>%
+  ungroup()
+```
+What does this appear to tell you about your most selective schools compared to your least selective schools? If it looks like there's a difference, then this may be a good predictor! Next step would be to add it to your dataset and calculate the RMSE. 
+```{r}
+sc<-sc%>%
+  group_by(adm_quartiles)%>%
+  mutate(mean_earn_adm=mean(md_earn_wne_p6, na.rm=T))%>%
+  ungroup()
+
+rmse_adm<-sc%>%
+  rmse(md_earn_wne_p6, mean_earn_adm)
+
+rmse_adm
+```
+We're an average of about $12,769. off when using only admission rate (quartiles) to predict eventual earnings. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
