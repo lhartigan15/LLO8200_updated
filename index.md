@@ -6,16 +6,20 @@ While there are files on the "Files" section of the LMS, you should use the file
 
 ### Async/Sync RStudio (.Rmd) Files
 These are the RStudio files and datasets that you will use in tandem with the async videos each week, listed by class week and LMS Module number. The first file below (Week 0) is a general setup file that provides a good structure for setting up your .Rmd files.
-* Week 0 - [.Rmd File Setup](./00_setup.Rmd)
-* Week 1 - [LMS Mod1 - Introduction Rmd File](./01_Intro.Rmd) 
-* Week 2 - [LMS Mod2 - Conditional Means Rmd File](./02_Conditional Means.Rmd) 
+0. LMS Mod 0 - [.Rmd File Setup](./00_setup.Rmd)
+1. LMS Mod 1 - [Introduction Rmd File](./01_Intro.Rmd) 
+2. LMS Mod 2 - [Conditional Means Rmd File](./02_Conditional Means.Rmd) 
   * Async Video Locations (listed by section #):
     * LMS Section 2.1 - view on LMS
     * [LMS Section 2.2 through 2.5 Replacement Video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
     * LMS Section 2.7 and 2.8 - view on LMS
     * [LMS Section 2.6 and 2.9 Replacement Video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
+3. LMS Mod 3 - [Descriptive Plots](./03_DescriptivePlots.Rmd) 
+4. LMS Mod 4 - [Flat data](./04_flatdata.Rmd)
+5. LMS Mod 5 - [Regression](./05_regression.Rmd)
+6. LMS Mod 6 - [Scatterplots](./06_scatterplots.Rmd)
 
-### Datasets (for async & sync sessions)
+### Datasets (for async & sync sessions - we may not use all of these)
 * [College "sc" dataset](./college.Rdata)
 * [College debt dataset](./sc_debt.Rdata)
 * [Attrition dataset](./attrition.Rdata)
