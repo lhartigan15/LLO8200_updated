@@ -20,13 +20,15 @@ These are the RStudio files and datasets that you will use in tandem with the as
 6. LMS Mod 6 - [Scatterplots](./06_scatterplots.Rmd)
 
 ### Datasets (for async & sync sessions - we may not use all of these)
+* [Attrition dataset](./attrition.Rdata)
 * [College "sc" dataset](./college.Rdata)
 * [College debt dataset](./sc_debt.Rdata)
-* [Attrition dataset](./attrition.Rdata)
 * [ELS full dataset](./els.Rdata)
 * [ELS testing dataset](./els_test.Rdata)
 * [ELS training dataset](./els_train.Rdata)
+* [Free excel dataset](./free.xls)
 * [FRL dataset](./frl.Rdata)
+* [HSB csv dataset](./hsbdata.csv)
 * [PD dataset](./pd.Rdata)
 * [SF cluster dataset](./sf_cluster.RData)
 * [SF complete dataset](./sf_complete.RData)
@@ -34,8 +36,6 @@ These are the RStudio files and datasets that you will use in tandem with the as
 * [Za full dataset](./za.RData)
 * [Za testing dataset](./za_test.RData)
 * [Za training dataset](./za_train.RData)
-* [Free excel dataset](./free.xls)
-* [HSB csv dataset](./hsbdata.csv)
 
 ### Synchronous (.Rmd) Files
 These files will only be uploaded when there are substantive code changes/additions to the async .Rmd files.
