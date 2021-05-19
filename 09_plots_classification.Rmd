@@ -1,0 +1,223 @@
+```{r}
+REMOVE ME!
+```
+---
+title: "Plots for Classifiers - LMS Module 9"
+output:
+  pdf_document: default
+---
+
+Plots are rarely used in the context of classification, but they can aid understanding. I'll show three ways of thinking about plots for classification: bar graphs, heatmaps, and plotting the probability predictions from a logit model.
+
+We'll continue working with the random acts of pizza dataset. 
+
+```{r}
+rm(list=ls())
+
+library(tidyverse)
+library(modelr)
+library(knitr)
+
+load("za.RData")
+```
+
+We always want to start with a cross tab of our dependent variable as a function of other variables. We structure cross tabs in a very particular way for the purposes of research: the independent variable goes on the rows, and the dependent variable goes on the columns. If proportions or percentages are going to be calculated, they should be calculated across rows. 
+
+Recalling our previous lesson, let's look at a crosstab of `got_pizza` with the independent variable of `student`
+
+```{r}
+tab_student<-with(za, table(student, got_pizza)) #IV on rows, first; DV on columns, second
+tab_student
+```
+
+If we want to make this a little better, we can change the row and column titles
+
+```{r}
+colnames(tab_student)<-c("No Pizza","Received a Pizza")
+kable(tab_student) #kable makes a prettier table for R Markdown knit files
+```
+
+If we want to add proportions to this table, we can it like so:
+```{r}
+tab_student_prop<-prop.table(tab_student, margin=1) #margin=1 tells the command to make the rows sum to 1; if you did margin=2 it would sum by columns
+kable(tab_student_prop) #pretties the table up for the final knit doc
+```
+
+Sometimes  (okay, all the times) audiences prefer percentages. Easy enough to do:
+```{r}
+kable(round(tab_student_prop*100, 1)) #this rounds this to the tenths place because of the ,1 at the end (1 place after the decimal); 2 would make it to the hundredths place, etc. etc. 
+```
+
+If you want to include a third variable in a cross tab, that requires splitting the dataset. For instance, if we want to know the proportion of posts that include "student" AND "grateful" that received pizza, we would do this:
+```{r}
+tab_student_grateful<-with(filter(za,
+                           as.character(grateful)=="Grateful in post"),
+                           table(student, got_pizza))
+tab_student_grateful
+#makes table filtered for ONLY those who had grateful in their post
+```
+
+# Set up the code for the people who did NOT include grateful in post
+```{r}
+tab_student_notgrateful<-with(filter(za,
+                                     as.character(grateful)=="Grateful not in post"), 
+                              table(student, got_pizza))
+tab_student_notgrateful
+```
+
+*Outcome by "Student" AND "Grateful"*
+```{r}
+prop.table(tab_student_grateful, margin=1)%>%
+  kable()
+#reminder, these are ONLY people who had "grateful" in their post
+```
+
+
+## Bar Graphs from Cross Tabs
+
+To format the data for barcharts, we make use of the concept of conditional means. Let's use two variables to calculate the probability of receiving a pizza: poor and student. 
+
+```{r}
+za_sum<-za%>%
+  group_by(poor, student)%>%
+  dplyr::summarize(prob_pizza=mean(got_pizza, na.rm=TRUE))%>%
+  ungroup()
+za_sum
+```
+
+Then we can plot this using our familiar ggplot commands:
+
+```{r}
+gg1<-ggplot(za_sum, aes(y=prob_pizza, x=student, fill=poor))
+gg1<-gg1 + geom_bar(stat="identity", position="dodge")
+gg1<-gg1 + xlab("Student Status") + ylab("Probability of Receiving a Pizza")
+gg1<-gg1 + theme(legend.title=element_blank())#removes title from legend 
+gg1<-gg1 + scale_fill_manual(values=c("Poor not in post"="light blue", "Poor in post"="dark green"))
+gg1<-gg1 + geom_text(aes(label=round(prob_pizza, 2)), #add data labels to bars
+                   position=position_dodge(width=.9), #matches positioning we originally specified above (see line 90); change the width# to adjust
+                   vjust=-.25) #adjusts the height of the labels relative to the bars
+gg1
+```
+
+## Heat Maps
+
+To generate a heat map, we'll first divide up the independent variables into quintiles:
+
+```{r}
+#score = sentiment score (higher is more positive); karma = poster's karma on reddit
+za<-za%>%
+  mutate(score_quintile=ntile(score, 5), #5 is quintile
+         karma_quintile=ntile(karma, 5))
+#look at the data after you add these quintile vars - use the table function to make sure it worked properly
+```
+
+Then we'll create a summary dataset that shows the probabilities of the outcome across all of the combined categories of the two independent variables. 
+
+```{R}
+za_sum<-za%>%
+  group_by(score_quintile, karma_quintile)%>% #group by two IVs
+  dplyr::summarize(prob_pizza=mean(got_pizza, na.rm=TRUE))%>% #take mean of DV by this grouping
+  arrange(-prob_pizza)%>% #arrange data by pred.probabilities (descending order)
+  ungroup() 
+za_sum
+```
+
+Missing data isn't important, so we'll drop it. 
+```{r}
+za_sum<-za_sum%>%
+  filter(!(is.na(score_quintile)),!(is.na(karma_quintile))) #!is.na = not missing
+za_sum
+```
+
+Now we're ready to plot!
+
+```{r}
+gg<-ggplot(za_sum,
+           aes(x=as.factor(score_quintile),
+               y=as.factor(karma_quintile), fill=prob_pizza))
+gg<-gg + geom_tile() #heat map grid (tiles)
+gg<-gg + scale_fill_gradient(low="white", high="red") #fill with gradient coloring where lowest probabilities are black and highest gold
+gg<-gg + xlab("Emotional Valence") + ylab("Reddit Karma") #add labels
+gg<-gg + theme(legend.title=element_blank()) #remove legend title
+
+#we removed the legend title, but that means we don't tell the reader what is actually being plotted with our colors; add a title to do this
+gg<-gg + ggtitle("Predicted Probability of Receiving a Pizza") + 
+  theme(plot.title = element_text(color="black", size=14, face="bold", hjust=.5))
+
+gg
+```
+
+
+## Plotting by probabilities from models
+
+It can be difficult to plot the results of a logistic regression. We're going to use the same solution that we used for linear regression, where we create simulations from a hypothetical dataset. 
+
+First we rerun our logistic regression. 
+```{r}
+logit_mod<-glm(got_pizza ~ karma + total_posts + raop_posts + student + grateful,
+               data=za,
+               na.action=na.exclude,
+               family=binomial(link="logit"),
+               y=TRUE)
+
+#logit_mod<-glm(y~x1+x2,
+#               family=binomial(link="logit"))
+
+summary(logit_mod)
+```
+
+Then we create some hypothetical data. 
+
+```{r}
+#create a dataset that would look like we want it to (we're constraining the data); then run our predictive model in it.
+#going to specify a variable for each IV in the model
+hypo_data<-data_grid(za, 
+                     total_posts=seq_range(total_posts, n=100), #go from min to max of total posts in 100 steps
+                     karma=mean(karma, na.rm=TRUE), #hold constant @ the mean of karma
+                     raop_posts=mean(raop_posts, na.rm=TRUE), #hold constant @ mean # posts
+                     grateful=levels(grateful)[1], #hold constant at first level of grateful; = did not indicate grateful
+                     student=levels(student))%>% #lets student vary 
+  mutate(pred=predict(logit_mod, newdata=., type="response")) #generate a prediction from our logit model
+
+#we're letting total # posts var and the student variable vary (0 or 1)
+```
+
+And now we're ready to plot. 
+
+```{r}
+gg<-ggplot(hypo_data,
+           aes(x=total_posts, y=pred, color=student))
+gg<-gg + geom_line()
+gg<-gg + xlab("Total Posts") + ylab("Predicted Probability of Pizza")
+gg<-gg + scale_color_manual(values=c("No student"="magenta", "Student"="black"))
+gg<-gg + theme(legend.title=element_blank()) #remove legend title - not needed in this case
+
+
+gg
+```
+
+## How to do the same with Random Acts of Pizza posts (raop) varying
+```{r}
+#we're going to let RAOP and student vary, but nothing else
+hypo_data2<-data_grid(za, 
+                     total_posts=mean(total_posts, na.rm=TRUE), #hold ttl posts constant
+                     karma=mean(karma, na.rm=TRUE), #hold karma constant
+                     raop_posts=seq_range(raop_posts, n=100), #let RAOP vary
+                     grateful=levels(grateful)[1], #hold grateful constant
+                     student=levels(student))%>% #let student vary
+  mutate(pred=predict(logit_mod, newdata=., type="response"))
+```
+
+
+```{r}
+gg<-ggplot(hypo_data2,
+           aes(x=raop_posts, y=pred, color=student))
+gg<-gg + geom_line() 
+gg<-gg + xlab("RAOP Posts") + ylab("Predicted Probability of Pizza")
+gg<-gg + scale_color_manual(values=c("No student"="cyan", "Student"="black"))
+gg<-gg + theme(legend.title=element_blank())
+
+gg
+
+#This is the plot of predicted probability of Pizza Received by RAOP posts and whether poster was student or not (holding ttl posts, karma, and grateful constant).
+```

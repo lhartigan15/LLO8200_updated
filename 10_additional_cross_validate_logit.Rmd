@@ -1,0 +1,122 @@
+---
+title: "Cross Validating Logistic Regression"
+author: "Doyle"
+date: "7/22/2020"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(caret)
+```
+
+
+```{r}
+load("attrition.Rdata")
+```
+
+## Important: for this to work you need to define your outcome as a factor
+## with descriptive factor levels. If nothing else, just use "Yes" and "No" to describe 
+## outcome names. 
+
+```{r}
+at<-at%>%
+  mutate(Attrition=as.factor((Attrition)))
+```
+
+
+```{r}
+mod1_formula<-as.formula(Attrition~
+                           as.factor(Department)+
+                           as.factor(Education)+
+                           MonthlyIncome+
+                           as.factor(Gender)+
+                           JobSatisfaction+
+                           Age+
+                           YearsAtCompany+
+                           as.factor(BusinessTravel)
+                           )
+```
+
+```{r}
+
+fitControl<-trainControl(method="boot",
+                         p=.2,
+                         savePredictions = TRUE,
+                         classProbs = TRUE,
+                         number = 1000)
+
+```
+
+
+```{r}
+mod1_results<-train(mod1_formula,
+                    data=at,
+                    trControl=fitControl,
+                    method="glm",
+                    family=binomial(link="logit")
+                    )
+```
+
+## Summary of results
+```{r}
+summary(mod1_results$finalModel)
+```
+
+
+##Plot Accuracy (already calculated)
+
+```{r}
+
+## Mean Accuracy
+mod1_results$results$Accuracy
+
+## SD Accuracy
+mod1_results$results$AccuracySD
+
+## Plot
+gg<-ggplot(data=mod1_results$resample,aes(x=Accuracy))
+gg<-gg+geom_density(fill="blue",alpha=.2)
+gg
+```
+
+
+## Calculate and show sensitivity
+```{r}
+mod1_sense<-mod1_results$pred%>%
+  group_by(Resample)%>%
+  summarize(sense=caret::sensitivity(data=as.factor(pred),
+                              reference=as.factor(obs),
+                              positive="Yes"))
+
+## Mean Sensitivity
+mod1_sense%>%summarize(mean_sense=mean(sense))
+
+## SD sensitivity
+mod1_sense%>%summarize(sd_sense=sd(sense))
+
+gg<-ggplot(data=mod1_sense,aes(x=sense))
+gg<-gg+geom_density(fill="blue",alpha=.5)
+gg
+```
+
+## Calculate and plot specificity
+```{r}
+mod1_spec<-mod1_results$pred%>%
+  group_by(Resample)%>%
+  summarize(spec=caret::specificity(data=as.factor(pred),
+                             reference=as.factor(obs),
+                             negative="No"))
+
+## Mean Specificty
+mod1_spec%>%summarize(mean_spec=mean(spec))
+
+## SD specificity
+mod1_spec%>%summarize(sd_sense=sd(spec))
+
+gg<-ggplot(data=mod1_spec,aes(x=spec))
+gg<-gg+geom_density(fill="blue",alpha=.5)
+gg
+
+```
+
