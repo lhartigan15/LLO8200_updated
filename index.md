@@ -55,7 +55,7 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
-| [Assignment 1 PDF](./01_Assignment_starter.pdf), [starter .Rmd](./01_Assignment_starter.Rmd), [college debt data](./sc_debt.Rdata) | 5/25/21 |
+| [Assignment 1 PDF](./01_Assignment_starter.pdf), [starter .Rmd](./01_Assignment_starter.Rmd) | 5/25/21 |
 
 ### Final Project Materials (forthcoming)
 
