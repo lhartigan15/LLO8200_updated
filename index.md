@@ -50,7 +50,7 @@ Each assignment (problem set) should be uploaded to the LMS _before_ we meet for
 1. .Rmd code file.
 2. "Knit" assignment file. The knit file can be in pdf or html (pdf is preferred). 
 
-Note that you must drag/drop (or upload) both files at the same time in order for the LMS to accept the submission; if you try to do them one at a time, it will only accept one. Also, you are responsible for reviewing the files before uploading (check formatting, output, etc.). I will not accept submissions via email (unless there are extenuating circumstances). **There will be a penalty for submissions not meeting these requirements.**
+Note that you must upload BOTH files BEFORE you hit "submit" in the LMS; if you try to submit them one at a time, it will only allow you to upload one. Also, you are responsible for reviewing the files before uploading (check formatting, output, etc.). I will not accept submissions via email (unless there are extenuating circumstances). **There will be a penalty for submissions not meeting these requirements.**
 
 All assignments are graded on a 100-point scale. Corrections can be submitted for any assignment and you can earn up to half of the deducted points back. You have one week from the time you receive feedback on the assignment to submit corrections.
 
@@ -59,7 +59,7 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 | [Assignment 1 PDF](./01_Assignment_starter.pdf), [starter .Rmd](./01_Assignment_starter.Rmd) | 5/25/21 |
 
 ### Final Project Materials
-[Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) | due 6/1/21
+[Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 6/1/21
 
 ### Additional Resources
 Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool to help you do so. This properly weights the various course elements (note that you'll need to put in some "estimated" data for the final products to populate an average). 
