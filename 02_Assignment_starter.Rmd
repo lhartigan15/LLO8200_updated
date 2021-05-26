@@ -1,3 +1,6 @@
+```{r}
+REMOVE ME!
+```
 ---
 title: "Assignment 2 - LMS Module 3"
 author: "Lacey Hartigan"
