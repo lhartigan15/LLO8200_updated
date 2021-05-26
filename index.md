@@ -58,7 +58,8 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 |:-------------|:------------------|
 | [Assignment 1 PDF](./01_Assignment_starter.pdf), [starter .Rmd](./01_Assignment_starter.Rmd) | 5/25/21 |
 
-### Final Project Materials (forthcoming)
+### Final Project Materials
+|:-------------|:------------------|
 | [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) | due 6/1/21 |
 
 ### Additional Resources
