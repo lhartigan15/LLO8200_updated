@@ -23,6 +23,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
 7. LMS Mod 6 - [Scatterplots](./06_scatterplots.Rmd)
 
 ### Datasets (for async & sync sessions - we may not use all of these)
+* [Area dataset - ACS 2019](./area_data.Rds)
 * [Attrition dataset](./attrition.Rdata)
 * [College "sc" dataset](./college.Rdata)
 * [College debt dataset](./sc_debt.Rdata)
