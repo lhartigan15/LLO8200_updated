@@ -16,10 +16,14 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * [LMS Section 2.6 and 2.9 Replacement Video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
 3. LMS Mod 3 - [Descriptive Plots](./03_DescriptivePlots.Rmd) 
 4. LMS Mod 4 - [Flat data](./04_flatdata.Rmd)
-5. LMS Mod 5 - [Regression - updated](./05_regression_updated.Rmd)
+5. LMS Mod 5 (part 1) - [Regression - updated](./05_regression_updated.Rmd)
   * This week we have updated videos. These replace the ones in the LMS entirely.
     * [Part 1](https://youtu.be/8P5CLj5Vy70)
     * [Part 2](https://youtu.be/6s5__DICHDg)
+6. LMS Mod 5 (part 2) - [Regression - updated](./05_regression_updated.Rmd)
+  * This week we have updated videos. These replace the ones in the LMS entirely.
+    * [Part 1](https://www.youtube.com/watch?v=llfHYO_MujY)
+    * [Part 2](https://www.youtube.com/watch?v=hm33VbjQZMY)
 7. LMS Mod 6 - [Scatterplots](./06_scatterplots.Rmd)
 
 ### Datasets (for async & sync sessions - we may not use all of these)
