@@ -72,8 +72,8 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 | [Assignment 2 PDF](./02_Assignment_starter.pdf), [starter .Rmd](./02_Assignment_starter.Rmd) | 6/8/21 |
 
 ### Final Project Materials
-[Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 6/1/21
-[Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 6/22/21
+* [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 6/1/21
+* [Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 6/22/21
 
 ### Additional Resources
 Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool to help you do so. This properly weights the various course elements (note that you'll need to put in some "estimated" data for the final products to populate an average). 
