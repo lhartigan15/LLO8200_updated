@@ -12,20 +12,22 @@ These are the RStudio files and datasets that you will use in tandem with the as
 1. LMS Mod 1 - [Introduction Rmd File](./01_Intro.Rmd) 
 2. LMS Mod 2 - [Conditional Means Rmd File](./02_Conditional Means.Rmd) 
   * Async Video Locations (listed by section #):
-    * LMS Section 2.1 - view on LMS
-    * [LMS Section 2.2 through 2.5 Replacement Video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
-    * LMS Section 2.7 and 2.8 - view on LMS
-    * [LMS Section 2.6 and 2.9 Replacement Video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
+    * LMS Lecture 2.1 - view on LMS
+    * [LMS Lecture 2.2 through 2.5 video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
+    * LMS Lecture 2.7 and 2.8 - view on LMS
+    * [LMS Lecture 2.6 and 2.9 video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
 3. LMS Mod 3 - [Descriptive Plots](./03_DescriptivePlots.Rmd) 
 4. LMS Mod 4 - [Flat data](./04_flatdata.Rmd)
 5. LMS Mod 5 (part 1) - [Regression, part 1 - updated](./05_regression_updated.Rmd)
-  * This week we have updated videos. These replace the ones in the LMS entirely.
-    * [Part 1](https://youtu.be/8P5CLj5Vy70)
-    * [Part 2](https://youtu.be/6s5__DICHDg)
+  * Async Video Locations (listed by section #):
+    * LMS Lecture 5.1 - view on LMS
+    * [LMS Lecture 5.2 video](https://youtu.be/8P5CLj5Vy70)
+    * [LMS Lecture 5.3 & 5.4 video](https://youtu.be/6s5__DICHDg)
 6. LMS Mod 5 (part 2) - [Regression, part 2 - updated](./05_regression_part2.Rmd)
-  * This week we have updated videos. These replace the ones in the LMS entirely.
-    * [Part 1](https://www.youtube.com/watch?v=llfHYO_MujY)
-    * [Part 2](https://www.youtube.com/watch?v=hm33VbjQZMY)
+  * Async Video Locations (listed by section #):
+    * [LMS Lecture 5.4a replacement video](https://www.youtube.com/watch?v=llfHYO_MujY)
+    * [LMS Lecture 5.4b replacement video](https://www.youtube.com/watch?v=hm33VbjQZMY)
+    * LMS Lecture 5.5 - view on LMS
 7. LMS Mod 6 - [Scatterplots](./06_scatterplots.Rmd)
 
 ### Datasets (for async & sync sessions - we may not use all of these)
@@ -71,6 +73,7 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 
 ### Final Project Materials
 [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 6/1/21
+[Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 6/22/21
 
 ### Additional Resources
 Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool to help you do so. This properly weights the various course elements (note that you'll need to put in some "estimated" data for the final products to populate an average). 
