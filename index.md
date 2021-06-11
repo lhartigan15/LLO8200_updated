@@ -4,6 +4,8 @@ This is the course website for Professor Hartigan's sections of LLO 8200 Introdu
 
 While there are files on the "Files" section of the LMS, you should use the files from THIS page to ensure you have the most up to date information. Additionally, please reference this syllabus for information. You are responsible for reviewing and ensuring you are following the schedule included in this syllabus, found here: [Hartigan's Summer 2021 LLO8200 Syllabus](./Hartigan_LLO8200_syllabus_summer2021.pdf). 
 
+If you want to set up email alerts for updates/additions to this site, you can use the free version of a third-party program: [Distill](https://distill.io/). The free version will check for updates every 6 hours and send you alerts. Note: this is a platform that is not owned by Vanderbilt or me and you should review their data privacy and security to ensure you are comfortable with their practices.
+
 ### Async/Sync RStudio (.Rmd) Files
 These are the RStudio files and datasets that you will use in tandem with the async videos each week, listed by class week and LMS Module number. The first file below (Week 0) is a general setup file that provides a good structure for setting up your .Rmd files.
 0. LMS Mod 0 - [.Rmd File Setup](./00_setup.Rmd)
