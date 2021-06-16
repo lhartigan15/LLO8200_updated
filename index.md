@@ -51,8 +51,9 @@ These are the RStudio files and datasets that you will use in tandem with the as
 
 ### Synchronous (.Rmd) Files
 These files will only be uploaded when there are substantive code changes/additions to the async .Rmd files.
-* Week 2 - [Conditional Means .Rmd File - added Ntiles code](./02_Conditional Means_inclass.Rmd)
-* Week 3 - [Descriptive Plots .Rmd File](./03_DescriptivePlots_inclass.Rmd)
+* Week 2 - [Conditional Means in-class .Rmd File - added Ntiles code](./02_Conditional Means_inclass.Rmd)
+* Week 3 - [Descriptive Plots in-class .Rmd File](./03_DescriptivePlots_inclass.Rmd)
+* Week 6 - [Regression part 1 in-class .Rmd File](./05_regression_updated_inclass.Rmd)
 
 #### Known Corrections to Async Questions
 * Week 1 - UNC Chapel Hill admit rate = 0.34
