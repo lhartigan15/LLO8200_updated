@@ -23,7 +23,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * LMS Lecture 5.1 - view on LMS
     * [LMS Lecture 5.2 video](https://youtu.be/8P5CLj5Vy70)
     * [LMS Lecture 5.3 & 5.4 video](https://youtu.be/6s5__DICHDg)
-6. LMS Mod 5 (part 2) - [Regression, part 2 - updated](./05_regression_part2.Rmd)
+6. LMS Mod 5 (part 2) - [Regression, part 2 - updated](./05_regression_part2.Rmd), [html lecture notes](https://raw.githack.com/wdoyle42/ll0_8200_summer_21/main/05-regression-2.html)
   * Async Video Locations (listed by section #):
     * [LMS Lecture 5.4a replacement video](https://www.youtube.com/watch?v=llfHYO_MujY)
     * [LMS Lecture 5.4b replacement video](https://www.youtube.com/watch?v=hm33VbjQZMY)
