@@ -1,0 +1,89 @@
+---
+title: "Regression, Specifying the Reference Group"
+output: html_document
+---
+
+## Load needed libraries
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(plotly)
+```
+
+## Add the "Area" dataset
+```{r}
+ad<-readRDS("area_data.Rds")
+```
+
+## Split the data into training and testing versions. 
+```{r}
+set.seed(524)
+
+split_data<-ad%>%
+  initial_split(prop=.5)
+
+ad_train<-training(split_data)
+ad_test<-testing(split_data)
+```
+
+## Set Linear Model
+
+```{r}
+lm_fit <- 
+  linear_reg() %>% 
+  set_engine("lm")%>%
+  set_mode("regression")
+```
+
+## Begin Workflow
+
+```{r}
+income_wf<-workflow()%>%
+  add_model(lm_fit)
+```
+
+## Set Formula
+```{r}
+income_formula<-as.formula("income_75 ~ college_educ + perc_homeown + metro + region")
+```
+
+## Set Recipe
+
+Below, `step_dummy` is applied to both the `metro` and `region` variables (categorical variables). We can use step_relevel if we want to specify the reference group (i.e., the group that will be omitted from our results table). If you don't specify, R will choose the first group alphabetically or the 0/lowest-numbered group (if stored as numbers). 
+```{r}
+income_rec<-recipe(income_formula, data=ad_train)%>%
+  step_relevel(region, ref_level = "South")%>% #here's where I tell R that I want South to be my reference
+  step_dummy(metro, region)
+```
+
+## Update workflow with new recipe
+
+Because we've already created the workflow `income_wf` we can update it with our new recipe, using the command `update_recipe`.
+```{r}
+income_wf<-income_wf%>%
+  update_recipe(income_rec)
+```
+
+## Fit to training data and look at coefficients and model fit
+
+Now we're ready to fit our linear model. The fit command below tells it to fit the model, with results stored in the object `lm_results`. We can then pipe the lm_results to the `tidy` command to see the coefficients. To see measures of model fit we can use `pull_workflow_fit` and then pipe those results to the `glance` command. 
+
+```{r}
+lm_results<-fit(income_wf, ad_train)
+
+lm_results%>%
+  tidy()
+
+lm_results%>%
+  pull_workflow_fit()%>%
+  glance()
+```
+
+## Using `last_fit` to pull RMSE and Rsquared
+
+The `tidymodels` package has a function that automates the steps of running the model, generating predictions in the testing dataset and then generating metrics of model fit from the testing dataset. It's called `last_fit`.
+
+```{r}
+lf<-last_fit(income_wf, split=split_data)
+lf$.metrics
+```
