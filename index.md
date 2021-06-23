@@ -29,6 +29,11 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * [LMS Lecture 5.4b replacement video](https://www.youtube.com/watch?v=hm33VbjQZMY)
     * LMS Lecture 5.5 - view on LMS
 7. LMS Mod 6 - [Scatterplots](./06_scatterplots.Rmd)
+8. LMS Mod 7 - [Getting Data: Web Sources](./07_webscraping_updated.Rmd)
+  * Async Video Locations (listed by section #):
+    * LMS Lectures 7.1-7.3 - view on LMS
+    * [LMS Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
+    * LMS Lectures 7.5 - view on LMS
 
 ### Datasets (for async & sync sessions - we may not use all of these)
 * [Area dataset - ACS 2019](./area_data.Rds)
