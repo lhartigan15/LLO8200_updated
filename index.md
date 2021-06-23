@@ -62,6 +62,7 @@ These files will only be uploaded when there are substantive code changes/additi
 * Week 3 - [Descriptive Plots in-class .Rmd File](./03_DescriptivePlots_inclass.Rmd)
 * Week 6 - [Regression part 1 in-class .Rmd File](./05_regression_updated_inclass.Rmd)
 * Week 7 - [Regression - Specifying/Changing the Reference Group for Dummy Variables .Rmd File](./05_regression_part2_referencegroup.Rmd)
+* Week 8 - [Twitter API .Rmd File](./07_twitterAPI.Rmd)
 
 #### Known Corrections to Async Questions
 * Week 1 - UNC Chapel Hill admit rate = 0.34
