@@ -12,28 +12,36 @@ These are the RStudio files and datasets that you will use in tandem with the as
 1. LMS Mod 1 - [Introduction Rmd File](./01_Intro.Rmd) 
 2. LMS Mod 2 - [Conditional Means Rmd File](./02_Conditional Means.Rmd) 
   * Async Video Locations (listed by section #):
-    * LMS Lecture 2.1 - view on LMS
-    * [LMS Lecture 2.2 through 2.5 video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
-    * LMS Lecture 2.7 and 2.8 - view on LMS
-    * [LMS Lecture 2.6 and 2.9 video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
+    * Lecture 2.1 - view on LMS
+    * [Lectures 2.2 through 2.5 video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
+    * Lectures 2.7 and 2.8 - view on LMS
+    * [Lectures 2.6 and 2.9 video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
 3. LMS Mod 3 - [Descriptive Plots](./03_DescriptivePlots.Rmd) 
 4. LMS Mod 4 - [Flat data](./04_flatdata.Rmd)
 5. LMS Mod 5 (part 1) - [Regression, part 1 - updated](./05_regression_updated.Rmd)
   * Async Video Locations (listed by section #):
-    * LMS Lecture 5.1 - view on LMS
-    * [LMS Lecture 5.2 video](https://youtu.be/8P5CLj5Vy70)
-    * [LMS Lecture 5.3 & 5.4 video](https://youtu.be/6s5__DICHDg)
+    * Lecture 5.1 - view on LMS
+    * [Lecture 5.2 video](https://youtu.be/8P5CLj5Vy70)
+    * [Lectures 5.3 & 5.4 video](https://youtu.be/6s5__DICHDg)
 6. LMS Mod 5 (part 2) - [Regression, part 2 - updated](./05_regression_part2.Rmd), [html lecture notes](https://raw.githack.com/wdoyle42/ll0_8200_summer_21/main/05-regression-2.html)
   * Async Video Locations (listed by section #):
-    * [LMS Lecture 5.4a replacement video](https://www.youtube.com/watch?v=llfHYO_MujY)
-    * [LMS Lecture 5.4b replacement video](https://www.youtube.com/watch?v=hm33VbjQZMY)
-    * LMS Lecture 5.5 - view on LMS
+    * [Lecture 5.4a video](https://www.youtube.com/watch?v=llfHYO_MujY)
+    * [Lecture 5.4b video](https://www.youtube.com/watch?v=hm33VbjQZMY)
+    * Lecture 5.5 - view on LMS
 7. LMS Mod 6 - [Scatterplots](./06_scatterplots.Rmd)
 8. LMS Mod 7 - [Getting Data: Web Sources](./07_webscraping_updated.Rmd)
   * Async Video Locations (listed by section #):
-    * LMS Lectures 7.1-7.3 - view on LMS
-    * [LMS Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
-    * LMS Lectures 7.5 - view on LMS
+    * Lectures 7.1-7.3 - view on LMS
+    * [Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
+    * Lecture 7.5 - view on LMS
+9. LMS Mod 8 (part 1) - [Analyzing Data: Classification](./08_classification.Rmd) -- Note, we are stretching this out over two weeks! 
+  * Async Video Locations (listed by section #):
+    * Lecture 8.1 - view on LMS
+    * [Lecture 8.2 video](https://www.youtube.com/watch?v=IIEvyvsVO7Q)
+    * Lecture 8.4 - view on LMS
+    * [Lecture 8.5 video](https://www.youtube.com/watch?v=KbmEJkslBeE)
+10. LMS Mod 8 (part 2) - [Analyzing Data: Classification](./08_classification.Rmd)
+    * Video forthcoming
 
 ### Datasets (for async & sync sessions - we may not use all of these)
 * [Area dataset - ACS 2019](./area_data.Rds)
