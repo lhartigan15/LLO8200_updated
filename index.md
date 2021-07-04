@@ -88,7 +88,7 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 #### Final Project Examples
 Note: these are strong examples; but that doesn't mean they are perfect. Be sure that you use the supplied rubrics to ensure you're meeting all expectations. 
 * [Presentation - Bike Share in the Bay Area](./Booker_Kumbhari_Rasnick_Stonesifer_LLO 8200 Data Science_ BikeShare.pdf)
-* [Presentation - Modeling Parenting Participation in School Events](https://docs.google.com/presentation/d/1sgmQ52i69Vwmb1mfGb9L7vwsygUfuCwn6k0ZyeJiRcA/edit#slide=id.g8f4bd20341_0_1)
+* [Presentation - Modeling Parent Participation in School Events](https://docs.google.com/presentation/d/1sgmQ52i69Vwmb1mfGb9L7vwsygUfuCwn6k0ZyeJiRcA/edit#slide=id.g8f4bd20341_0_1)
 * [Presentation - A Tale of Two Cities: Examining Crime and Arrest Rates in the Community Areas of Chicago](./LLO8200_Final Presentation_Bhowmick, Edonick, Emuron, Kabbaz.pptx)
 * [Knit report - What Predicts Family Spending on Groceries?](https://raw.githack.com/wdoyle42/ll0_8200_summer_21/main/example_report.html)
 * [Knit report - How Might Race Influence Employee Experience?](file:///C:/Users/lacey/Google%20Drive/Teaching/Vanderbilt/LLO%208200%20-%20Data%20Science/Final%20Projects/Archived/Fall%202020/Wilen/Angie_Wilen_Wilen_FinalProject_Final.html)
