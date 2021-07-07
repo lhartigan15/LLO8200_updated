@@ -112,7 +112,7 @@ There are a multitude of resources re. RStudio and RMarkdown on the web. Here is
 * [R Color Palette Cheat Sheet](./colorPaletteCheatsheet.pdf)
 * [GGplot Cheat Sheet](./ggplot2-cheatsheet.pdf)
 
-Additional coding practice
+Additional Practice
 * [Census data with R (advanced course)](https://www.census.gov/data/academy/courses/ranking-project.html)
 * [Mapping census data with R using choroplethr (intermediate course)](https://www.census.gov/data/academy/courses/choroplethr.html)
 * [Squirrel census - mapping exercise](https://annielyu.com/2019/10/29/fun-leaflet-in-r-with-nyc-squirrel-census-data/)
