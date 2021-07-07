@@ -112,5 +112,19 @@ There are a multitude of resources re. RStudio and RMarkdown on the web. Here is
 * [R Color Palette Cheat Sheet](./colorPaletteCheatsheet.pdf)
 * [GGplot Cheat Sheet](./ggplot2-cheatsheet.pdf)
 
+Additional coding practice
+* [Census data with R (advanced course)](https://www.census.gov/data/academy/courses/ranking-project.html)
+* [Mapping census data with R using choroplethr (intermediate course)](https://www.census.gov/data/academy/courses/choroplethr.html)
+* [Squirrel census - mapping exercise](https://annielyu.com/2019/10/29/fun-leaflet-in-r-with-nyc-squirrel-census-data/)
+* [ggplot2](https://rpubs.com/williamsurles/295930)
+* [ggplot2](http://euclid.psych.yorku.ca/www/psy6135/tutorials/gapminder.html)
+* [Linear regression](https://www.machinelearningplus.com/machine-learning/complete-introduction-linear-regression-r/)
+* [Logistic regression/classification](https://towardsdatascience.com/modelling-binary-logistic-regression-using-tidymodels-library-in-r-part-1-c1bdce0ac055)
+* [Logistic regression/classification](https://ntaback.github.io/UofT_STA130/week8/Week8PracticeProblems-solutions1.html)
+* [Logistic regression/classification](https://rpubs.com/AIventurer/datacamp_R_ML_TB_Ch2)
+* [K-fold cross validation](https://drsimonj.svbtle.com/k-fold-cross-validation-with-modelr-and-broom)
+* [Random partititioning/Monte Carlo approach to cross validation](https://ijlyttle.github.io/model_cv_selection.html)
+* ["For" loops](https://www.datamentor.io/r-programming/for-loop/)
+
 #### Known Corrections to Async Questions
 * Week 1 - UNC Chapel Hill admit rate = 0.34
