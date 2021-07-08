@@ -7,7 +7,7 @@ While there are files on the "Files" section of the LMS, you should use the file
 If you want to set up email alerts for updates/additions to this site, you can use the free version of a third-party program: [Distill](https://distill.io/). The free version will check for updates every 6 hours and send you alerts. Note: this is a platform that is not owned by Vanderbilt or me and you should review their data privacy and security to ensure you are comfortable with their practices.
 
 ### Async/Sync RStudio (.Rmd) Files
-These are the RStudio files and datasets that you will use in tandem with the async videos each week, listed by class week and LMS Module number. The first file below (Week 0) is a general setup file that provides a good structure for setting up your .Rmd files.
+These are the RStudio files and datasets that you will use in tandem with the async videos each week, listed by class week and LMS Module number. The first file below (LMS Mod 0) is a general setup file that provides a good structure for setting up your .Rmd files. Note that, if no other video links are provided, you should watch the associated async videos on the LMS. 
 0. LMS Mod 0 - [.Rmd File Setup](./00_setup.Rmd)
 1. LMS Mod 1 - [Introduction Rmd File](./01_Intro.Rmd) 
 2. LMS Mod 2 - [Conditional Means Rmd File](./02_Conditional Means.Rmd) 
@@ -41,7 +41,9 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * Lecture 8.4 - view on LMS
     * [Lecture 8.5 video](https://www.youtube.com/watch?v=KbmEJkslBeE)
 10. LMS Mod 8 (part 2) - [Analyzing Data: Classification](./08_classification.Rmd)
-    * Video forthcoming
+    * [Lecture 8.6 video](https://www.youtube.com/watch?v=IhCJOZJv_O8&feature=youtu.be)
+11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification](./09_plots_classification.Rmd)
+
 
 ### Datasets (for async & sync sessions - we may not use all of these)
 * [Area dataset - ACS 2019](./area_data.Rds)
