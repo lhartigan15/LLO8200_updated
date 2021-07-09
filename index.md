@@ -40,7 +40,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * [Lecture 8.2 video](https://www.youtube.com/watch?v=IIEvyvsVO7Q)
     * Lecture 8.4 - view on LMS
     * [Lecture 8.5 video](https://www.youtube.com/watch?v=KbmEJkslBeE)
-10. LMS Mod 8 (part 2) - [Analyzing Data: Classification](./08_classification.Rmd)
+10. LMS Mod 8 (part 2) - [Analyzing Data: Classification - updated](./08_classification_inclass.Rmd)
     * [Lecture 8.6 video](https://www.youtube.com/watch?v=IhCJOZJv_O8&feature=youtu.be)
 11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification](./09_plots_classification.Rmd)
 
