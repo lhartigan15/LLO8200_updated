@@ -89,7 +89,8 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 | [Assignment 2 PDF](./02_Assignment_starter.pdf), [starter .Rmd](./02_Assignment_starter.Rmd) | 6/8/21 |
 | [Assignment 3 PDF](./03_Assignment.pdf) | 6/22/21 |
 | [Assignment 4 PDF](./Assignment-4---Regression.pdf) | 7/6/21 |
-| [Assignment 5 PDF](./Assignment-5---Classification.pdf) | 7/20/21 |
+| [Assignment 5 PDF](./Assignment-5---Classification.pdf) | 7/27/21 |
+| [Assignment 6 PDF (forthcoming, optional assignment)] | 8/3/21 |
 
 ### Final Project Materials
 * [Final Project Expectations and Rubrics](./Final Project - Expectations and Rubrics.pdf)
