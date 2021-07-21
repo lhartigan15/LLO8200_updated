@@ -43,7 +43,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
 10. LMS Mod 8 (part 2) - [Analyzing Data: Classification - updated](./08_classification_inclass.Rmd)
     * [Lecture 8.6 video](https://www.youtube.com/watch?v=IhCJOZJv_O8&feature=youtu.be)
 11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification](./09_plots_classification.Rmd)
-
+12. LMS Mod 10 - [Cross-Validation - new videos and .Rmd file forthcoming; to be posted Friday, 7/23]
 
 ### Datasets (for async & sync sessions - we may not use all of these)
 * [Area dataset - ACS 2019](./area_data.Rds)
