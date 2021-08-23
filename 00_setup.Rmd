@@ -1,25 +1,51 @@
-```{r}
-#REMOVE This chunk and ensure that the line with the three dashes from below --- is on line 1 of this .rmd file
-```
 ---
-title: "Setting up .Rmd files"
+title: "Setting up .Rmd files, Reading in Data, and Plotting"
 author: "Lacey Hartigan"
-date: "5/9/21"
+date: "08/23/21"
 output:
   pdf_document: default
   html_document: default
 ---
 
-Note: If I want to knit to html instead of pdf, I move line 7 in the header above to line 6. Whichever one is first, that's the format .Rmd will knit to. 
+Note: If I want to knit to html instead of pdf, I move line 7 in the header above to line 6. Whichever one is first, that's the format .Rmd will knit to. I can also always use the dropdown Knit menu to knit. 
 
-```{r  include=FALSE}
+```{r include=FALSE}
+## Clear environment - this will remove everything from your environment (I tend to do this when I start a new project/analysis)
+rm(list=ls())
+
 knitr::opts_chunk$set(echo = TRUE)
+```
 
-#I tend to load all the libraries I will need for the whole .Rmd file first. Also, remember that whatever you load last will override the others IF there are overlapping commands. So, I tend to load tidyverse last. If you're getting weird issues - you can try loading packages in a different order
+```{r load libraries}
+#I tend to load all the libraries I will need for the whole .Rmd file first. Also, remember that whatever you load last will override the others IF there are overlapping commands. So, I typically load tidyverse last. If you're getting weird issues - you can try loading packages in a different order
 library(forcats)
 library(knitr)
 library(tidyverse)
 ```
 
 Here's some great info on dealing with conflicting packages (and how to figure out if you have conflicts). [Dealing with Package Conflicts](https://www.tidyverse.org/blog/2018/06/conflicted/)
+
+```{r load_data}
+## Load in the data - IF the datafile is saved in the same place as my .Rmd file, this works
+load("college.Rdata")
+
+#I want to rename the dataset as collegesc
+collegesc<-as.data.frame(sc)
+
+# IF the data is saved elsewhere, I need to tell R where it is:
+#setwd("C:/Users/lacey/Google Drive/Teaching/Vanderbilt/LLO 8200 - Data Science/Async .Rmd files")
+
+#I can run the function getwd() to confirm that it's what I want it to be
+#getwd()
+
+#you can also use drop downs under the FILES tab to the right OR you can use the "Session" tab at the top
+```
+
+Let's plot a univariate graphic for one of the variables in our dataset. I'm interested in the distribution of admission rates across the 125 colleges in our dataset. We're going to use ggplot this term A LOT. Let's start now. 
+```{r}
+admplot <- ggplot(collegesc, aes(x=adm_rate)) +  
+    geom_density(color="black", fill="gold")
+
+admplot
+```
 
