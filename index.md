@@ -85,7 +85,7 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
-| [Assignment 1 PDF](./01_Assignment_starter.pdf) | 09/08/21 |
+| [Assignment 1 PDF](./01_Assignment_starter.pdf), [Assignment 1 Starter .Rmd](./01_Assignment_starter.Rmd) | 09/08/21 |
 | [Assignment 2 PDF placeholder] | 09/22/21 |
 | [Assignment 3 PDF placeholder] | 10/06/21 |
 | [Assignment 4 PDF placeholder] | 10/20/21 |
