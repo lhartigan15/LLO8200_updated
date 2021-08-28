@@ -3,8 +3,8 @@ REMOVE ME
 ```
 ---
 title: "Problem Set 1"
-author: "Lacey Hartigan"
-date: "due 5/25/21"
+author: "YOUR NAME HERE"
+date: "due 9/8/21"
 output: pdf_document
 ---
 
@@ -15,7 +15,7 @@ For this assignment, you'll be working with the College Scorecard (debt) dataset
 2. Save your .Rmd file as LastName_FirstName.Rmd (do this before you knit).    
 3. You need to submit your .Rmd code file AND a knit file (upload both simultaneously to the course webpage; you can't upload them one-by-one). You will only receive full credit if you upload both files.    
 4. Below I have set up the file for you with the library you'll need and I have included code to read in the dataset (note, I won't do this every time).    
-5. I expect that the .Rmd file you submit will run cleanly, and that the knit file won't contain any errors (LOOK at the knit file after you create it - if questions are running into each other, if you see error messages, etc., you're not done).      
+5. I expect that the .Rmd file you submit will run cleanly, and that the knit file won't contain any errors (LOOK at the knit file after you create it - if questions/text are running into each other, if you see error messages, etc., you're not done).      
 6. You can use comments to tell me what you are doing either in text or in code chunks, but remove "old" code that didn't run/work.      
 
 
@@ -26,6 +26,7 @@ library(yardstick)
 library(tidyverse)
 ```
 
+Load the data here (I provide the code this time, but I won't always).
 ```{r}
 collegedebt<-readRDS("sc_debt.Rdata")
 ```
