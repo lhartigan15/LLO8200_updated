@@ -8,7 +8,7 @@ If you want to set up email alerts for updates/additions to this site, you can u
 
 ### Async/Sync RStudio (.Rmd) Files
 These are the RStudio files and datasets that you will use in tandem with the async videos each week, listed by class week and LMS Module number. The first file below (LMS Mod 0) is a general setup file that provides a good structure for setting up your .Rmd files. Note that, if no other video links are provided, you should watch the associated async videos on the LMS. 
-0. LMS Mod 0 - [.Rmd File Setup](./00_setup.Rmd)
+0. LMS Mod 0 - [.Rmd File Setup](./00_setup.Rmd), [R Setup Slide Deck](./Intro to R_final.pptx)
 1. LMS Mod 1 - [Introduction Rmd File](./01_Intro.Rmd) 
 2. LMS Mod 2 - [Conditional Means Rmd File](./02_Conditional Means.Rmd) 
   * Async Video Locations (listed by section #):
