@@ -68,11 +68,11 @@ These are the RStudio files and datasets that you will use in tandem with the as
 
 ### Synchronous (.Rmd) Files
 These files will only be uploaded when there are substantive code changes/additions to the async .Rmd files.
-* Week 2 - [Conditional Means in-class .Rmd File - added Ntiles code](./02_Conditional Means_inclass.Rmd)
-* Week 3 - [Descriptive Plots in-class .Rmd File](./03_DescriptivePlots_inclass.Rmd)
-* Week 6 - [Regression part 1 in-class .Rmd File](./05_regression_updated_inclass.Rmd)
-* Week 7 - [Regression - Specifying/Changing the Reference Group for Dummy Variables .Rmd File](./05_regression_part2_referencegroup.Rmd)
-* Week 8 - [Twitter API .Rmd File](./07_twitterAPI.Rmd); [Webscraping in-class .Rmd File](./07_webscraping_inclass.Rmd)
+* LMS Mod 2 - [Conditional Means in-class .Rmd File - added Ntiles code](./02_Conditional Means_inclass.Rmd)
+* LMS Mod 3 - [Descriptive Plots in-class .Rmd File](./03_DescriptivePlots_inclass.Rmd)
+* LMS Mod 5 (part 1) - [Regression part 1 in-class .Rmd File](./05_regression_updated_inclass.Rmd)
+* LMS Mod 5 (part 2) - [Regression - Specifying/Changing the Reference Group for Dummy Variables .Rmd File](./05_regression_part2_referencegroup.Rmd)
+* LMS Mod 7 - [Twitter API .Rmd File](./07_twitterAPI.Rmd); [Webscraping in-class .Rmd File](./07_webscraping_inclass.Rmd)
 
 ### Assignments
 Each assignment (problem set) should be uploaded to the LMS _before_ we meet for live session on the given due date. All assignment submissions must include two files to receive credit:
