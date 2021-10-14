@@ -1,0 +1,44 @@
+---
+title: "Assignment 4 - LMS Module 7"
+author: "YOUR NAME HERE"
+date: "due 10/27/2020"
+output: pdf_document
+---
+
+1. Download data for all of the counties in Tennessee (TN) on highest education received.
+```{r}
+
+```
+
+2. Compute the proportion of the population that has an associate’s degree or above in each TN county. Print the first several rows of your new dataset (hint: use the head() function). Do NOT print the whole dataset, please.
+```{r}
+
+```
+
+3. Download data for all of the counties in TN on household income.
+```{r}
+
+```
+
+
+4. Compute the proportion of the population that has a household income above $50,000 in each TN county. Print the first several rows of your new dataset (hint: use the head() function). Do NOT print the whole dataset, please.
+```{r}
+
+```
+
+
+5. Create a scatterplot of the proportion of the population that has at least an associate's degree (x-axis) and  the proportion of the population with an income over $50,000 (y-axis).
+```{r}
+
+```
+
+ 
+6. Create a map of the data you calculated in either problem 2 or 4 (education or income) (or create maps for both if you really want to flex those coding muscles!). 
+```{r}
+
+```
+Provide a few sentences describing some interesting or unexpected findings you see from your map(s). 
+
+
+
+
