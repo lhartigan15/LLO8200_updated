@@ -88,7 +88,7 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 | [Assignment 1 PDF](./01_Assignment_starter.pdf), [Assignment 1 Starter .Rmd](./01_Assignment_starter.Rmd) | 09/08/21 |
 | [Assignment 2 PDF](./02_Assignment.pdf), [Assignment 2 Starter .Rmd](./02_Assignment_starter.Rmd) | 09/22/21 |
 | [Assignment 3 PDF](./Assignment-3---Regression.pdf), [Assignment 3 Starter .Rmd](./Assignment 3 - Regression_starter.Rmd) | 10/13/21 |
-| [Assignment 4 PDF placeholder] | 10/27/21 |
+| [Assignment 4 PDF](./Assignment_4_LMSmod7_webscraping.pdf), [Assignment 4 Starter .Rmd](./Assignment_4_LMSmod7_webscraping.Rmd) | 10/27/21 |
 | [Assignment 5 PDF placeholder] | 11/10/21 |
 | [Assignment 6 PDF placeholder] | 12/1/21 |
 | [Assignment 7 PDF placeholder] | 12/15/21 |
