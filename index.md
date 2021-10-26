@@ -63,8 +63,6 @@ These are the RStudio files and datasets that you will use in tandem with the as
 * [SF complete dataset](./sf_complete.RData)
 * [SFO dataset](./sfo.RData)
 * [Za full dataset](./za.RData)
-* [Za testing dataset](./za_test.RData)
-* [Za training dataset](./za_train.RData)
 
 ### Synchronous (.Rmd) Files
 These files will only be uploaded when there are substantive code changes/additions to the async .Rmd files.
