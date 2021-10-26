@@ -34,10 +34,10 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * Lectures 7.1-7.3 - view on LMS
     * [Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
     * Lecture 7.5 - view on LMS
-9. LMS Mod 8 (part 1) - [Analyzing Data: Classification](./08_classification.Rmd) -- Note, we are stretching this out over two weeks! 
+9. LMS Mod 8 (part 1) - [Analyzing Data: Classification](./08_classification_inclass.Rmd) -- Note, we are stretching this out over two weeks! This first week will cover up to line 252 in this attached/updated code.
   * Async Video Locations (listed by section #):
     * Lecture 8.1 - view on LMS
-    * [Lecture 8.2 video](https://www.youtube.com/watch?v=IIEvyvsVO7Q)
+    * [Lecture 8.2 & 8.3 video](https://www.youtube.com/watch?v=IIEvyvsVO7Q)
     * Lecture 8.4 - view on LMS
     * [Lecture 8.5 video](https://www.youtube.com/watch?v=KbmEJkslBeE)
 10. LMS Mod 8 (part 2) - [Analyzing Data: Classification - updated](./08_classification_inclass.Rmd)
