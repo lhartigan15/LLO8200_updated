@@ -280,7 +280,7 @@ The area under the curve considers both the sensitivity (does the model accurate
 logit_results%>%
   predict(za_test, type="prob")%>%
   bind_cols(za_test)%>%
-  roc_auc(truth=got_pizza_f, .estimate=.pred_1, event_level="second")
+  roc_auc(truth=got_pizza_f, .estimate=.pred_Yes, event_level="second")
 #ROC - receiver operating characteristic
 ```
 
