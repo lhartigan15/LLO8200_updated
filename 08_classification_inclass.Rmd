@@ -263,7 +263,7 @@ th<-logit_results%>%
   predict(za_test, type="prob")%>%
   bind_cols(za_test)%>%
    threshold_perf(truth=got_pizza_f,
-                 estimate=.pred_1,
+                 estimate=.pred_Yes,
                  thresholds=seq(0, 1, by=.1), metrics=c("sens","spec"))
 
 ggplot(filter(th, .metric%in%c("sens", "spec")),
