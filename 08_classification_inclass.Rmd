@@ -288,7 +288,7 @@ logit_results%>%
 logit_results%>%
   predict(za_test,type="prob")%>%
   bind_cols(za_test)%>%
-  roc_curve(truth=got_pizza_f, .estimate=.pred_1, event_level="second")%>%
+  roc_curve(truth=got_pizza_f, .estimate=.pred_Yes, event_level="second")%>%
   autoplot()
 ```
 [Here's a nice visual to aid in interpreting these plots:](https://en.wikipedia.org/wiki/Receiver_operating_characteristic#/media/File:Roc-draft-xkcd-style.svg)
@@ -325,7 +325,7 @@ plot_data<-logit_results%>%
   rename(`Post Includes "Student"`=student)
 
 plot_data%>%
-ggplot(aes(x=raop_posts, y=.pred_1, color=`Post Includes "Student"`))+
+ggplot(aes(x=raop_posts, y=.pred_Yes, color=`Post Includes "Student"`))+
   geom_line()+
   xlab("Number of Posts on RAOP")+
   ylab("Prob(Pizza)")
