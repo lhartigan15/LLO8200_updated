@@ -47,8 +47,9 @@ load("za.Rdata")
 | score | Sentiment score, more positive words+, more negative words - |
 
 ```{r}
-#my dataset didn't have the got_pizza_f variable; so I added it
-za$got_pizza_f<-as.factor(za$got_pizza)
+#Let's examine our dataset summary
+summary(za)
+#take note of the missing data - if data is missing on key variables, we may want to omit this data from our descriptive statistics plots/tables
 ```
 
 
@@ -61,6 +62,15 @@ za%>%
   count(got_pizza)%>% # Count numbers getting pizza
   mutate(p=prop.table(n))%>% #mutate for proportions using prop.table
   kable(format="markdown") # output to table
+
+#Note - here's a place where I don't want NAs included. I want my proportions to be calculated from my VALID N (the non-missing data), so I'm going to filter out missing and then re-run my table:
+za%>%
+  filter(!is.na(got_pizza))%>%
+  count(got_pizza)%>% # Count numbers getting pizza
+  mutate(p=prop.table(n))%>% #mutate for proportions using prop.table
+  kable(format="markdown") # output to table
+
+#because there isn't very much missingness on my got_pizza var (only 3 missing values), my proportions don't change all that much - but these are more accurate. I'm going to filter out missing for all future plots
 ```
 
 So, about 75% of the sample didn't get pizza, about 25% did. 
@@ -69,6 +79,7 @@ Next, we cross-tabulate receiving pizza with certain terms. First, if the reques
 
 ```{r}
 za%>%
+  filter(!is.na(got_pizza))%>%
   group_by(student, got_pizza)%>%
   summarize(n=n())%>%
   mutate(prop=n/sum(n))%>%
@@ -81,6 +92,7 @@ Next, if the request mentioned the word "grateful."
 
 ```{r}
 za%>%
+  filter(!is.na(got_pizza))%>%
   group_by(grateful, got_pizza)%>%
   summarize(n=n())%>%
   mutate(prop=n/sum(n))%>%
@@ -90,6 +102,7 @@ za%>%
 
 #ad in crosstab with poor
 za%>%
+  filter(!is.na(got_pizza))%>%
   group_by(poor, got_pizza)%>%
   summarize(n=n())%>%
   mutate(prop=n/sum(n))%>%
@@ -102,10 +115,9 @@ Crosstabs using binary data are equivalent to generating conditional means, as s
 
 ```{r conditional_means}
 #Predictions using conditional means
-
 za%>%
   group_by(grateful)%>%
-  summarize(mean(got_pizza, na.rm=-TRUE))
+  summarize(mean(got_pizza, na.rm=T)) #the na.rm removes any missing on our got_pizza var, so I didn't bother filtering it out like I did above when I was calculating the means "by hand"
 ```
 
 We can also use conditional means to get proportions for very particular sets of characteristics. In this case, what about individuals who included some combination of the terms "grateful","student" and "poor" in their posts? 
@@ -113,12 +125,12 @@ We can also use conditional means to get proportions for very particular sets of
 ```{r}
 za%>%
   group_by(grateful, student)%>%
-  mutate(mean_pizza=mean(got_pizza))%>%
+  mutate(mean_pizza=mean(got_pizza, na.rm=T))%>%
   arrange(-mean_pizza)
 
 za_sum<-za%>%
   group_by(grateful, student, poor)%>%
-  mutate(mean_pizza=mean(got_pizza))%>%
+  summarize(mean_pizza=mean(got_pizza, na.rm=T))%>%
   arrange(-mean_pizza)
 
 kable(za_sum)
@@ -139,9 +151,14 @@ Logistic regression is set up to handle binary outcomes as the dependent variabl
 
 We're going to use the "tidymodels" approach to running this model, which works much better for a standard data science workflow. It begins with splitting the data into testing and training datasets using the `initial_split` function.  
 
-
 ```{r}
 # Training and testing datasets
+#before I split these, I'm going to go ahead and drop the 3 observations that are missing on my outcome variable - got pizza; this way I won't chance having all three missing in one of my datasets. While 3 observations really aren't going to throw anything way off - I know they're not going to be included in my analyses, so I'm dropping them. 
+za<-za%>%
+  filter(!is.na(got_pizza))
+
+set.seed(1025)
+
 za_split<-initial_split(za, prop=.5)
 
 za_train<-training(za_split)
@@ -207,8 +224,6 @@ logit_results%>%
   conf_mat(truth=got_pizza_f, estimate=.pred_class)
 ```
 
-The confusion matrix generated here is explained [here](https://topepo.github.io/caret/measuring-performance.html#class). 
-
 We're usually interested in three things: the overall accuracy of a classification is the proportion of cases accurately classified. The sensitivity is the proportion of "ones" that are accurately classified as ones-- it's the probability that a case classified as positive will indeed be positive. Specificity is the probability that a case classified as 0 will indeed be 0. 
 
 
@@ -249,10 +264,10 @@ th<-logit_results%>%
   bind_cols(za_test)%>%
    threshold_perf(truth=got_pizza_f,
                  estimate=.pred_1,
-                 thresholds=seq(0,1,by=.1),metrics=c("sens","spec"))
+                 thresholds=seq(0, 1, by=.1), metrics=c("sens","spec"))
 
-ggplot(filter(th,.metric%in%c("sens","spec")),
-       aes(x=.threshold,y=.estimate,color=.metric))+
+ggplot(filter(th, .metric%in%c("sens", "spec")),
+       aes(x=.threshold, y=.estimate, color=.metric))+
   geom_line()
 ```
 
@@ -263,18 +278,21 @@ The area under the curve considers both the sensitivity (does the model accurate
 
 ```{r}
 logit_results%>%
-  predict(za_test,type="prob")%>%
+  predict(za_test, type="prob")%>%
   bind_cols(za_test)%>%
-  roc_auc(truth=got_pizza_f,.estimate=.pred_1, event_level="second")
+  roc_auc(truth=got_pizza_f, .estimate=.pred_1, event_level="second")
+#ROC - receiver operating characteristic
 ```
 
 ```{r}
 logit_results%>%
   predict(za_test,type="prob")%>%
   bind_cols(za_test)%>%
-  roc_curve(truth=got_pizza_f,.estimate=.pred_1,event_level="second")%>%
+  roc_curve(truth=got_pizza_f, .estimate=.pred_1, event_level="second")%>%
   autoplot()
 ```
+[Here's a nice visual to aid in interpreting these plots:](https://en.wikipedia.org/wiki/Receiver_operating_characteristic#/media/File:Roc-draft-xkcd-style.svg)
+
 
 ## Use "last fit" to get same results.
 ```{r}
@@ -282,21 +300,23 @@ logit_final<-last_fit(logit_wf, za_split)
 
 logit_final$.metrics
 ```
+On a scale of 1 to 100, our model is scoring about a 60 (not all that good). 
 
-# Plotting results from logisitc regression
+
+# Plotting results from logistic regression
 
 Because individual coefficients are so hard to understand, most of the time we convert the results to predicted probabilities, using a range of hypothetical values, as in the code below. 
 ```{r}
 hypo_data<-za_train%>%
   data_grid(
-    age=mean(age,na.rm=TRUE),
-    karma=as.integer(mean(karma,na.rm=TRUE)),
-    total_posts=as.integer(mean(total_posts,na.rm=TRUE)),
+    age=mean(age, na.rm=TRUE),
+    karma=as.integer(mean(karma, na.rm=TRUE)),
+    total_posts=as.integer(mean(total_posts, na.rm=TRUE)),
     raop_posts=as.integer(seq_range(raop_posts, n=100)),
     student=as_factor(levels(student)),
     grateful=as_factor(levels(grateful)[1]),
-    pop_request=as.integer(mean(pop_request,na.rm=TRUE)),
-    score=mean(score,na.rm=TRUE)
+    pop_request=as.integer(mean(pop_request, na.rm=TRUE)),
+    score=mean(score, na.rm=TRUE)
 )
 
 plot_data<-logit_results%>%
@@ -310,3 +330,10 @@ ggplot(aes(x=raop_posts, y=.pred_1, color=`Post Includes "Student"`))+
   xlab("Number of Posts on RAOP")+
   ylab("Prob(Pizza)")
 ```
+
+
+
+
+
+
+
