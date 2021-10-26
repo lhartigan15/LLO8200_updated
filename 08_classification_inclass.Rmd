@@ -254,6 +254,8 @@ logit_results%>%
 *Question: how do you get perfect specificity? How do you get perfect sensitivity?*
 
 
+***END OF WEEK 1 CODE***
+
 ## Thresholds
 
 As we vary the threshold from 0 to 1, the sensitivity will decrease, while the specificity will increase. The best models will be able to have both high sensitivity and specificity at an threshold. The code below shows what happens to sensitivity and specificity as thresholds go from 0 to 1. 
