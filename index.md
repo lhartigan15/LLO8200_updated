@@ -43,7 +43,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
 10. LMS Mod 8 (part 2) - same code file as part 1 (this week's content begins on line 259)
     * [Lecture 8.6 video](https://www.youtube.com/watch?v=IhCJOZJv_O8&feature=youtu.be)
     * Some additional resources for logistic regression: 
-    * This is a great/succinct explanation of the process and understanding each piece: (https://medium.com/analytics-vidhya/a-guide-to-machine-learning-in-r-for-beginners-part-5-4c00f2366b90) - while some of the code they use here is different than what we use, the overall principles/explanations are the same
+    * You can find a great/succinct explanation of the process and understanding each piece [HERE.](https://medium.com/analytics-vidhya/a-guide-to-machine-learning-in-r-for-beginners-part-5-4c00f2366b90) While some of the code they use here is different than what we use, the overall principles/explanations are the same.
     * Here is a nice clear powerpoint detailing interpretations for odds ratios/output for logistic regression: [logistic regression PPT](./LogisticRegression_11-17-20.pptx)
 11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification](./09_plots_classification.Rmd)
 12. LMS Mod 10 - [Cross-Validation - new videos and .Rmd file forthcoming; to be posted Friday, 7/23]
