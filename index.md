@@ -48,7 +48,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
 11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification](./09_plots_classification.Rmd)
 12. LMS Mod 10 - [Cross-Validation - new videos and .Rmd file forthcoming; to be posted Friday, 7/23]
 
-### Datasets (for async & sync sessions - we may not use all of these)
+### Datasets for the Semester (we may not use all of these)
 * [Area dataset - ACS 2019](./area_data.Rds)
 * [Attrition dataset](./attrition.Rdata)
 * [College "sc" dataset](./college.Rdata)
@@ -61,6 +61,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
 * [FRL dataset](./frl.Rdata)
 * [HSB csv dataset](./hsbdata.csv)
 * [Income variables (if needed)](./income_vars.Rdata)
+* [Lemons (car = bad buy) dataset](./lemondata.csv)
 * [PD dataset](./pd.Rdata)
 * [SF cluster dataset](./sf_cluster.RData)
 * [SF complete dataset](./sf_complete.RData)
