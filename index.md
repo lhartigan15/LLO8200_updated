@@ -46,7 +46,15 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * You can find a great/succinct explanation of the process and understanding each piece [HERE.](https://medium.com/analytics-vidhya/a-guide-to-machine-learning-in-r-for-beginners-part-5-4c00f2366b90) While some of the code they use here is different than what we use, the overall principles/explanations are the same.
     * Here is a nice clear powerpoint detailing interpretations for odds ratios/output for logistic regression: [logistic regression PPT](./LogisticRegression_11-17-20.pptx)
 11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification](./09_plots_classification.Rmd)
-12. LMS Mod 10 - [Cross-Validation - new videos and .Rmd file forthcoming; to be posted Friday, 7/23]
+12. LMS Mod 10 - [Cross-Validation](./10m_cross_validation_updated.Rmd)
+    * Lecture 10.1 - view on LMS
+    * [Lecture 10.2.1 video](https://youtu.be/Q78A2M226z4)
+    * [Lecture 10.2.2 video](https://youtu.be/i1wi9DhC9Jc)
+    * [Lecture 10.3 video](https://youtu.be/pdikKDWiLY8)
+    * [Lecture 10.4 video](https://www.youtube.com/watch?v=hfZ_Jcz99mk)
+    * [Lecture 10.5 video](https://www.youtube.com/watch?v=B1JpLvCXhUQ)
+    * Lecture 10.6 - view on LMS
+
 
 ### Datasets for the Semester (we may not use all of these)
 * [Area dataset - ACS 2019](./area_data.Rds)
