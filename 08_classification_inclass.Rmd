@@ -71,6 +71,9 @@ za%>%
   kable(format="markdown") # output to table
 
 #because there isn't very much missingness on my got_pizza var (only 3 missing values), my proportions don't change all that much - but these are more accurate. I'm going to filter out missing for all future plots
+
+exampledata<-za%>%
+  filter(!is.na(got_pizza))
 ```
 
 So, about 75% of the sample didn't get pizza, about 25% did. 
@@ -167,7 +170,7 @@ za_test<-testing(za_split)
 ```
 
 Next we set up the terms of the model.
-```{r linear_model}
+```{r model formula}
 # Model terms
 za_formula<-as.formula("got_pizza_f ~
              age + 
@@ -285,6 +288,7 @@ logit_results%>%
   roc_auc(truth=got_pizza_f, .estimate=.pred_Yes, event_level="second")
 #ROC - receiver operating characteristic
 ```
+We got an ROC of .591. Our goal would be at least .7; so our model clearly isn't doing a great job of balancing sens/spec (which we already knew). 
 
 ```{r}
 logit_results%>%
@@ -334,6 +338,24 @@ ggplot(aes(x=raop_posts, y=.pred_Yes, color=`Post Includes "Student"`))+
 ```
 
 
+# What if I want to modify my threshold to attempt to get a more balanced sensitivity and specificity? 
+```{r}
+#first - I want to change my predicted class values
+predictions<-as.data.frame(logit_final$.predictions) #save predictions as dataset
+
+predictions$.pred_class2=ifelse(predictions$.pred_Yes>.24,"Yes","No") #modify threshold to .24
+
+table(za_test$got_pizza_f, predictions$.pred_class2) #examine new confusion matrix
+
+#accuracy
+(1408+317)/2835 #our accuracy went down -- how come? 
+
+#sensitivity
+1408/(1408+715)
+
+#specificity
+317/(388+317)
+```
 
 
 
