@@ -52,7 +52,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * [Lecture 10.2.2 video](https://youtu.be/i1wi9DhC9Jc)
     * [Lecture 10.3 video](https://youtu.be/pdikKDWiLY8)
     * [Lecture 10.4 video](https://www.youtube.com/watch?v=hfZ_Jcz99mk)
-    * [Lecture 10.5 video](https://www.youtube.com/watch?v=B1JpLvCXhUQ)
+    * [Lecture 10.5 video](https://www.youtube.com/watch?v=B1JpLvCXhUQ) *Note: This video is OPTIONAL. It's interesting, but somewhat complicated. 
     * Lecture 10.6 - view on LMS
 
 
