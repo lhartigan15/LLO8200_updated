@@ -100,7 +100,7 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 | [Assignment 3 PDF](./Assignment-3---Regression.pdf), [Assignment 3 Starter .Rmd](./Assignment 3 - Regression_starter.Rmd) | 10/13/21 |
 | [Assignment 4 PDF](./Assignment_4_LMSmod7_webscraping.pdf), [Assignment 4 Starter .Rmd](./Assignment_4_LMSmod7_webscraping.Rmd) | 10/27/21 |
 | [Assignment 5 PDF](./Assignment-5---Classification.pdf), [Assignment 5 Starter .Rmd](./Assignment 5 - Classification.Rmd) | 11/10/21 |
-| [Assignment 6 PDF placeholder] | 12/1/21 |
+| [Assignment 6 PDF](./Assignment-6---Classification-plots-and-cross-validation.pdf), [Assignment 6 Starter .Rmd](./Assignment 6 - Classification plots and cross-validation.Rmd) | 12/1/21 |
 | [Assignment 7 PDF placeholder - WILL BE OPTIONAL] | 12/15/21 |
 
 ### Final Project Materials
