@@ -108,6 +108,7 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 * [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 10/6/21
 * [Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 10/27/21
 * [Progress Report 3 Instructions](./Progress Report 3 - Instructions.pdf) - due 11/10/21
+* [Knit Report Example - Hartigan](./Final-Project---Example.pdf), [Associated .Rmd file](./Final Project - Example.Rmd)
 
 #### Final Project Examples
 Note: these are strong examples; but that doesn't mean they are perfect. Be sure that you use the supplied rubrics to ensure you're meeting all expectations. 
