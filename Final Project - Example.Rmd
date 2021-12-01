@@ -26,22 +26,21 @@ data<-read_dta("M:/334 - TN Together/000 - TN Together 2020-21 Administration/An
 
 # Cigarettes, Nicotine, and Vaping
 
-Nearly one in five deaths in the United States is caused by cigarette smoking, making it the leading cause of preventable death nationally (Centers for Disease Control and Prevention [CDC], 2014). Although the prevalence of smoking has
-decreased over time, the recent emergence of Electronic Nicotine Delivery Systems (ENDS; also often referred to as e-cigarettes) have contributed greatly to rising rates of nicotine consumption. Whereas the long-term consequences of ENDS use are not yet known, research has shown that youth who use ENDS are highly likely to also smoke traditional cigarettes. The health consequences associated with smoking are well established and include lung cancer, cardiovascular and metabolic diseases, and respiratory diseases (Lipari, 2013). 
+Nearly one in five deaths in the United States is caused by cigarette smoking, making it the leading cause of preventable death nationally (Centers for Disease Control and Prevention [CDC], 2014). Although the prevalence of smoking has decreased over time, the recent emergence of Electronic Nicotine Delivery Systems (ENDS; also often referred to as e-cigarettes) have contributed greatly to rising rates of nicotine consumption. Whereas the long-term consequences of ENDS use, specifically, are not yet known, research has shown that youth who use ENDS are also highly likely to smoke traditional cigarettes. The health consequences associated with smoking are well established and include lung cancer, cardiovascular and metabolic diseases, and respiratory diseases (Lipari, 2013). 
 
-Findings from the National Survey on Drug Use and Health (NSDUH) reveal that Tennessee youth report higher past-month use rates of tobacco than the national average (see Figure 1). And, while Tennessee youth reported tobacco use at lower rates in 2016–2017 than in 2011–2012, they still outpaced the national average. 
+Findings from the National Survey on Drug Use and Health (NSDUH, 2018) reveal that Tennessee youth report higher past-month use rates of tobacco than the national average (see Figure 1). And, while Tennessee youth reported tobacco use at lower rates in 2016–2017 than in 2011–2012, they still outpaced the national average. 
 
 ![National Survey on Drug Use and Health (NSDUH)](Userates.JPG)
 
-According to the Tennessee Together Student Survey (TN Together, 2018-2019), a statewide Tennessee survey administered to 8th-, 10th-, and 12th-grade public school youth, nearly one in three students (29.8%) reported vaping or using e-cigarettes in their lifetime—evidence of the growing popularity of ENDS among youth. Nearly 20 percent (19.1%) of students reported using in the past 30 days, more than double the rate of past-month cigarette use. Finally, more than half of current e-cigarette users (52.9%) reported smoking on a regular basis (i.e., six or more days in the past month). 
+According to the Tennessee Together Student Survey (TN Together, 2018-2019), a statewide Tennessee survey administered to 8th-, 10th-, and 12th-grade public school youth, nearly one in three students (29.8%) reported vaping or using e-cigarettes in their lifetime—evidence of the growing popularity of ENDS among youth. Nearly 20 percent (19.1%) of students reported vaping in the past 30 days, more than double the rate of past-month cigarette use. Finally, more than half of current e-cigarette users (52.9%) reported smoking on a regular basis (i.e., six or more days in the past month). 
 
-Understanding youth substance use begins with understanding the risk and protective factors related to such use. These factors include access to substances, perceived risk of substance use, peer use, and social norms regarding use. The TN Together survey revealed that nearly 70 percent of students felt that it was “fairly easy” or “very easy” to obtain tobacco products in their communities, which may contribute to their high use prevalence. Students also reported that social norms regarding e-cigarettes were favorable toward use, with more than 40 percent of youth perceiving that their peers would not disapprove if they smoked e-cigarettes. Further, more than 40 percent (41.7%) of students believed that at least one of their closest friends had vaped or used e-cigarettes in the past 12 months. Importantly, more than one-third of students (34.0%) perceived “no risk” or only “slight risk” associated with e-cigarette use. This low perception of risk and high level of perceived social acceptability may be important contributing factors to the high rates of e-cigarette use in the Tennessee student population (Tennessee Department of Mental Heath and Substance Abuse Services [TDMHSAS], 2019).
+Understanding youth substance use begins with understanding the risk and protective factors related to such use. These factors include access to substances (e.g., Connell et al., 2010), perceived risk of substance use (e.g., Cleveland et al., 2008), peer use (e.g., Zimmerman & Vasquez, 2011), and social norms regarding use (e.g., Wills et al., 1996). The TN Together survey revealed that nearly 70 percent of students felt that it was “fairly easy” or “very easy” to obtain tobacco products in their communities, which may contribute to their high use prevalence. Students also reported that social norms regarding e-cigarettes were favorable toward use, with more than 40 percent of youth perceiving that their peers would not disapprove if they smoked e-cigarettes. Further, more than 40 percent (41.7%) of students believed that at least one of their closest friends had vaped or used e-cigarettes in the past 12 months. Importantly, more than one-third of students (34.0%) perceived “no risk” or only “slight risk” associated with e-cigarette use. This low perception of risk and high level of perceived social acceptability may be important contributing factors to the high rates of e-cigarette use in the Tennessee student population (Tennessee Department of Mental Heath and Substance Abuse Services [TDMHSAS], 2019).
 
 ## Predictors of Use
-While much research has focused on predictors of youth substance use, very little has been done to specifically examine factors related to youth ENDS use. This study seeks to analyze the most recent TN Together Survey data (2020-2021) to identify key predictors of Tennessee youth vaping behaviors. Key predictors examined include: perception of risk, perceived access, and peer approval of ENDS use. In sum, this study seeks to answer the question: Which risk factors predict TN youth past 30-day ENDS use?  
+While much research has focused on predictors of youth substance use, very little has been done to specifically examine factors related to youth ENDS use. This study seeks to analyze the most recent TN Together Survey data (2020-2021) to identify key predictors of Tennessee youth vaping behaviors. Key predictors examined include: perception of risk, perceived access, and peer approval of ENDS use. In sum, this study seeks to answer the question: Which risk factors predict Tennessee youth's past 30-day ENDS use?  
 
 ## The Data
-The 2020-2021 TN Together Student Survey data includes data from over 17,000 Tennessee 8th-, 10th-, and 12th-grade students from 34 counties across the state of Tennessee. This anonymous student survey includes measures related to substance use as well as potential risk and protective factors. 
+The 2020-2021 TN Together Student Survey data includes data from over 17,000 8th-, 10th-, and 12th-grade students from 34 counties across the state of Tennessee. This anonymous student survey includes measures related to substance use as well as potential risk and protective factors. 
 
 # TN Students' ENDS Use
 The figure below displays the distribution of students' self-reported past-30-day ENDS use. Note that this ENDS use includes vaping nicotine, marijuana, and/or flavoring only (i.e., any vaping behaviors). 
@@ -82,7 +81,7 @@ plotdv<- ggplot(ENDSdv, aes(x=endsuse, y=count, fill=endsuse)) +
   ggtitle("Past-30-Day ENDS Use")
 plotdv
 ```
-While most students reported no past-30-day use, approximately 18 percent of students surveys reported ENDS use in the past 30 days. This equates to almost one-in-five TN youth reporting current vaping behaviors.  
+While most students reported no past-30-day use, approximately 18 percent of students surveys reported ENDS use in the past 30 days. This equates to nearly one-in-five TN youth reporting current vaping behaviors.  
 
 ## Examining Potential Predictors of ENDS Use
 
@@ -156,9 +155,6 @@ GenderENDS<-left_join(Gender, GenderEND)%>%
     mutate(pct_use=round(used/Gender_n*100, 1))%>%
     select(Gender, pct_use)%>%
     arrange(Gender)
-
-order<-c("Male", "Female", "Other")
-GenderENDS$Gender <- factor(GenderENDS$Gender, levels = order)
 
 gg_Gender<-ggplot(GenderENDS, aes(x=as.factor(Gender), y=as.numeric(pct_use))) +
   geom_bar(stat="identity", fill="#031c39") +
@@ -275,7 +271,6 @@ gg_race<-ggplot(racethENDS, aes(x=as.factor(`Race/Ethnicity`), y=as.numeric(`Pct
   geom_label_repel(aes(label=paste0(`Pct Used`,"%")), 
                    label.size = NA, size=3, box.padding = 0.3, direction="x", segment.colour=NA, 
                    nudge_y = 1) +
-  scale_x_discrete(labels=racethENDS$`Race/Ethnicity`) +
       scale_y_continuous(expand=c(0,0)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
@@ -293,7 +288,7 @@ grid.arrange(gg_grade, gg_Gender, gg_race, layout_matrix = layout_matrix)
 
 Examining the demographic plots above, it appears that, as anticipated, ENDS use was higher for high-school students compared to middle-school students. There also appears to be a potential difference by gender, with students identifying as female or other reporting higher use rates than males. Interestingly, there did not appear to be any different usage rates reported by race/ethnicity; with all three race/ethnic groups (white, Black, Hispanic) reporting use rates around 18 percent. Given these findings, I will include grade and gender as covariates in predictive models, but will not include race/ethnicity. 
 
-### Risk Factors for Student Substance Use
+### Risk Factors for Student Substance Use        
 One factor that may play a role in student's substance use is the ease with which they can obtain said substance. Students were asked, "How easy is it to get vaping devices (juuls, vape pens, e-cigarettes)?" Responses ranged from "Very Difficult" to "Very Easy." The plot below represents the difference in vaping use between students who responded that vaping devices were "Fairly or Very Difficult" to obtain versus those who responded that they were "Fairly or Very Easy" to obtain.  
 ```{r, fig.height=2.5}
 #Access
@@ -368,7 +363,7 @@ peer<-ENDSuse%>%
 
 gg_peer<-ggplot(peer, aes(x=as.factor(q27c_d), y=ends_bypeer)) +
   geom_bar(stat="identity", fill="#420212") +
-  scale_x_discrete(labels=c("Not at all/A little bit Wrong", "Wrong/Very Wrong")) +
+  scale_x_discrete(labels=c("Not at all or A little bit Wrong", "Wrong or Very Wrong")) +
       scale_y_continuous(expand=c(0,0), limits=c(0, 45)) +
   geom_text(aes(label=paste0(ends_bypeer,"%")), vjust=-.5) +
     ylab("Percent of Students") +
@@ -474,4 +469,20 @@ This analysis examined three potential risk factors for youth vaping use: percei
 This student examined cross-sectional data from one survey year. This one year also happened to be during the COVID-19 pandemic and thus, results may be unique to this year. However, given that ENDS use rates were similar in the previous administration (2018-2019), it is likely that results would hold. Further analyses across years should examine the stability of these predictors. 
 
 Future studies may also examine the unexpected finding surrounding gender (i.e., girls reported higher use than males) to identify whether or not females are truly more prone to ENDS use and to potentially inform targeted prevention and intervention efforts.  
+
+## References
+
+Centers for Disease Control (CDC) and Prevention.(2014). The Health Consequences of Smoking—50 Years of Progress: A Report of the Surgeon General. Retrieved from https://www.ncbi.nlm.nih.gov/books/NBK179276/pdf/Bookshelf_NBK179276.pdf
+
+Cleveland, M. J., Feinberg, M. E., Bontempo, D. E., & Greenberg, M. T. (2008). The role of risk and protective factors in substance use across adolescence. The Journal of adolescent health : official publication of the Society for Adolescent Medicine, 43(2), 157–164. https://doi.org/10.1016/j.jadohealth.2008.01.015
+
+Connell, C. M., Gilreath, T. D., Aklin, W. M., & Brex, R. A. (2010). Social-ecological influences on patterns of substance use among non-metropolitan high school students. American Journal of Community Psychology, 45(1–2):36–48.
+
+Lipari, R.N.(2013). Trends in adolescent substance use and perception of risk from substance use in: The CBHSQ Report. Rockville, MD: Substance Abuse and Mental Health Services Administration. Retrieved from https://www.ncbi.nlm.nih.gov/books/NBK385059/
+
+Tennessee Department of Mental Health and Substance Abuse Services (TDMHSAS) (2020). 2018-2019 Tennessee Together Student Survey Results. Accessed online at: https://www.tn.gov/content/dam/tn/mentalhealth/documents/2018-2019_TN_Together_Report.pdf.
+
+Wills, T. A., McNamara, G., Vaccaro, D., & Hirky, A. E. (1996). Escalated substance use: A longitudinal grouping analysis from early to middle adolescence. Journal of Abnormal Psychology, 105, 166–190. https://doi.org/10.1037/0021-843x.105.2.166
+
+Zimmerman, G. M. & Vasquez, B. E. (2011). Decomposing the peer effect on adolescence substance use: Mediation, nonlinearity, and differential nonlinearity. Criminoloy, 49(4): 1235-1274.
 
