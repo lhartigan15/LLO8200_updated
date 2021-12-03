@@ -430,7 +430,7 @@ In other words:
 
 ### Model Validation and Quality: ROC AUC, Sensitivity, and Specificity
 
-To validate this model, I used a monte carlo simulation method with 1000 randomly selected samples. The table below displays the mean ROC-AUC (receiver operator characteristic - area under the curve), sensitivity (sens), and specificity (spec) across the resampled models. According to these three means, the model was adequate (ROC-AUC>0.7) and was better at predicting use (mean sensitivity = 0.90) than non-use (mean specificity = 0.42). I also plotted the distribution of ROC-AUC values from the 1000 simulations and found that the ROC-AUC remained consistently between 0.80 and 0.84, further validating that this model does indeed predict vaping use reliably.  
+To validate this model, I used a monte carlo simulation method with 1000 randomly selected samples. The table below displays the mean ROC-AUC (receiver operator characteristic - area under the curve), sensitivity (sens), and specificity (spec) across the resampled models. According to these three means, the model was adequate (ROC-AUC>0.7) and was better at predicting non-use (mean specificity = 0.90) than use (mean sensitivity = 0.42). I also plotted the distribution of ROC-AUC values from the 1000 simulations and found that the ROC-AUC remained consistently between 0.79 and 0.84, further validating that this model does indeed predict vaping use reliably.  
 ```{r}
 set.seed(1245)
 
@@ -441,7 +441,8 @@ logit_mc <-
   fit_resamples(
     logit_wf,
     logit_mc_rs,
-    metrics = metric_set(roc_auc, sens, spec)
+    metrics=metric_set(roc_auc, sens, spec),
+    control=control_resamples(event_level = "second")
   )
 
 table<-logit_mc%>%
