@@ -76,14 +76,6 @@ These are the RStudio files and datasets that you will use in tandem with the as
 * [SFO dataset](./sfo.RData)
 * [Za full dataset](./za.RData)
 
-### Synchronous (.Rmd) Files
-These files will only be uploaded when there are substantive code changes/additions to the async .Rmd files.
-* LMS Mod 2 - [Conditional Means in-class .Rmd File - added Ntiles code](./02_Conditional Means_inclass.Rmd)
-* LMS Mod 3 - [Descriptive Plots in-class .Rmd File](./03_DescriptivePlots_inclass.Rmd)
-* LMS Mod 5 (part 1) - [Regression part 1 in-class .Rmd File](./05_regression_updated_inclass.Rmd)
-* LMS Mod 5 (part 2) - [Regression - Specifying/Changing the Reference Group for Dummy Variables .Rmd File](./05_regression_part2_referencegroup.Rmd)
-* LMS Mod 7 - [Twitter API .Rmd File](./07_twitterAPI.Rmd); [Webscraping in-class .Rmd File](./07_webscraping_inclass.Rmd)
-
 ### Assignments
 Each assignment (problem set) should be uploaded to the LMS _before_ we meet for live session on the given due date. All assignment submissions must include two files to receive credit:
 1. .Rmd code file.
@@ -104,18 +96,21 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 
 ### Final Project Materials
 * [Final Project Expectations and Rubrics](./Final Project - Expectations and Rubrics.pdf)
-* [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 10/6/21
-* [Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 10/27/21
-* [Progress Report 3 Instructions](./Progress Report 3 - Instructions.pdf) - due 11/10/21
-* [Knit Report Example - Hartigan](./Final-Project---Example.pdf), [Associated .Rmd file](./Final Project - Example.Rmd)
+* [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 
+* [Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 
+* [Progress Report 3 Instructions](./Progress Report 3 - Instructions.pdf) - due 
 
 #### Final Project Examples
-Note: these are strong examples; but that doesn't mean they are perfect. Be sure that you use the supplied rubrics to ensure you're meeting all expectations. 
-* [Presentation - Bike Share in the Bay Area](./Booker_Kumbhari_Rasnick_Stonesifer_LLO 8200 Data Science_ BikeShare.pdf)
-* [Presentation - Modeling Parent Participation in School Events](https://docs.google.com/presentation/d/1sgmQ52i69Vwmb1mfGb9L7vwsygUfuCwn6k0ZyeJiRcA/edit#slide=id.g8f4bd20341_0_1)
-* [Presentation - A Tale of Two Cities: Examining Crime and Arrest Rates in the Community Areas of Chicago](./LLO8200_Final Presentation_Bhowmick, Edonick, Emuron, Kabbaz.pptx)
-* [Knit report - What Predicts Family Spending on Groceries?](https://raw.githack.com/wdoyle42/ll0_8200_summer_21/main/example_report.html)
-* [Knit report - How Might Race Influence Employee Experience?](./Wilen_FinalProject_Final.pdf)
+Note: these are all strong examples; but that doesn't mean they are all perfect. You need to use the supplied rubrics to ensure you're meeting all expectations. 
+##### Presentations
+* [Broadband Speeds in Louisiana](./Broadband Speeds in Louisiana_presentation.pdf)
+* [Exploring Institutional Placements in TX Child Welfare System](./Exploring Institutional Placements in TX Child Welfare System_presentation.pdf)
+* [Teacher Attrition in DC](./Teacher Attrition in DC_presentation.pdf)
+##### Reports (with associated .Rmd files)
+* [Predictors of Student Vaping in TN](./Final-Project---Example.pdf), [Associated .Rmd file](./Final Project - Example.Rmd)
+* [Broadband Speeds in Louisiana](./Broadband Speeds in Louisiana_report.pdf), [Associated .Rmd file](./Broadband Speeds in Louisiana.Rmd)
+* [Exploring Institutional Placements in TX Child Welfare System](./Exploring Institutional Placements in TX Child Welfare System_report.pdf), [Associated .Rmd file](./Exploring Institutional Placements in TX Child Welfare System.Rmd)
+* [Predicting Time on Death Row in Florida](./Predicting Time on Death Row in Florida_report.pdf), [Associated .Rmd file](./Predicting Time on Death Row in Florida.Rmd)
 
 ### Additional Resources
 Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool to help you do so. This properly weights the various course elements (note that you'll need to put in some "estimated" data for the final products to populate an average). 
