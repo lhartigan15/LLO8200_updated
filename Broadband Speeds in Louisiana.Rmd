@@ -1,0 +1,556 @@
+---
+title: "Predicting Broadband Speed in Louisiana"
+author: "Robert Amponsah, Sharon Gloyer, Emily Myers, Elysa Vargas"
+date: "12/12/2021"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message = FALSE, results='asis')
+print("<P style='page-break-before: always'>")
+
+rm(list=ls()) 
+
+
+library(tidyverse)
+library(tidymodels)
+library(glmnet)
+library(modelr)
+library(knitr)
+library(yardstick)
+library(probably)
+```
+
+# Louisiana's Digital Divide
+
+## **Introduction**  
+
+The COVID–19 pandemic and subsequent social distancing mandates resulted in a surge of internet-enabled remote services and opportunities within healthcare, education, and workforce systems. Some sources indicate that, “Internet services have seen rises in usage from 40% to 100%, compared to pre-lockdown levels” (De et al., 2020). Out of necessity people began taking advantage of telehealth services, online schooling, and a myriad of office-based organizations pivoted to work from home models. Unfortunately, the flexibility these technological advances offered were not accessible to everyone. According to the Federal Communications Commission (FCC), even though the digital divide is narrowing, there are still an estimated 21 million people in the United States without internet access or sufficient internet speed. These non-users, as noted in Kate Farrish’s (2020) article “Health Care and Education Suffer When There’s No Internet Access," are more likely to be poor, living in rural areas, and are Black or Hispanic. Without reliable internet services during this time, and in the future, these marginalized groups are subject to additional inequities within the healthcare, education, and workforce sectors. 
+
+Having travelled significantly down the path of virtual operations, it is likely the US will continue to see increased telehealth services, online schooling, and work from home opportunities in the years to come. Another likelihood will be additional government incentives to improve network infrastructure as has been evident with the Connect America Fund and the Rural Digital Opportunity Fund (RDOF). Though these programs are in their infancy, the reverse bidding process associated with RDOF has already been criticized by experts for overpromising on speeds that are unrealistic (Rivkin-Fish, 2021). Thus, a critical question to consider during future expansion is where providers will choose to leverage this funding and what the effect will be on the communities that receive it.
+
+One potentially vulnerable population in need of stronger internet infrastructure is the state of Louisiana. This year the US News and World Report ranked Louisiana 46th for healthcare utilizing access to care, quality of care and the overall health of the population as indicating metrics. Additionally, they ranked Louisiana 48th for education, factoring in performance in higher education as well as primary and secondary schooling and pre-K education. Further, the U.S. Bureau of Labor Statistics' most recent unemployment rates reveal the state is ranked 38th for unemployment. If the country continues to shift towards virtual services, Louisiana, who is ranked 40th in the country for broadband coverage, prices, and speeds (Cooper & Tanberk, 2021), needs significant updates to their network to ensure all residents have reliable service. The FCC currently identifies those with less than a 25 megabits per second (mbps) broadband download speed as unserved while those below 100 mbps are considered underserved. A current initiative, the Broadband for Everyone in Louisiana (BEL) commission, aims to ensure that by 2029 everyone in the state is equipped with a speed of at least 25 mbps, a step in the right direction. The images in Figure 1 indicate continued limited access to acceptable broadband speeds across the state including adequate coverage throughout highly-populated, urban areas (red reflects unserved and underserved areas).
+
+![Broadband Coverage - Louisiana (State view, New Orleans, Baton Rouge, Shreveport) Source: National Telecommunication and Information Administration](/Users/sharongloyer/Documents/1.Vandy/1.Fall 2021/8200/Final Project/R files/pic LA cons.png)
+
+As providers continue to bid for federal and state funds, a primary concern is the impact to investment return (IRR). This suggests the most important factors for growth within a region include number of customer locations, population density, and commuting averages. Without overlaying other demographic characteristics of a US Census tract (a geographic US Census unit), will providers inadvertently perpetuate systemic inequities? 
+
+To address the digital divide within Louisiana which may further exacerbate other systemic inequities, the central research question of this work concerns **the degree to which regional characteristics predict an area’s broadband speed. Is there a relationship between broadband speed and Louisiana census tracts as classified by the rural-urban commuting codes?** Ultimately, we intend to offer recommendations to providers regarding additional indicators to consider when strategizing growth and network improvements within Louisiana.
+
+## **The Data**
+
+The first data set used in this report is the Fixed Broadband Deployment data from the FCC. This data set gives information on broadband maximum advertised download speeds broken down by county, zip code, and FIPS (Federal Information Processing Standard) code. From the FIPS code we could extract tract codes. Tracts are small, mostly permanent sub-county geographic areas designated by the US Census Bureau. We matched tract codes in the FCC data set with tract codes in the Rural-Urban Commuting Area (RUCA) codes dataset (the latest from 2010) to summarize geographic area types. RUCA codes are developed by the US Deparment of Agriculture (USDA) and classify tract codes into 11 different categories ranging from rural to metropolitan areas. RUCA codes also classify U.S. census tracts using measures of population density, urbanization, and daily commuting. This focus on geographic area types and their additional measures helps us determine what discrepancies exist in access to broadband at reasonable advertised download speeds in various types of geographic areas based on population density and commuting pattern. With the first step of the analysis, we attempt to predict if geographic areas of varying population and commuting sizes experience different broadband speeds and whether or not federal grant funds issued in the Obama era were appropriately allocated to address rural broadband access.  
+
+For our secondary analysis, we use US Census data to investigate how/if demographics of similarly classified RUCA code areas have an effect on the root mean squared error of our original analysis. In particular, we focus on median income, race/ethnicity (specifically Black and Hispanic populations based on the literature review), and population count as we conduct our secondary analysis. We chose these categories because we feel the information provided can be used to determine and ensure funds from new grants and legislative allocations are equitably distributed across the state of Louisiana.
+
+In terms of data preparation, we made a key decision to summarize the primary dependent variable, broadband speed, by taking the median advertised broadband speed per Tract Code. We used median instead of mean due to account for the wide and inconsistent range of possible speeds (0 to 1000 mbps) that could create outliers which would increase the chances of a skewed mean. We used advertised speed vs. actual speed because there is wide variation in the amount of speed experienced for customers over even short periods of time. Advertised speed allowed for a consistent benchmark across providers and tracts. We also made the decision to segment out broadband types that do not reflect the typical household experience (for example, we excluded satellite broadband). Finally, we kept in the RUCA category of "No RUCA" because though the USDA definition means that there was no population in the area in 2010, there could be today, and the FCC data which is more recent may reflect broadband availability in these areas.
+
+```{r, include=FALSE}
+#Clean and tidy Louisiana FCC Broadband file
+#We first load in the Louisiana FCC Broadband file found [here](https://www.fcc.gov/general/broadband-deployment-data-fcc-form-477) and identify opportunities for cleaning/tidying based on how we'll use the information and merge later with the RUCA data. 
+LAbbnd <- read_csv("LA-Fixed-Jun2020-v1.csv")
+
+#First, one of the key variables we will be using, is coming in as scientific notation. We need to use the full number for the next tidying exercise so we'll create a new variable that changes the format.
+LAbbnd <- LAbbnd %>% 
+  mutate(BlockCodeFormat=format(LAbbnd$BlockCode, scientific = FALSE))
+
+#Next, take the new variable and drop the last 4 digits since to match with our other geographic data, we are only going to the level of "tract" which is the block code minus the last four digits.
+LAbbnd <- LAbbnd %>% 
+  mutate(TractCode=substr(LAbbnd$BlockCodeFormat,1,nchar(LAbbnd$BlockCodeFormat)-4))
+
+#Next, we know we only want the data where the TechCode is less than or equal to 50 since that represents the types of broadband we are looking at (i.e., not satellite).
+LAbbnd2 <- filter(LAbbnd, TechCode <= 50)
+
+#Next, we will remove all columns except the ones we need for further calculation and to merge with the RUCA file:
+LAbbnd3 <- select(LAbbnd2, MaxAdDown, TractCode)
+
+#Finally, we will summarize the data by taking the median advertised broadband speed per Tract Code. We are using median vs. mean due to the large range of possible speeds (0 to 1000 mb/s) that could create outliers which would increase the chances of a skewed mean.
+LAbbndf<-LAbbnd3%>% 
+  group_by(TractCode)%>%
+  summarize(MedDownSpeed=median(MaxAdDown, na.rm = TRUE))
+
+#Saving this data if needed for future use:
+write.csv(LAbbndf, file="MedianBBspeedperTract.csv")
+```
+
+```{r, include=FALSE}
+#Clean and tidy RUCA file
+#We load in the RUCA codes file found [here](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes.aspx) and identify opportunities for cleaning/tidying:
+RUCA<-read_csv(file="ruca2010revised.csv")
+
+#Next, we remove unneeded columns, filter the data to only show codes from the state of Louisiana (our target state), and rename columns to language that makes the content more obvious:
+RUCA2<-RUCA[,-(c(1,6))]
+
+RUCA2<-RUCA2%>%
+  filter(RUCA2$`Select State`=="LA")
+
+names(RUCA2)<-c("State",
+                "County",
+                "Tract_FIPS",
+                "Primary_RUCA",
+                "Tract_Population",
+                "Land_Area_sq_mi",
+                "Population_Density_per_sq_mi")
+
+#Finally, we add a column that takes the existing numeric RUCA codes and translates them into their actual descriptions which we'll need for analysis:
+RUCA3<-RUCA2%>%
+  mutate(Primary_RUCA=as.numeric(Primary_RUCA))
+RUCA3$RUCADescription <- ifelse(RUCA3$Primary_RUCA == "1", "Metro_Core", 
+  ifelse(RUCA3$Primary_RUCA == "2", "Metro_High_Commuting", 
+  ifelse(RUCA3$Primary_RUCA == "3", "Metro_Low_Commuting", 
+  ifelse(RUCA3$Primary_RUCA == "4", "Micro_Core", 
+  ifelse(RUCA3$Primary_RUCA == "5", "Micro_High_Commuting", 
+  ifelse(RUCA3$Primary_RUCA == "6", "Micro_Low_Commuting", 
+  ifelse(RUCA3$Primary_RUCA == "7", "SmallTown_Core", 
+  ifelse(RUCA3$Primary_RUCA == "8", "SmallTown_High_Commuting", 
+  ifelse(RUCA3$Primary_RUCA == "9", "SmallTown_Low_Commuting", 
+  ifelse(RUCA3$Primary_RUCA == "10", "Rural", "No RUCA"))))))))))
+
+#Saving this data if needed for future use:
+write_csv(RUCA3,"RUCAcleanRA.csv")
+```
+
+```{r, include=FALSE}
+#Merge Broadband and RUCA files
+#We merge the two files based on the Tract Code which is "TractCode" in the Broadband file and "Tract_FIPS" in the RUCA file:
+mergebbndRUCA <- merge(LAbbndf,RUCA3,by.x="TractCode",by.y="Tract_FIPS",all.x = TRUE)
+```
+
+```{r, include=FALSE}
+#Clean and tidy Census data files
+#We load in the Census files to bring in our demographic data [here](https://www.fcc.gov/general/broadband-deployment-data-fcc-form-477) and identify opportunities for cleaning/tidying based on how we'll use the information and merge later with the broadband and RUCA data. 
+#First, we read in the income data.
+income <- read_csv("Income.csv")
+
+#Since the geographic IDs have extra information at the front of the number and we know the tract code is the last 11 digits, we truncate the data to exactly what we need. Also, the first row is actually column header data, not variable data, so we remove it. We add-in column names that make more sense for our purposed. Finally, we don't need the NAME column since that data is already in our RUCA file so we remove it.
+income2 <- income[- 1, ]  
+
+income3 <- income2 %>% 
+  separate(GEO_ID, into = c("remove", "TractCode"), sep = "S")
+
+income4 <- income3 [,-(c(1,3))]
+
+names(income4) <- c("TractCode", "Household_Med_Income", "Household Mean Income", "Household Inc Past 12 Mths (% Allocated", "Families Total")
+
+#Saving this data if needed for future use:
+write_csv(income4,"incomeclean.csv")
+
+#Next we read in the race data:
+censusrace<-read_csv(file="Updated Race.csv")
+
+#Next, we tidy the race data:
+censusrace2 <- censusrace %>% slice(-c(1))
+censusrace2<-censusrace2[ ,-(c(2,5,6,7,9,10,11,12,13))]
+names(censusrace2)<-c("GEO_ID",
+                "Total_Pop",
+                "Total_HispanicLatino",
+                "Total_Black")
+
+censusrace2$`Total_Pop`<-as.numeric(censusrace2$`Total_Pop`)
+censusrace2$`Total_HispanicLatino`<-as.numeric(censusrace2$`Total_HispanicLatino`)
+censusrace2$`Total_Black`<-as.numeric(censusrace2$`Total_Black`)
+
+censusrace2<-censusrace2%>%
+  mutate("Perc_HispanicLatino"=(Total_HispanicLatino/Total_Pop)*100)%>%
+  mutate("Perc_Black"=(Total_Black/Total_Pop)*100)
+
+
+censusrace3 <- censusrace2 %>% 
+  separate(GEO_ID, into = c("remove", "TractCode"), sep = "S")
+
+censusrace4 <- censusrace3 [,-(c(1))]
+
+censusrace4[censusrace4 =="NaN"]<-NA
+censusrace5 <- na.omit(censusrace4)
+
+#Saving this data if needed for future use:
+write_csv(censusrace5,"censusraceclean.csv")
+```
+
+```{r, include=FALSE}
+#Finally, we merge the income and race data into 1 census data file
+mergedemo <- merge(income4,censusrace5,by="TractCode")
+
+#Merging combined broadband file with census data file
+mergebbnd <- merge(mergebbndRUCA,mergedemo,by="TractCode")
+```
+
+## **Descriptive Statistics**
+### **Distribution of Median Download Speed in Louisiana**
+
+```{r}
+mergebbnd%>%
+  ggplot(aes(x=MedDownSpeed))+
+  geom_vline(xintercept=25, color="#FFDD3c")+
+  geom_vline(xintercept=100, color="#4c9a2a")+
+  geom_density()+
+  xlab("Median Advertised Download Speed (Mbps)") +
+  ylab("Density")+
+  geom_text(x=800, y=.020, label="n = 866")+
+ scale_x_continuous(breaks = sort(c(seq(min(mergebbnd$MedDownSpeed), 
+    max(mergebbnd$MedDownSpeed), length.out=0), 25, 100)))
+```
+The density plot does not show a normal distribution of median download speed. The state of Louisiana has a higher frequencies of speed between 0 and 100 (which the FCC qualifies as underserved internet speed) which further demonstrates the need for greater infrastructure in the state as most of the tract areas do not have sufficient download speeds, according to the reported median download speeds of the tract. 
+
+### **Conditional mean of broadband speed at the level of geographic area classification**
+
+Next we look at RUCA classification as a prediction of broadband speed. We first further define the classifications:
+```{r}
+Rucaclass <- c("Metro_Core","Metro_High_Commuting","Metro_Low_Commuting",
+                     "Micro_Core","Micro_High_Commuting","Micro_Low_Commuting",
+               "Rural","SmallTown_Core","SmallTown_High_Commuting",
+               "SmallTown_Low_Commuting","No RUCA")
+Rucadef <- c("primary flow within an urbanized area (UA)","primary flow 30% or more to a UA",
+             "primary flow 10% to 30% to a UA", 
+             "primary flow within an urban cluster of 10,000 to 49,999 (large UC)",
+"primary flow 30% or more to a large UC","primary flow 10% to 30% to a large UC",
+"primary flow within an urban cluster of 2,500 to 9,999 (small UC)",
+"primary flow 30% or more to a small UC",
+"primary flow 10% to 30% to a small UC","primary flow to a tract outside a UA or UC",
+"census tract has zero population and no rural-urban identifier information")
+  
+tibble(
+  RUCA_Classification = Rucaclass,
+  Area_Definition = Rucadef
+) %>% 
+kable(align = "lr")
+```
+
+
+```{r, include=FALSE}
+#We're curious what the counts are for RUCA classification, so we display them with the table() command: 
+table(mergebbnd$RUCADescription)
+```
+
+This table reflects the average advertised broadband speed for each classification: 
+```{r}
+mergebbnd_sum_geo<-mergebbnd%>% 
+  group_by(RUCADescription)%>%
+  summarize(avgspeed=mean(MedDownSpeed)) %>% 
+  arrange(avgspeed) %>% 
+  kable()
+#show results
+mergebbnd_sum_geo
+```
+
+```{r, include=FALSE}
+mergebbnd_sum_geo2<-mergebbnd%>% 
+  select(RUCADescription, MedDownSpeed, Primary_RUCA) %>% 
+  group_by(RUCADescription, Primary_RUCA)%>%
+  summarize(avgspeed=mean(MedDownSpeed)) %>% 
+  arrange(-Primary_RUCA)
+```
+
+```{r, include=FALSE}
+mergebbnd_sum_geo3 <- 
+  mutate(mergebbnd_sum_geo2, avgspeedrnd=round(avgspeed, digits=1)) %>% 
+  select(RUCADescription, Primary_RUCA, avgspeedrnd)
+#show results
+mergebbnd_sum_geo3
+```
+
+The graph below is a bivariate graphical representation comparing average broadband speed to RUCA classification. Vertical threshold lines represent where the FCC characterizes areas as *unserved* (<25Mbps, yellow line) and *underserved* (<100Mbps, green line). This is ordered by largest geographic area type to smallest so that we can look at insights across different rural/urban area types.
+
+```{r}
+speedbyRUCA<-ggplot(mergebbnd_sum_geo3, aes(x=fct_reorder(RUCADescription, Primary_RUCA), y=avgspeedrnd))+ 
+  geom_bar(stat="Identity", fill="#00a8e0", color="white")+
+  xlab("RUCA Classifications (State of Louisiana)")+ 
+  ylab("Avg Advertised Download Speed (Mbps)")+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
+ geom_text(aes(label=avgspeedrnd), vjust=-0.3, size=3.5)+
+  geom_hline(yintercept=25, color="#FFDD3c")+
+  geom_hline(yintercept=100, color="#4c9a2a")+
+  scale_y_continuous(breaks = sort(c(seq(min(mergebbnd_sum_geo3$avgspeedrnd), 
+    max(mergebbnd_sum_geo3$avgspeedrnd), length.out=0), 25, 100)))
+##Print
+speedbyRUCA
+```
+
+One of the more obvious findings from the bivariate analysis is that there is not a constant decrease in broadband speed from more populated to least populated areas. In fact, the Rural geographic area has a higher average broadband speed greater than any of the Small Town areas which have higher populations. The focus on rural area infrastructure during the Obama presidency may contribute to this outcome, however, small town infrastructure may have been neglected. It is also interesting to note that high commuting areas always have faster average broadband speeds than low commuting ones. We would have thought that the opposite was true and given the RUCA code data is from 2010, it would be interesting to investigate what happens in the current pandemic era when high commuting area become low as work and school from home have increased.
+
+### **Conditional means of additional predictors**
+In this section we use the FCC's criteria for categorizing the median download speed of a tract as either underserved (<=100 megabits per second) or served (>100 megabits per second). By understanding the relationship of our independent variables to median download speed as categorized by service level, we can improve our linear regression model to ultimately how broadband speed impacts a particular area. This will also provide clarity around which characteristics may not currently be layered into a provider's IRR and thereby potentially perpetuate systemic inequities within a given tract. 
+
+```{r, include=FALSE}
+mergebbnd$Served <- ifelse(mergebbnd$MedDownSpeed <= 100, "Underserved", "Served")
+
+mergebbnd$Served<-as.factor(mergebbnd$Served) 
+                          
+```
+
+### **Population**
+```{r}
+mergebbnd<-mergebbnd%>%
+  mutate(Pop_Quartiles=ntile(Tract_Population, 4)) 
+
+mergebbnd$Pop_Quartiles<-as.factor(mergebbnd$Pop_Quartiles)
+
+mergebbnd%>%
+  filter(!is.na(Served))%>%
+  group_by(Pop_Quartiles, Served)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n))%>%
+  subset(select=c("Pop_Quartiles","Served","prop"))%>%
+  spread(Served,prop)%>%
+  kable()
+```
+The population quartiles reflect groupings of tract population from the lowest populated tracts (1) to the highest populated tracts (4). This crosstab output indicates that nearly 97% of tracts within the lowest population quartile have a median download speed that would be considered underserved. This decreases to 81% for tracts that fall within the highest population quartile. Overall, this indicates a relationship between tract population and broadband speed with the more populous areas having faster broadband speeds. However, even in the most populous tracts, only 19% are adequately served (>100 mbps). 
+
+### **Income Levels**
+```{r}
+mergebbnd<-mergebbnd%>%
+  mutate(Income_Quartiles=ntile(`Household_Med_Income`, 4)) 
+
+mergebbnd$Income_Quartiles<-as.factor(mergebbnd$Income_Quartiles)
+
+mergebbnd%>%
+  filter(!is.na(Served))%>%
+  group_by(Income_Quartiles, Served)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n))%>%
+  subset(select=c("Income_Quartiles","Served","prop"))%>%
+  spread(Served,prop)%>%
+  kable()
+```
+Median household income is the independent variable associated with levels of poverty within a given tract. The income quartiles reflect groupings of tract median household income from the lowest income tracts (1) to the highest income tracts (4). Additionally, this crosstab demonstrates that these poorer areas also have a substantial proportion of lower broadband speeds. While the difference between the lowest and highest quartile is not as great as with population, we do see that in areas in the highest quartile of median income have fewer areas that are considered underserved.  
+
+### **Percentage of Hispanic/Latino Residents**
+```{r}
+mergebbnd<-mergebbnd%>%
+  mutate(Hispanic_Quartiles=ntile(`Perc_HispanicLatino`, 4)) 
+
+mergebbnd$Hispanic_Quartiles<-as.factor(mergebbnd$Hispanic_Quartiles)
+
+mergebbnd%>%
+  filter(!is.na(Served))%>%
+  group_by(Hispanic_Quartiles, Served)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n))%>%
+  subset(select=c("Hispanic_Quartiles","Served","prop"))%>%
+  spread(Served,prop)%>%
+  kable()
+```
+The Hispanic/Latino quartiles reflect groupings of tract percentage of Hispanic/Latino residents from tracts with the lowest population (1) to the highest population (4). This crosstab demonstrates an inconsistent relationship between areas with lower or higher concentration of Hispanic/Latino residents and broadband speed. However, in general, areas with more Hispanic/Latino residents also have a greater proportion of download speeds that are considered to be underserved. Thus, if providers are only looking at income and population they might miss the nuance of providing reliable internet service to a significant community of Hispanic/Latino residents.  
+
+### **Percentage of Black Residents**
+```{r}
+mergebbnd<-mergebbnd%>%
+  mutate(Black_Quartiles=ntile(`Perc_Black`, 4)) 
+
+mergebbnd$Black_Quartiles<-as.factor(mergebbnd$Black_Quartiles)
+
+mergebbnd%>%
+  filter(!is.na(Served))%>%
+  group_by(Black_Quartiles, Served)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n))%>%
+  subset(select=c("Black_Quartiles","Served","prop"))%>%
+  spread(Served,prop)%>%
+  kable()
+```
+The Black quartiles reflect groupings of tract percentage of Black residents from tracts with the lowest population (1) to the highest population (4). Similarly with Black residents it is unclear if there is a negative relationship between higher percentages of Black residents and download speeds. However, the quartile with the greatest percentages of Black residents also represents areas where download speeds fall below the FCC's metric for acceptable internet capabilities.  
+
+## **Analysis**
+Based on our results from the conditional means exercise, we run a model that predicts the advertised download speed (dependent variable) as a function of the RUCA classification, population, and income (independent variables that seemed to predict a relationship). We first check to ensure that there is a significant difference between the independent variables we are taking into our model. Running a Kruskal-Wallis test reveals p-values less than the significance level of 0.05, and thus we can conclude that there are significant differences between the variables.
+Before running the linear regression, the No RUCA values were removed as even though they have advertised broadband speeds, their absence of median income and population cause a prediction/fit error in regression analysis. In addition, their small count (n=3) does not have a significant impact on regression results.
+
+```{r, include=FALSE}
+kruskal.test(Household_Med_Income ~ RUCADescription, data = mergebbnd)
+kruskal.test(Tract_Population ~ RUCADescription, data = mergebbnd)
+```
+
+```{r}
+mergebbnd2 <- mergebbnd %>% 
+  filter(RUCADescription!="No RUCA")
+```
+### **Regression Results**
+```{r}
+#Linear Regression
+#Splitting data into training and testing data
+mergebbnd2$`Household_Med_Income`<-as.numeric(mergebbnd2$`Household_Med_Income`)
+
+set.seed(83)
+
+split_data<-mergebbnd2%>%
+  initial_split(prop=.5)
+
+mergebbnd2_train<-training(split_data)
+
+mergebbnd2_test<-testing(split_data)
+```
+
+```{r}
+#The first step is to define the model, in this case, a linear regression.  
+lm_fit <- 
+  linear_reg() %>% 
+  set_engine("lm")%>%
+  set_mode("regression")
+
+#Now we start the workflow. Adding our model as defined above to the workflow.
+lforce_wf<-workflow()%>%
+  add_model(lm_fit)
+
+#To start training our model, we specify a formula. The formula below is for a model with the advertised download speed (left hand side, dependent variable) and RUCA classification, population, and income (right hand side, independent variables):
+lforce_formula<-as.formula("MedDownSpeed ~ RUCADescription + Tract_Population + Household_Med_Income")
+
+#Setting the recipe:
+lforce_rec<-recipe(lforce_formula, data=mergebbnd2_train) %>% 
+step_dummy(RUCADescription)
+
+#Adding the recipe to the workflow: 
+lforce_wf<-lforce_wf%>%
+  add_recipe(lforce_rec)
+
+#Fitting the processed data to the training dataset and taking a look at the results:
+lm_results<-fit(lforce_wf, mergebbnd2_train)
+
+lm_results%>%
+  tidy() %>% 
+  kable()
+
+lm_results%>%
+  extract_fit_parsnip()%>%
+  glance() %>% 
+  kable()
+```
+
+
+```{r}
+#Adding our predictions to the testing data set...
+mergebbnd2_test <-  
+  predict(lm_results, mergebbnd2_test)%>% 
+  rename(pred1=.pred)%>%  
+  bind_cols(mergebbnd2_test)
+```
+
+```{r}
+rmse_1<-mergebbnd2_test%>%
+  yardstick::rmse(truth=MedDownSpeed, estimate=pred1) %>% 
+  kable()
+rmse_1
+```
+The predictor most related to the outcome is tract population and is the only predictor with a p-value less than .05 representing its significance. The regression model predicts that for every 100 unit increase in tract population, the median advertised download speed increases by 4 mbps, controlling for all other independent variables. The R squared of the overall multiple regression model accounted for 8% of the model variance. 
+
+The root mean squared error (RMSE) represents the square root of the variance of the residuals, which provides insights to the average distance between observed values and predicted values for the dependent variable: median advertised download speed. The actual value of 247 is subjective but more useful when comparing other models to determine the better predictor model. However, this is a large RMSE which could be due to the large spectrum of advertised download speeds that ranges from 1 mbps to over 1000 mbps.
+
+### **Graphic Visualization of Tract Population in each RUCA**
+```{r}
+g3<-ggplot(data=filter(mergebbnd2, is.na(RUCADescription)==FALSE),
+            aes(x=Tract_Population, y=MedDownSpeed,
+                color=as.factor(RUCADescription)
+                ))
+
+g3<-g3 + geom_point(size=.25) 
+g3 <-g3+facet_wrap(~RUCADescription)
+g3<-g3 + geom_smooth(method="lm",se=FALSE, color="black")
+g3<-g3+theme(legend.position="bottom", legend.title=element_blank()) + 
+  ylab("Median Download Speed") + 
+  xlab("Tract Population") + 
+  scale_color_discrete(name="RUCA Code")
+g3 <- g3+guides(color=guide_legend(nrow=4))
+g3
+```
+
+The majority of RUCAs have a flat relationship between median download speed and the population as categorized by RUCA. The metro core tracts show a positive relationship wherein population increases, so does median download speed. The micro high commuting tracts show a negative relationship wherein as population increases, median download speeds of the areas decrease. One explanation for this may be that providers have not invested in infrastructure because most people are working outside of the area and therefore might not need strong internet at home. However, it is important to note that this data is pre-pandemic. Now that more companies are shifting to work from home models, this classification area will likely need significant updates. 
+
+### **Graphic Visualization of Linear Regression Model**
+```{r, include=FALSE}
+mod_1<-lm(MedDownSpeed ~ Tract_Population + as.factor(RUCADescription), data=mergebbnd2)
+summary(mod_1)
+```
+
+```{r}
+library(modelr)
+mergebbnd2<-mergebbnd2%>%
+  add_predictions(mod_1)%>%
+  rename(pred_mod_1=pred)
+
+g4<-ggplot(mergebbnd2, aes(x=Tract_Population, y=MedDownSpeed)) 
+g4<-g4+geom_point(alpha=.2,size=.4)
+g4<-g4+geom_smooth(data=mergebbnd2,(aes(x=Tract_Population,y=pred_mod_1)))
+g4<-g4+xlab("Tract Population")+ylab("Median Download Speed")
+g4
+
+```
+From the beginning we recognized that median download speed was not normally distributed and in fact there were quite a few outliers. The model shown here shows that in general as tract population increases, so does median download speed. Within each RUCA there did not seem to be significant variance between household median incomes. As such, we decided to look more deeply at tract population to understand the relationship to median download speeds.
+
+
+```{r}
+hypo_data<-data_grid(mergebbnd2, Tract_Population=seq_range(Tract_Population, n=100), RUCADescription) %>% 
+  add_predictions(mod_1)
+```
+
+```{r pagebreak, results='asis', eval=is_latex_output()}
+cat('\\pagebreak')
+```
+
+**Graphic Visualization of Linear Regression by RUCA**
+
+```{r}
+g5<-ggplot(data=hypo_data,
+           aes(x=Tract_Population,
+               y=pred,
+               color=fct_reorder(.f=as.factor(RUCADescription), -pred))) 
+
+g5<-g5+geom_smooth(method=lm, se=FALSE)
+g5<-g5+theme(legend.position="bottom",legend.title = element_blank())
+g5<-g5+xlab("Tract_Population")+ylab("Median Download Speed")
+g5 <- g5+guides(color=guide_legend(nrow=4))
+g5
+```
+The final graph predicts median download speed for each RUCA category with tract population as the independent variable. It is important to note download speed cannot be negative, so the negative speed values for the corresponding tract population per RUCA are not applicable. Based on the linear model, Micro High Commuting has the fastest median download speed at each tract population values, whereas Micro Low Commuting has the slowest median download speeds at each tract population value. 
+
+### Linear Model Validation and Quality: RMSE
+
+This model is validated via a monte carlo simulation method with 1000 randomly selected samples. The table below displays the RMSE across the resampled models. Our mean RMSE from the 1000 "fits" is 239, which is lower than the RMSE from our regression model, though still not highly predictive. 
+
+```{r}
+mergebbnd2_mc_rs<-mc_cv (mergebbnd2,times = 1000)
+
+lm_mc_results<-
+  fit_resamples(
+    lforce_wf,
+    mergebbnd2_mc_rs,
+    control=control_resamples(save_pred = TRUE)
+  )
+
+lm_mc_results%>%
+  collect_metrics() %>% 
+  select(.metric, mean, std_err) %>% 
+  kable()
+```
+The distribution of RMSEs reflects a fairly normal distribution pattern, however, it is distributed over quite a wide range (~180-300). This shows that the model does not fit consistently to "new data", further validating that it does not predict broadband speed reliably given the factors chosen for the model.  
+     
+```{r}
+lm_mc_results%>%
+  unnest(.metrics)%>%
+  filter(.metric=="rmse")%>%
+  ggplot(aes(x=.estimate))+
+  xlab("RMSE")+ylab("Density")+
+  ggtitle("Model Validation: RMSE Distribution")+
+  theme(plot.title = element_text(color="black", size=12, face="bold", hjust=.5))+
+  geom_density()
+```
+
+## Key Findings, Limitations, and Next Steps
+
+This analysis examined potential relationships between RUCA codes of US Census tracts and median broadband download speeds in the state of Louisiana. Additional relationships explored include population density, percent Black and percent Hispanic, and median household income. Overall, findings revealed these relationships are not necessarily predictive of median download speed. Additionally, univariate analysis indicates much of the state of Louisiana continues to be underserved or unserved according to industry standards despite previous funding and legislation. Although the literature suggests a connection between access to broadband and race, this is not necessary the case when considering broadband speed in Louisiana. There did however, appear to be a relationship between commuting populations and broadband speeds. A high commuting population always had higher broadband speeds than low commuting populations. 
+
+When considering the overall analysis the presence of outliers was a limiting factor. The root mean squared error is sensitive to the high outliers in the positive skew. The chosen data points including advertised instead of actual download speeds also restricts the scope of the analysis. RUCA as a data point is also a limitation due to the fact the codes were generated from Census data from 2010. An additional limiting factor is the external validity of the study. The data in this project cannot be generalized beyond the state of Louisiana. 
+
+Future studies may investigate ways to focus funding in the most equitable method in areas that are currently unserved. This may benefit from an investigation into additional predictive variables such as the number of providers available in a tract, total dollars spent by providers, and average commuting time. Law makers in the state of Louisiana should reevaluate policies targeting only rural areas to better serve all citizens within the state. 
+\newpage
+
+## References
+
+Broadband USA (2021, November). *Indicators of Broadband Need.* Broadband USA Maps. https://broadbandusa.maps.arcgis.com/apps/webappviewer/index.html?id=e2b4907376b548f892672ef6afbc0da5
+
+Cooper, T. & Tanberk, J. (2021, November 5). *Best and worst states for internet coverage, prices, and speeds.* BroadbandNow Research. https://broadbandnow.com/research/best-states-with-internet-coverage-and-speed 
+
+De, R., Pandey, N., & Pal, A., (2020, June 9). *Impact of Digital Surge During COVID-19 Pandemic: A Viewpoint on Research and Practice.* Elsevier Public Health Emergency Collection. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7280123/
+
+Farrish, K. (2020, August 4). *Health Care and Education Suffer When There’s No Internet Access.* Connecticut Health I-Team. http://c-hit.org/2020/08/14/health-care-and-education-suffer-when-theres-no-internet-access/
+
+Rivkin-Fish, (2021, April 29). *Is the FCC’s reverse auction fatally wounded or just bloodied?.* Benton Institute for Broadband & Society. https://www.benton.org/blog/fcc%E2%80%99s-reverse-auction-fatally-wounded-or-just-bloodied
+

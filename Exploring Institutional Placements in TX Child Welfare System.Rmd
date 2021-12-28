@@ -1,0 +1,824 @@
+---
+title: "Exploring Institutional Placements in the Texas Child Welfare System"
+author: "Valerie Law, Katie New, James Street"
+date: "12/08/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r, include=F}
+rm(list=ls())
+```
+
+```{r, include=F}
+
+library(haven)
+library(readxl)
+library(sysfonts)
+library(gridExtra)
+library(ggpubr)
+library(ggrepel)
+library(tidyverse)
+library(tidymodels)
+library(yardstick)
+library(plotly)
+library(rvest)
+library(tigris)
+library(lubridate)
+library(tidycensus)
+library(ggplot2)
+library(forcats)
+library(RColorBrewer)
+library(knitr)
+library(probably)
+library(modelr)
+
+knitr::opts_chunk$set(echo = F, warning = F, message = F)
+```
+
+# Institutional Foster Care Placement in America
+
+In 2018, the Federal government passed the Family First Prevention Services Act (FFPSA). The Family First Prevention Services Act of 2018 required states to better serve children by preventing the need for foster care and supporting better outcomes in the child welfare system (Casey Family Programs, 2021). As one of its primary focuses, the act overhauled federal child welfare financing, requiring states to limit child placement in congregate care settings classified as any group home, facility, or institution that houses more than six persons. The only exception to this restriction was for states to meet new federal standards to operate qualified residential treatment facilities (QRTF) (Legislative News, studies and analysis: National conference of state legislatures, 2021, NCSL, 2020). FFPSA required QRTFs to follow strict guidelines regarding child placements. Guidelines targeted clinical staff and treatment models, which ultimately stifled congregate care placements for youth with severe emotional or behavioral disorders (Legislative News, studies and analysis: National conference of state legislatures, 2021). Additionally, states were given two years to plan, transition, and develop prevention-focused infrastructure for children within the child welfare system or lose federal funding. Although the Family First Prevention Services Act intended to provide the best placement for minors in the child welfare system, the federal law left states in a bind.
+
+The effects of the COVID-19 virus further complicated states' attempts to follow the new federal mandate. First, the nation's method of detecting abuse and neglect depended on teachers, doctors, and other professionals (Welch & Haskins, 2020). Yet this network was rendered almost powerless as in-person and face-to-face interactions between children and professionals were minimized by the stay-at-home orders issued by most states (Welch & Haskins, 2020). At the same time, other vital components of the child welfare system, home investigations, child-parent visits, mandatory court appearances, and home-based parenting programs nearly came to a standstill (Welch & Haskins, 2020). Thus, making it harder for the system to ensure the safety and well-being of the almost 3.5 million children that come into contact with the child welfare system annually (Welch & Haskins, 2020).
+
+Despite the impact of the virus and the challenges the American child welfare system already faced, states were required to move forward with plans to implement the federal mandate. However, to move forward, determine adequate placement for children, and develop preventative measures for child removal, states need to know and be able to predict the factors leading to placement location decisions for children. It is not enough to know how many children are in the system. States must understand what factors lead children to be placed in an institutional setting versus a licensed foster home.  While states have guidelines in place for what children may be placed in a congregate care setting, there is a gap in the literature examining how the circumstances surrounding a child's removal from the home may impact their potential placement in an institutional setting. Therefore, our research aims to answer: what removal reasons can be used as predictors to help child welfare workers, and in effect states, determine which children are being funneled into institutions instead of foster homes or relative placement? Predicting how removal reasons lead to facility, group home, and institutional placements will enable social workers and state representatives to develop interventions for child placement.	
+
+For this project, our group will look at the foster care system in Texas, the second-largest child welfare system in the country. Texas's child welfare system acts as a microcosm of the rest of the country because of its diverse population and the various needs of children serviced through its welfare system. And like the rest of the country, Texas's struggle to comply with the FFPSA mandate was complicated by the cost of the efforts, an already strained budget, and the effects of the COVID-19 economic downturn (The Texas response to the Family First Prevention Services Act 2020). In general, the Family First Prevention Services Act underscored Texas's child welfare system's deficits and absorbed the more recent gains their overburdened welfare system recently made through community-based care (The Texas response to the Family First Prevention Services Act 2020). Additionally, Texas has the largest number of children funneled into institutional settings, and like the rest of the country, Texas does not have a single qualified residential treatment facility (The Texas response to the Family First Prevention Services Act 2020). Therefore, identifying predictors in Texas, one of the most challenged child welfare systems in the country, could serve to benefit states facing similar struggles.   
+
+## Research Question
+
+What predictors affect institutional placement within Texas’ child welfare system?
+
+## The Data
+
+Our research will utilize the Adoption and Foster Care Analysis and Reporting System (AFCARS) (US Administration of Children and Families Regulation) for FY2019. This dataset is maintained by the National Data Archive on Child Abuse and Neglect and is considered the most comprehensive collection of foster care and adoption data. This dataset contains the most recent statistics for the 2019 fiscal year, with more than 675,000 observations directly identifying characteristics of children in the foster care system across America. Because we aim to identify predictive measures within the foster care system, this dataset, based on its size and comprehensive nature, provides the best opportunity to make accurate predictions.
+
+```{r}
+AFCARS<-read_spss("FC2019v1.sav")
+```
+
+# Institutional Placements in America
+
+This study will look specifically at institutional placements for youth in the foster care system. AFCARS (2020) defines institutions as placement settings that care for more than 12 children. After reviewing national data, it was determined that Texas has more institutional placements than any other state in America. Texas is also second in the country for number of children in their foster care system.  
+
+```{r}
+AFCARS$CurPlSet[AFCARS$CurPlSet==99]=NA
+
+AFCARS$CurPlSet<-as.numeric(AFCARS$CurPlSet)
+
+AFCARS<-AFCARS%>%
+  mutate(CurPlSet_Instit=dplyr::recode(CurPlSet, '1'='0', '2'='0', '3'='0', '4'='0', 
+                                       '5'='1', '6'='0', '7'='0', '8'='0'))
+
+table(AFCARS$CurPlSet_Instit, AFCARS$St)
+
+```
+
+# Institutional Placements in Texas FY 2019
+
+For FY 2019, AFCARS reported 4,252 children in institutional placements. Another 45,501 children were placed in other out-of-home placements throughout the state.
+
+
+```{r}
+Texas<-AFCARS%>%
+  filter(St=="TX")
+```
+
+```{r}
+Texas$CurPlSet<-as.numeric(Texas$CurPlSet)
+
+Texas<-Texas%>%
+  mutate(CurPlSet_Instit=dplyr::recode(CurPlSet, '1'='0', '2'='0', '3'='0', '4'='0', 
+                                       '5'='1', '6'='0', '7'='0', '8'='0'))
+```
+
+```{r}
+ggplot(Texas, aes(x=CurPlSet))+
+  geom_bar(fill="steelblue")+
+  geom_text(stat='count',aes(label=..count..),
+            vjust=-.15)+
+  labs(x="Placement Setting", y="Number of Youth in Setting", title = "Current Placement Setting for Youth in Foster Care in Texas FY 2019")+
+  scale_x_discrete(limits =c("1","2","3","4","5","6","7","8"),
+                   labels = c ("Pre-adoptive home", "Relative foster home", "Non-relative foster home", "Group Home", "Institution", "Independent living", "Runaway", "Trial home visit"))+
+  theme(axis.text.x=element_text(angle=60,hjust=1))
+ 
+```
+
+
+Institutional placements account for 8.5% of children in the Texas child welfare system (AFCARS, 2020). 
+
+```{r}
+Texas%>%
+  filter(!is.na(CurPlSet_Instit))%>%
+  count(CurPlSet_Instit)%>%
+  mutate(p=prop.table(n)*100)%>%
+  kable(format="markdown")
+```
+
+## Exploring Potential Predictors of Institutional Placement
+
+Our literature review provided some insight into possible predictors for institutional placement. For instance, adolescents make up the majority of institutional placements, while males are slightly more likely than females to be placed in these types of settings (Wai-ying et al., 2014; Zhou et al., 2021). Further, research shows that institutional placement is less likely for first-time removal from the home (Wai-ying et al., 2014; Zhou et al., 2021). Therefore, subsequent removals from the home into foster care are more likely to include institutional placement. Research also indicates that African American and Hispanic youth are slightly more likely to be placed in an institutional setting than White youth, while youth with mental health conditions are also more likely to be placed in these settings (Wai-ying et al., 2014; Zhou et al., 2021). 
+
+During our literature review, it became notable there was a gap in the research examining removal reasons from the home as a potential predictor of institutional placement. 
+
+This study examined the following groups of potential predictors: demographics (race, sex, age at time of placement), medical, physical, and emotional disorders, removal reasons, and number of removals. For all descriptive analysis, 0 is representative of "No Institutional Placement," while 1 is representative of "Institutional Placement."
+
+# Demographic Indicators
+
+Consistent with the literature, this study examined descriptive analysis on the following demographics: sex (male/female), and race.
+
+```{r}
+sex<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(Sex))%>%
+  group_by(Sex, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("Sex","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+    mutate(varname=ifelse(Sex==1, "Male", 
+                          ifelse(Sex==2, "Female", NA)))%>%
+    ungroup()%>%
+    select(-Sex)
+
+asian<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(Asian))%>%
+  group_by(Asian, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("Asian","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+    mutate(varname=ifelse(Asian==1, "Asian", NA))%>% #because I'm only keeping Asian==1, I don't bother recoding the 0s
+    filter(varname=="Asian")%>%
+    ungroup()%>%
+    select(-Asian)
+
+black<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(BlkAfrAm))%>%
+  group_by(BlkAfrAm, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("BlkAfrAm","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+    mutate(varname=ifelse(BlkAfrAm==1, "Black", NA))%>% 
+    filter(varname=="Black")%>%
+    ungroup()%>%
+    select(-BlkAfrAm)
+
+hpi<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(HawaiiPI))%>%
+  group_by(HawaiiPI, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("HawaiiPI","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+    mutate(varname=ifelse(HawaiiPI==1, "HPI", NA))%>% 
+    filter(varname=="HPI")%>%
+    ungroup()%>%
+    select(-HawaiiPI)
+
+white<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(White))%>%
+  group_by(White, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("White","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+    mutate(varname=ifelse(White==1, "White", NA))%>% 
+    filter(varname=="White")%>%
+    ungroup()%>%
+    select(-White)
+
+Texas$HisOrgin<-as.numeric(Texas$HisOrgin)
+
+Texas<-Texas%>%
+  mutate(Hispanic=dplyr::recode(HisOrgin, '1'='1', '2'='0', '3'='0'))
+
+Hispanic<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(Hispanic))%>%
+  group_by(Hispanic, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("Hispanic","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+    mutate(varname=ifelse(Hispanic==1, "Hispanic", NA))%>% 
+    filter(varname=="Hispanic")%>%
+    ungroup()%>%
+    select(-Hispanic)
+
+demogs<-rbind(sex, white, black, Hispanic, asian, hpi) 
+
+demogs%>%
+  kable()
+
+```
+
+# Age at Last Removal
+
+Consistent with the literature, this study examined descriptive analysis for age at last removal from the home.
+
+```{r}
+age<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(AgeAtLatRem) & AgeAtLatRem!=99)%>%
+        mutate(varname=ifelse(AgeAtLatRem<10, "<10 yrs", 
+                          ifelse(AgeAtLatRem>=10 & AgeAtLatRem<=12, "10-12 yrs",
+                                 ifelse(AgeAtLatRem>=13 & AgeAtLatRem<=15, "13-15 yrs",
+                                        ifelse(AgeAtLatRem>=16 & AgeAtLatRem<=18, "16-18 yrs", NA)))))%>% 
+  group_by(varname, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("varname","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit, prop)
+
+age%>%
+  kable()
+```
+
+# Medical, Physical, and Emotional Disorders
+
+This study examined descriptive analysis of the following medical, physical, and emotional disorders: mental retardation, vision/hearing impairment, physical disability, emotionally disturbed, and other diagnosed medical conditions. 
+
+Note: Mental retardation is the classification/terminology used by the AFCARS dataset. This is not terminology condoned by the authors of this report. For the remainder of the report, the authors will use the abbreviation MR to represent this classification. 
+
+```{r}
+MR<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(MR))%>%
+  group_by(MR, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("MR","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(MR==1, "MR", NA))%>%
+  filter(varname=="MR")%>%
+  ungroup()%>%
+  select(-MR)
+
+VisHear<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(VisHear))%>%
+  group_by(VisHear, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("VisHear","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(VisHear==1, "VisHear", NA))%>%
+  filter(varname=="VisHear")%>%
+  ungroup()%>%
+  select(-VisHear)
+
+ PhyDis<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(PhyDis))%>%
+  group_by(PhyDis, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("PhyDis","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(PhyDis==1, "PhyDis", NA))%>%
+  filter(varname=="PhyDis")%>%
+  ungroup()%>%
+  select(-PhyDis)
+ 
+ EmotDist<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(EmotDist))%>%
+  group_by(EmotDist, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("EmotDist","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(EmotDist==1, "EmotDist", NA))%>%
+  filter(varname=="EmotDist")%>%
+  ungroup()%>%
+  select(-EmotDist)
+ 
+ OtherMed<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(OtherMed))%>%
+  group_by(OtherMed, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("OtherMed","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(OtherMed==1, "OtherMed", NA))%>%
+  filter(varname=="OtherMed")%>%
+  ungroup()%>%
+  select(-OtherMed)
+
+med_phy_emot<-rbind(MR, VisHear, PhyDis, EmotDist, OtherMed)
+
+med_phy_emot%>%
+  kable()
+```
+
+# Removal Reasons 
+
+AFCARS (2020) identifies 15 possible reasons for why a child or youth was removed from the home. Since the literature failed to address removal reasons as a possible predictor of institutional placement, this study performed descriptive analysis on all 15 removal reasons listed in the AFCARS report: physical abuse, sex abuse, neglect, alcohol abusing parents, alcohol abusing children, drug abusing parents, drug abusing children, child disabilities, child behavioral problems, parents died, parents jailed, parental inability to cope, abandonment, relinquishment, and housing.
+
+```{r}
+ PhyAbuse<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(PhyAbuse))%>%
+  group_by(PhyAbuse, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("PhyAbuse","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(PhyAbuse==1, "PhyAbuse", NA))%>%
+  filter(varname=="PhyAbuse")%>%
+  ungroup()%>%
+  select(-PhyAbuse)
+
+ SexAbuse<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(SexAbuse))%>%
+  group_by(SexAbuse, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("SexAbuse","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(SexAbuse==1, "SexAbuse", NA))%>%
+  filter(varname=="SexAbuse")%>%
+  ungroup()%>%
+  select(-SexAbuse)
+ 
+ Neglect<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(Neglect))%>%
+  group_by(Neglect, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("Neglect","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(Neglect==1, "Neglect", NA))%>%
+  filter(varname=="Neglect")%>%
+  ungroup()%>%
+  select(-Neglect) 
+ 
+ AAParent<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(AAParent))%>%
+  group_by(AAParent, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("AAParent","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(AAParent==1, "AAParent", NA))%>%
+  filter(varname=="AAParent")%>%
+  ungroup()%>%
+  select(-AAParent) 
+ 
+DAParent<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(DAParent))%>%
+  group_by(DAParent, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("DAParent","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(DAParent==1, "DAParent", NA))%>%
+  filter(varname=="DAParent")%>%
+  ungroup()%>%
+  select(-DAParent)
+
+AAChild<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(AAChild))%>%
+  group_by(AAChild, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("AAChild","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(AAChild==1, "AAChild", NA))%>%
+  filter(varname=="AAChild")%>%
+  ungroup()%>%
+  select(-AAChild)
+
+DAChild<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(DAChild))%>%
+  group_by(DAChild, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("DAChild","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(DAChild==1, "DAChild", NA))%>%
+  filter(varname=="DAChild")%>%
+  ungroup()%>%
+  select(-DAChild)
+
+ChilDis<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(ChilDis))%>%
+  group_by(ChilDis, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("ChilDis","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(ChilDis==1, "ChilDis", NA))%>%
+  filter(varname=="ChilDis")%>%
+  ungroup()%>%
+  select(-ChilDis)
+
+ChBehPrb<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(ChBehPrb))%>%
+  group_by(ChBehPrb, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("ChBehPrb","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(ChBehPrb==1, "ChBehPrb", NA))%>%
+  filter(varname=="ChBehPrb")%>%
+  ungroup()%>%
+  select(-ChBehPrb) 
+
+PrtsDied<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(PrtsDied))%>%
+  group_by(PrtsDied, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("PrtsDied","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(PrtsDied==1, "PrtsDied", NA))%>%
+  filter(varname=="PrtsDied")%>%
+  ungroup()%>%
+  select(-PrtsDied)
+
+PrtsJail<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(PrtsJail))%>%
+  group_by(PrtsJail, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("PrtsJail","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(PrtsJail==1, "PrtsJail", NA))%>%
+  filter(varname=="PrtsJail")%>%
+  ungroup()%>%
+  select(-PrtsJail)
+
+NoCope<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(NoCope))%>%
+  group_by(NoCope, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("NoCope","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(NoCope==1, "NoCope", NA))%>%
+  filter(varname=="NoCope")%>%
+  ungroup()%>%
+  select(-NoCope)
+
+Abandmnt<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(Abandmnt))%>%
+  group_by(Abandmnt, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("Abandmnt","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(Abandmnt==1, "Abandmnt", NA))%>%
+  filter(varname=="Abandmnt")%>%
+  ungroup()%>%
+  select(-Abandmnt)
+
+Relinqsh<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(Relinqsh))%>%
+  group_by(Relinqsh, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("Relinqsh","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(Relinqsh==1, "Relinqsh", NA))%>%
+  filter(varname=="Relinqsh")%>%
+  ungroup()%>%
+  select(-Relinqsh)
+
+Housing<-Texas%>%
+  filter(!is.na(CurPlSet_Instit) & !is.na(Housing))%>%
+  group_by(Housing, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("Housing","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  mutate(varname=ifelse(Housing==1, "Housing", NA))%>%
+  filter(varname=="Housing")%>%
+  ungroup()%>%
+  select(-Housing)
+
+removalreasons<-rbind(PhyAbuse, SexAbuse, Neglect, AAParent, DAParent, AAChild, DAChild, ChilDis, ChBehPrb, PrtsDied, PrtsJail, NoCope, Abandmnt, Relinqsh, Housing)
+
+removalreasons%>%
+  kable()
+```
+
+# Total Number of Removals from the Home
+
+Consistent with the literature, this study examined descriptive analysis for the total number of removals from the home. 
+
+```{r}
+Texas%>%
+  filter(!is.na(CurPlSet_Instit)&!is.na(TotalRem))%>%
+  group_by(TotalRem, CurPlSet_Instit)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n)*100)%>%
+  subset(select=c("TotalRem","CurPlSet_Instit", "prop"))%>%
+  spread(CurPlSet_Instit,prop)%>%
+  kable()
+```
+
+# Key Variables
+
+Based on the descriptive analysis above, the following variables were chosen for a predictive model: age at last removal, MR, emotionally disturbed, other medical conditions, sex abuse, child disability, child behavioral problems, parental death, parental inability to cope, abandonment, total number of removals from the home, sex (male/female).
+
+# Predictive Model for Institutional Placement in the Texas Child Welfare System
+
+Based on the descriptive statistics outlined above, our team ran a logistic regression to predict whether or not a child would be placed in an institutional setting. The following predictors were included in our model: age at last removal, MR, emotionally disturbed, other medical condition, sex abuse, child disability, child behavioral problem, parental death, parental inability to cope, abandonment, total removals from the home, and sex of the child (male,female). For the logistic regression, 0 is representative of "No Institutional Placement," while 1 is representative of "Institutional Placement."
+
+```{r}
+Texas$CurPlSet_Instit_Factor<-as.factor(Texas$CurPlSet_Instit)
+```
+
+```{r}
+Texas<-Texas%>%
+  filter(!is.na(CurPlSet_Instit)) 
+
+set.seed(1025)
+
+Texas_split<-initial_split(Texas, prop=.5)
+
+Texas_train<-training(Texas_split)
+
+Texas_test<-testing(Texas_split)
+```
+
+```{r}
+Texas_formula<-as.formula("CurPlSet_Instit_Factor ~
+             AgeAtLatRem +
+             MR +
+             EmotDist +
+             OtherMed +
+             SexAbuse + 
+             ChilDis +
+             ChBehPrb +
+             PrtsDied +
+             NoCope +
+             Abandmnt+
+             TotalRem+
+             Sex")
+```
+
+```{r}
+logit_rec<-recipe(Texas_formula, data=Texas)
+```
+
+```{r}
+logit_mod <- 
+  logistic_reg() %>% 
+  set_engine("glm")%>% 
+  set_mode("classification")
+```
+
+```{r}
+logit_wf<-workflow()%>%
+  add_recipe(logit_rec)%>%
+  add_model(logit_mod)
+```
+
+```{r}
+logit_results<-fit(logit_wf, data=Texas_train)
+```
+
+```{r}
+logit_results%>%
+  tidy()%>%
+  kable()
+```
+## Significant Variables
+
+Based on the logistic regression results, there were 9 variables that demonstrated significance with a p-value < 0.05: age at last removal, MR, emotionally disturbed, other medical conditions, sex abuse, child behavioral problems, parental inability to cope, abandonment, and sex of the child (male/female). There was one additional predictor, total removals from the home, that demonstrated borderline significance with a p-value equal to 0.056.
+
+```{r, include=F}
+exp(0.20364951) #Age at last removal from the home
+```
+```{r, include=F}
+(1.225868-1)*100
+```
+Interpretation: For every 1 year increase in age at last removal from the home, the odds of being placed in an institutional setting increase by 22.6% holding all other variables constant.
+
+```{r, include=F}
+exp(0.49288172)#Mental Retardation
+```
+```{r, include=F}
+(1.637027-1)*100
+```
+Interpretation: For youth diagnosed with MR, there was a 63% increase in the odds of being placed in an institutional setting holding all other variables constant.
+
+```{r, include=F}
+exp(1.10105414)#Emotionally Disturbed
+```
+```{r, include=F}
+(3.007335-1)*100
+```
+Interpretation: For youth diagnosed as emotionally disturbed, there was a 200% increase in the odds of being placed in an institutional setting holding all other variables constant.
+
+```{r, include=F}
+exp(0.54894248)#Other Medical Conditions
+```
+```{r,include=F}
+(1.731421-1)*100
+```
+Interpretation: For youth with other medically diagnosed conditions, there was a 73% increase in the odds of being placed in an institutional setting holding all other variables constant.
+
+```{r,include=F}
+exp(0.17364149)#Sex Abuse
+```
+```{r,include=F}
+(1.189629-1)*100
+```
+Interpretation: For youth with sex abuse identified as a reason for removal from the home, there was an 18% increase in the odds of being placed in an institutional setting holding all other variables constant.
+
+```{r, include=F}
+exp(0.60503321)#Child Behavioral Problems
+```
+```{r, include=F}
+(1.831313-1)*100
+```
+Interpretation: For youth with child behavioral problems identified as a reason for removal from the home, there was an 83% increase in the odds of being placed in an institutional setting holding all other variables constant.
+
+```{r, include=F}
+exp(0.34612815)#Parental Inability to Cope
+```
+```{r, include=F}
+(1.413584-1)*100
+```
+Interpretation: For youth with parental inability to cope identified as a reason for removal from the home, there was a 41% increase in the odds of being placed in an institutional setting holding all other variables constant.
+
+```{r, include=F}
+exp(0.64144529)#Abandonment
+```
+```{r, include=F}
+(1.899224-1)*100
+```
+Interpretation: For youth with abandonment identified as a reason for removal from the home, there was a 90% increase in the odds of being placed in an institutional setting holding all other variables constant.
+
+```{r, include=F}
+exp(0.08880332)#Total Removals from the Home
+```
+```{r,include=F}
+(1.092866-1)*100
+```
+Interpretation: For each additional removal from the home, there was a 9% increase in the odds of being placed in an institutional setting holding all other variables constant.
+
+```{r,include=F}
+exp(-0.32096535)#Sex (Male/Female)
+```
+```{r,include=F}
+(0.7254484-1)*100
+```
+Interpretation: For females, there was a 27.5% decrease in the odds of being placed in an institutional setting holding all other variables constant.
+
+# Model Validation and Quality: ROC AUC, Sensitivity, Specificity
+```{r}
+logit_results%>%  
+  predict(Texas)%>%  
+  bind_cols(Texas)%>%  
+  conf_mat(truth=CurPlSet_Instit_Factor, estimate=.pred_class) 
+```
+
+## Accuracy
+
+Accuracy was 91.8%.
+
+```{r}
+logit_results%>%
+  predict(Texas)%>%
+  bind_cols(Texas)%>%
+  metrics(truth=CurPlSet_Instit_Factor, estimate=.pred_class)%>%
+  kable()
+```
+## Sensitivity
+
+Sensitivity was 16.9%.
+
+```{r}
+logit_results%>%
+  predict(Texas)%>%
+  bind_cols(Texas)%>%
+ sens(truth=CurPlSet_Instit_Factor, estimate=.pred_class, event_level="second")%>%
+  kable()
+```
+## Specificity
+
+Specificity was 98.6%.
+
+```{r}
+logit_results%>%
+  predict(Texas)%>%
+  bind_cols(Texas)%>%
+  spec(truth=CurPlSet_Instit_Factor,estimate=.pred_class,event_level="second")%>%
+  kable()
+```
+## Thresholds and ROC_AUC
+
+ROC_AUC was 85.9%. 
+
+```{r}
+th<-logit_results%>%
+  predict(Texas_test, type="prob")%>%  
+  bind_cols(Texas_test)%>%  
+   threshold_perf(truth=CurPlSet_Instit_Factor,
+                 estimate=.pred_1,
+                 thresholds=seq(0, 1, by=.1), metrics=c("sens","spec"))  
+
+ggplot(filter(th, .metric%in%c("sens", "spec")),
+       aes(x=.threshold, y=.estimate, color=.metric))+
+  geom_line()
+```
+```{r}
+logit_results%>%
+  predict(Texas, type="prob")%>%  
+  bind_cols(Texas)%>%  
+  roc_auc(truth=CurPlSet_Instit_Factor, .estimate=.pred_1, event_level="second")%>%
+  kable()
+```
+
+
+```{r}
+logit_results%>%
+  predict(Texas,type="prob")%>%
+  bind_cols(Texas)%>%
+  roc_curve(truth=CurPlSet_Instit_Factor, .estimate=.pred_1, event_level="second")%>%
+  autoplot()
+```
+
+# Model Validation and Quality using Monte Carlo
+
+To further validate this model, our team ran a monte carlo simulation with 1000 randomly selected samples. ROC_AUC was 85.9%. Sensitivity was 16.8%. Specificity was 98.6%.
+
+```{r}
+Texas$CurPlSet_Instit_Factor<-as.factor(Texas$CurPlSet_Instit)
+```
+ 
+```{r}
+Texas_formula<-as.formula("CurPlSet_Instit_Factor ~
+              AgeAtLatRem +
+              MR +
+              EmotDist +
+              OtherMed +
+              SexAbuse + 
+              ChilDis +
+              ChBehPrb +
+              PrtsDied +
+              NoCope +
+              Abandmnt+
+              TotalRem+
+              Sex")
+
+logit_rec<-recipe(Texas_formula, data=Texas)
+
+logit_fit<-
+   logistic_reg(mode="classification")%>%
+   set_engine("glm")
+```
+
+```{r}
+logit_mc_rs<-mc_cv(Texas, times=1000)
+```
+
+```{r}
+logit_wf<-workflow()%>%
+   add_recipe(logit_rec)%>%
+   add_model(logit_fit)
+```
+
+```{r}
+logit_mc <- 
+  fit_resamples(
+    logit_wf,
+    logit_mc_rs,
+    metrics = metric_set(roc_auc, spec, sens),
+    control=control_resamples(event_level="second")
+  )
+```
+
+```{r}
+logit_mc%>%
+  collect_metrics()%>%
+  kable()
+```
+
+# Key Findings, Limitations, and Next Steps
+
+This analysis examined twelve potential risk factors for a child being placed in an institutional setting while in the Texas child welfare system. The findings reveal that nine of the twelve variables were predictive of institutional placement: age at last removal, MR, emotionally disturbed, other medical conditions, sex abuse, child behavioral problems, parental inability to cope, abandonment, and sex of the child (male/female). The findings also reveal that total removals from the home is borderline significant as a predictive variable for institutional placement. 
+
+These findings suggest added supports should be put in place for youth in the foster care system who experience these nine variables. Case plans should be individualized to promote foster home placement with foster parents trained in therapeutic foster care and/or trauma informed care for these youth. Further, foster parent recruitment efforts should be expanded to educate and train foster parents in therapeutic and trauma informed care.
+
+This study explores child welfare data specific to the Texas child welfare system. Results are not generalizable to other states; however, the model may be applied to other states for state-specific exploration. The study also utilizes data from FY 2019, which is prior to the COVID pandemic. Due to the pandemic's impact on the child welfare system, further analysis with post-pandemic data is recommended.
+
+Further investigation is also recommended regarding available supports for youth diagnosed as emotionally disturbed, as well as available recruitment and training of foster parents specifically assigned to work with emotionally disturbed youth. 
+
+# References
+
+Casey Family Programs. (2021, November 4). Retrieved November 13, 2021, from https://www.casey.org/
+
+Legislative News, studies, and analysis: National conference of state legislatures. Legislative News, Studies and Analysis | National Conference of State Legislatures. (2021). Retrieved October 15, 2021, from https://www.ncsl.org/
+
+National Conference of State Legislatures. (2020). Family First Prevention Services Act. Retrieved from https://www.ncsl.org/research/human-services/family-first-prevention-services-act-ffpsa.aspx 
+
+The Texas response to the Family First Prevention Services Act. Texas Public Policy Foundation. (2020, November 8). Retrieved November 14, 2021, from https://www.texaspolicy.com/legeffpsa/
+
+United States. Children’s Bureau. The AFCARS report #27. U.S. Department of Health and Human Services, Administration for Children and Families, Administration on Children, Youth and Families, Children’s Bureau.
+
+Wai-ying,C., Mettrick,J., Stephan,S., & Von Waldner,C.(2014, October). Youth in group home care: Youth characteristics and predictors of later functioning. The Journal of Behavioral Health Services & Research, 41(4). 
+
+Welch, M., & Haskins, R. (2020, April 30). What covid-19 means for America's child welfare system. Brookings. Retrieved November 14, 2021, from https://www.brookings.edu/research/what-covid-19-means-for-americas-child-welfare-system/
+
+Zhou, Xiaomeng., McClanahan,J., Huhr,Scott., & Wulczyn,F. (2021, July). Using congregate care: What the evidence tells us. The Center for State Child Welfare Data. Retrieved from https://www.aecf.org/resources/using-congregate-care
+

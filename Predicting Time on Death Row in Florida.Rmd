@@ -1,0 +1,657 @@
+---
+title: "Predicting Time on Death Row in Florida"
+author: "Hayley Benedict, Jason Fatz, Chance Meyer, Marcus Quayle"
+output:
+  pdf_document: default
+---
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE)
+
+rm(list=ls())
+
+library(labelled)
+library(kableExtra)
+library(haven)
+library(tidyverse)
+library(tidymodels)
+library(plotly)
+library(tidyverse)
+library(probably)
+library(glmnet)
+library(modelr)
+library(yardstick)
+library(knitr)
+library(parameters)
+
+```
+```{r}
+
+load("fl_ex.Rdata")
+
+```
+# Florida's Underfunded Death Row Lawyers
+
+After someone is sentenced to death in Florida, their lawyers file appeals on their behalf. The purpose of the appeals is to ensure their execution will be constitutional. Thus, the constitutionality of the death penalty depends on whether these appeals are high-quality and reliable. Because the quality of the appeals depends on death row lawyers having adequate funds to fully litigate their cases, the constitutionality of the death penalty depends on proper funding of death row lawyers.
+
+However, death row lawyers are severely underfunded (Jaffe, 2018). Inadequate resources create circumstances where they cannot meaningfully litigate their appeals (Jaffe, 2018). Often, they run out of money, and cannot afford expert witnesses and travel needed to properly litigate a case. The American Bar Association has singled out Florida as a state that must improve its funding of death row lawyers (ABA, 2006). 
+
+In Florida, funding of death row lawyers is provided each fiscal year by the State (ABA, 2006). Lawyers attend state budget meetings and request funds they will need to litigate their clients’ cases. They face an uphill battle in arguing for funding, as only 5% of the State's budget is allocated to Criminal Justice. Thus, they must fight for a sliver of what is already a small slice of the pie.
+```{r, echo=FALSE, fig.align='center'}
+
+include_graphics("budget.png")
+
+```
+[*(Obtained from Florida Association of Counties. View full report here.)*](https://www.fl-counties.com/governors-2021-2022-proposed-state-budget)
+
+Given the intense competition for funding, lawyers need to make strong arguments for why they need more funds. However, it is notoriously difficult to anticipate how many clients a death row lawyer will have and thus how much money they will need in a given year.
+
+The United States Supreme Court has acknowledged that states like Florida use the death penalty to “kill an arbitrary handful of criminals each year” (Furman v. Georgia, 408 U.S. 238 (1972)). Herein lies the problem. If the number of a death row lawyer’s clients who will be executed each year is arbitrary, how can a lawyer know what their caseload will be and have a basis to argue convincingly for the amount of funding they will need? Not being able to predict how long their clients' cases will last prevents defense lawyers from obtaining proper funding.
+
+# The Consequences of Underfunding
+![](devices.jpg)
+
+Death row lawyers litigate appeals to make sure the death penalty is administered in a constitutional manner. When they cannot perform their role adequately, the results can be disastrous.
+
+For instance, death row lawyers challenge execution methods, to make sure they will not be unconstitutionally Cruel and Unusual. When they fail in those challenges, barbaric events transpire. Prior to 2010, 276 botched executions were documented in the U.S.  
+
+```{r, echo=FALSE, fig.align='center'}
+
+include_graphics("botched executions.png")
+
+```
+[*(Obtained from Death Penalty Information Center. View here.)*](https://deathpenaltyinfo.org/executions/botched-executions)
+
+Among those are Florida's botched executions. For instance, Florida's electric chair set Jesse Tafero on fire during his 1990 execution (Keller, 1990), and Florida's lethal injection procedure resulted in Angel Diaz being chemically burned to death, rather than sedated before death, in 2006 (AP, 2006).
+```{r, echo=FALSE, fig.align='center'}
+
+include_graphics("tefaro and diaz.png")
+
+```
+# How To Improve Funding: Predicting Years on Death Row
+
+If death row lawyers could anticipate how long their clients will be on death row, they would know how many clients they could expect to have in a given period of time. They would then have a basis to argue for an appropriate amount of funding from the State. If they knew how long their clients' cases would last, they could anticipate the amount of resources they would need to see cases through to the end.
+
+Thus, our research question is whether we can predict the number of years someone sentenced to death in Florida will spend on death row.
+```{r, echo=FALSE, fig.align='center'}
+
+include_graphics("death row.png")
+
+```
+
+# Data
+
+The Florida Department of Corrections maintains a list of individuals executed by the State in the modern death penalty era (FDOC, 2021). Currently, there are 99 observations, including cases from 35 counties and executions utilizing both electrocution and lethal injection. Merging this dataset with variables contained in a dataset of U.S. executions maintained by the Death Penalty Information Center, we derived a dataset with 16 variables.
+
+The plot below shows the distribution of years on death row among inmates executed in Florida.
+
+```{r, echo=FALSE, fig.align='left'}
+
+fl_ex %>%
+ggplot(aes(x = years_on_row)) +
+  geom_density() +
+  xlab("Years on Death Row") + ylab("Density") +
+  ggtitle("Distribution of Years on Death Row Among Inmates Executed in Florida") + theme_classic()
+  
+```
+The wide range of 37 years speaks to the difficulty death row lawyers have in anticipating how long their clients' cases will last. Time on death row ranges from 2 years (Michael Durocher) to 39 years (Thomas Knight). The average years spent on death row in Florida is 16.3 years.
+
+Just using this unconditional mean as a predictor, we get an RMSE of 7.88.  In other words, our prediction is off by, on average, 7.88 years.
+
+```{r}
+
+fl_ex <- fl_ex %>%
+  mutate(uncond_mean = mean(years_on_row, na.rm = TRUE))
+
+rmse_uncond <- fl_ex %>%
+  yardstick::rmse(years_on_row, uncond_mean)
+
+rmse_uncond %>% 
+  mutate(Measure = .metric, Estimate = .estimate) %>%
+  select(Measure, Estimate) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+
+# Predictors of Years on Death Row
+
+The variables we found to yield the most predictive model are the county where the crime occurred and the trial and appeals were held, method of execution, and age at sentencing. Variables we expected to be predictive but were not included the inmate’s race, the victim's race, and the number of victims or victim count.
+
+There is little research focused on predicting years on death row. However, there is a great deal of research into factors that affect the duration of death row appeals, and thus delay executions. These factors, along with relevant literature, are as follows.
+
+## County
+
+The Death Penalty Information Center found that county-level analysis reveals that death penalty litigation is handled differently and yields different outcomes from county to county (DPIC Report, 2013). Appeals are litigated in the county where a defendant committed their crime. Because litigation may take longer in certain counties, we examined whether county is predictive of years on death row.
+
+The following graph shows mean years on death row by county in Florida.
+```{r, echo=FALSE, fig.align='left'}
+
+YODR_sum <- fl_ex %>%
+  group_by(county) %>%
+  summarize(YODR_av = mean(years_on_row))
+
+gg <- ggplot(YODR_sum, aes(x = fct_reorder(county, YODR_av), y = YODR_av))
+gg <- gg + geom_bar(stat = "Identity", fill = "#525375")
+gg <- gg + xlab("County") + ylab("Mean Years on Death Row")
+gg <- gg + ggtitle("Years on Death Row By County")
+gg <- gg + theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+gg
+
+```
+There are 35 counties in Florida where death sentences resulted in executions. We see here that inmates sentenced in Clay County, a north-Florida county outside Jacksonville, spend the least amount of time on death row, at 2 years. Those in Glades County, a rural county in central Florida, spend the greatest amount of time, at 39 years. Viewing these same data on a heatmap indicates that a cluster of counties in central Florida have the longest mean time of death row.
+```{r}
+
+load("fl_ex_final.Rdata")
+
+```
+
+```{r}
+
+gg1 <- ggplot(fl_ex_final, aes(fill = years_on_row, geometry = geometry))
+gg1 <- gg1 + geom_sf(color = NA)
+gg1 <- gg1 + scale_fill_viridis_c(option = "viridis") 
+gg1 <- gg1 + ggtitle("Years on Death Row by County") + theme_classic()
+
+gg1
+
+```
+Counties missing from the map are those where there have been no death sentences carried out. County proved to be one of our most predictive variables, with an RMSE of 5.95 years. In other words, using county as a predictor, our prediction is off by 5.95 years on average, reduced from our initial RMSE of 7.88.
+
+```{r}
+
+fl_ex <- fl_ex %>%
+  group_by(county) %>%
+  mutate(mean_by_county = mean(years_on_row, na.rm=TRUE)) %>%
+  ungroup()
+
+rmse_county <- fl_ex %>%
+  yardstick::rmse(years_on_row, mean_by_county)
+
+rmse_county %>% 
+  mutate(Measure = .metric, Estimate = .estimate) %>%
+  select(Measure, Estimate) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+
+## Method
+
+A significant amount of research focuses on appeals challenging execution methods. A survey of state execution methods reveals that challenges to some methods, like lethal injection, are more successful than challenges to other execution methods in forcing states to change their execution protocols (DPIC, Methods of Execution,  2021). The delay caused when a state like Florida must reassess its method may extend years on death row.
+
+Currently, in practice, Florida uses lethal injection as its primary method. However, Florida's electrocution protocol is still authorized for use. At any point, if an appeal challenging Florida's lethal injection method is successful or if Florida runs out of lethal injection drugs (which has happened in several other states), Florida can simply switch back to electrocution. Additionally, a Florida statute permits inmates to opt for electrocution, instead of lethal injection. Thus, method of execution is a legitimate independent variable, in that it certainly may vary and affect the appeals process that delays executions. 
+
+The following graph shows the stark difference in mean time on death row spent by inmates executed by electrocution verses those executed by lethal injection.
+```{r, echo=FALSE, fig.align='left'}
+
+YODR_sum <- fl_ex %>%
+  group_by(method) %>%
+  summarize(YODR_av = mean(years_on_row))
+
+gg <- ggplot(YODR_sum, aes(x = method, y = YODR_av))
+gg <- gg + geom_bar(stat = "Identity", fill = "#525375")
+gg <- gg + ggtitle("Years on Death Row by Method of Execution") + theme_classic()
+gg <- gg+xlab("Method of Execution") + ylab("Mean Years on Death Row")
+gg
+
+
+```
+Of the 99 individuals executed in the State of Florida, 44 died by electrocution and 55 by lethal injection. Those executed in the electric chair spend an average of just over 10 years on death row, while those executed by lethal injection spend roughly twice as long, at more than 20 years. A switch to electrocution could drastically affect time on death row.
+
+This variable yielded an RMSE of 6.01. In other words, using method of execution as a predictor, our prediction is off by approximately 6 years on average.
+
+```{r}
+
+fl_ex <- fl_ex %>%
+  group_by(method) %>%
+  mutate(mean_by_method = mean(years_on_row, na.rm=TRUE)) %>%
+  ungroup()
+
+rmse_method <- fl_ex %>%
+  yardstick::rmse(years_on_row, mean_by_method)
+
+rmse_method %>% 
+   mutate(Measure = .metric, Estimate = .estimate) %>%
+  select(Measure, Estimate) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+
+## Age at Sentencing
+
+Age at time of sentencing is a common consideration in assessing what punishment a criminal deserves (Steffensmeier, 1995). In the death penalty context, the U.S. Supreme Court has gone so far as to prohibit those under 18 from being sentenced to death (Roper v. Simmons, 543 U.S. 551 (2005)). Because age is a major consideration in death penalty proceedings, it may impact whether and when Florida moves forward with an execution.
+
+The following plot shows that most individuals sentenced to death in Florida are in their late 20s, near 30, when their sentences are imposed.
+```{r fig.align='left', message=FALSE, warning=FALSE}
+
+fl_ex %>%
+ggplot(aes(x = age_at_sentencing)) + theme_classic() + xlab("Age at Sentencing") + ylab("Density") + ggtitle("Years on Death Row by Age at Sentencing") + theme(plot.title = element_text(color = "black", size = 16, face = "bold", hjust = .5)) +
+geom_density()
+
+```
+The following plot reflects that there appears to be a negative relationship between age at sentencing and years on death row, though not a strong linearity.
+```{r fig.align='left', message=FALSE, warning=FALSE}
+
+fl_ex %>%
+  ggplot(aes(x = age_at_sentencing, y = years_on_row, label = name)) +
+  ggtitle("Years on Death Row by Age at Sentencing") +
+  geom_point(color = "#525375", size = 1) +
+  geom_smooth(method = "lm") +
+  xlab("Age at Sentencing") + ylab("Years on Death Row") +
+  theme(plot.title = element_text(color = "black", size = 16, face = "bold", hjust = .5)) +
+  theme_classic()
+
+```
+The older the individual is at sentencing, the less time they spend on death row. Yet, this proved to be our least predictive variable, with an RMSE of 6.85 years. In other words, using age at sentencing as a predictor, our prediction is off by approximately 6.9 years on average.
+
+```{r}
+
+fl_ex <- fl_ex %>%
+  group_by(age_at_sentencing) %>%
+  mutate(mean_by_age_at_sent = mean(years_on_row, na.rm=TRUE)) %>%
+  ungroup()
+
+rmse_age_at_sent <- fl_ex %>%
+  yardstick::rmse(years_on_row, mean_by_age_at_sent)
+
+rmse_age_at_sent %>% 
+  mutate(Measure = .metric, Estimate = .estimate) %>%
+  select(Measure, Estimate) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+
+# A Predictive Model for Years on Death Row
+
+Individually, each predictor reduces the mean error of our prediction of years on death row, but only marginally. Yet, if together these variables are usefully predictive of years on death row, despite the nearly 40 year range of time spent on death row, lawyers could use them to anticipate funding needs. Improving their funding would improve litigation quality, which would in turn improve the constitutionality of the death penalty.
+
+## Multivariate Conditional Mean
+
+With the 3 variables of age at sentencing, method of execution, and county, we used the conditional mean as our first predictive algorithm.
+
+```{r}
+
+fl_ex <- fl_ex %>%
+  group_by(age_at_sentencing, method, county) %>%
+  mutate(mean_by_age_at_sent_meth_cty = mean(years_on_row, na.rm=TRUE)) %>%
+  ungroup()
+
+rmse_age_at_sent_meth_cty <- fl_ex %>%
+  yardstick::rmse(years_on_row, mean_by_age_at_sent_meth_cty)
+
+rmse_age_at_sent_meth_cty %>% 
+  mutate(Measure = .metric, Estimate = .estimate) %>%
+  select(Measure, Estimate) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+Our RMSE, given these 3 predictors, is 1.01 years. Thus, we can now predict the time spent on death row with a mean error of approximately 1 year, based on the conditional means approach. This is a significant improvement from our starting RMSE of 7.88.
+
+## Linear Regression
+
+Using the same 3 variables, a linear regression analysis is less promising. We used regression analysis as our second predictive algorithm. Note that we are making one important assumption: that the relationship between time spent on death row (our dependent variable) and our three predictors (independent variables) is linear.
+
+First, we will examine our variables independently, using regression analysis. 
+
+### Age at Sentencing
+```{r}
+
+death_fit <- 
+  linear_reg() %>% 
+  set_engine("lm") %>%
+  set_mode("regression")
+
+death_wf <- workflow() %>%
+  add_model(death_fit)
+
+death_formula <- as.formula("years_on_row ~ age_at_sentencing")
+
+death_rec <- recipe(death_formula, data = fl_ex)
+
+death_wf <- death_wf %>%
+  add_recipe(death_rec)
+
+death_results <- fit(death_wf, fl_ex)
+
+death_results %>%
+  tidy() %>%
+  mutate(Term = term, Estimate = estimate, Standard_Error = std.error, Statistic = statistic) %>%
+  select(Term, Estimate, Standard_Error, Statistic, p.value) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+For age at sentencing, the intercept is 23.7, meaning that if someone was sentenced to death at age zero, their predicted time spent on death row would be 23.7 years. The slope is -0.24, meaning for every year increase in age at sentencing, the predicted time spent of death row decreases by .24 years, which is nearly 3 months. The p-value is .02. Because we have a p-value less than .05, we have statistical significance. 
+
+```{r}
+
+death_results %>%
+  extract_fit_parsnip() %>%
+  glance() %>%
+  select(r.squared, statistic, p.value) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+However, the R Squared is .05, meaning only 5% of the variance of time spent of death row can be attributed to age at sentencing. 
+
+Our RMSE for age at sentencing is 7.67. In other words, a univariate linear regression using age at sentencing results in a prediction that has a mean error of 7.67 years.
+
+```{r}
+
+fl_ex <- death_results %>%
+  predict(new_data = fl_ex) %>%
+  rename(pred1 = .pred) %>%
+  bind_cols(fl_ex)
+
+rmse_1 <- yardstick::rmse(fl_ex,
+     truth = years_on_row,
+     estimate = pred1)
+
+rmse_1 %>% 
+  mutate(Measure = .metric, Estimate = .estimate) %>%
+  select(Measure, Estimate) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+
+### Method of Execution
+```{r}
+
+death_formula <- as.formula("years_on_row ~ method")
+
+death_rec <- recipe(death_formula, data = fl_ex)
+
+death_wf <- death_wf %>%
+  update_recipe(death_rec)
+
+death_results <- fit(death_wf, fl_ex)
+
+death_results %>%
+  tidy() %>%
+  mutate(Term = term, Estimate = estimate, Standard_Error = std.error, Statistic = statistic) %>%
+  select(Term, Estimate, Standard_Error, Statistic, p.value) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+The slope for method of execution is 10.26, meaning the number of years an individual spends on death row is predicted to be 10.26 years longer when the method of execution is lethal injection, as opposed to electrocution. We have an extremely extremely small p-value, far less than .05, so we have statistical significance.
+
+```{r}
+
+death_results %>%
+  extract_fit_parsnip() %>%
+  glance()%>%
+  select(r.squared, statistic, p.value) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+Our R Squared is .32.  This indicates that 32% of the variance of time spent of death row can be attributed to method of execution.
+
+```{r}
+
+fl_ex <- death_results %>%
+  predict(new_data = fl_ex) %>%
+  rename(pred2 = .pred) %>%
+  bind_cols(fl_ex)
+
+rmse_2 <- yardstick::rmse(fl_ex,
+     truth = years_on_row,
+     estimate = pred2)
+
+rmse_2 %>% 
+  mutate(Measure = .metric, Estimate = .estimate) %>%
+  select(Measure, Estimate) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+Finally, our RMSE for method of execution is 6.01. In other words, a univariate linear regression using method of execution results in a prediction that has a mean error of 6.01 years.
+
+### County
+```{r}
+
+death_formula <- as.formula("years_on_row ~ county")
+
+death_rec <- recipe(death_formula, data = fl_ex)
+
+death_wf <- death_wf %>%
+  update_recipe(death_rec)
+
+death_results <- fit(death_wf, fl_ex)
+
+death_results %>%
+  tidy() %>%
+  mutate(Term = term, Estimate = estimate, Standard_Error = std.error, Statistic = statistic) %>%
+  select(Term, Estimate, Standard_Error, Statistic, p.value) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+The slopes for each county vary, compared to Alachua County. Looking at the p-value for each county, there is statistical significance for Glades County, which, as mentioned before, has the highest mean time on death row at 39 years. There is also statistical significance for Pinellas County, bordering Tampa and containing Tampa's sister city St. Petersburg, as well as Sarasota County, bordering Tampa to the south. This may suggest a unique county court culture in the Tampa area. Tampa is in Hillsborough County, which narrowly missed statistical significance at with a p-value of .07.
+
+```{r}
+
+death_results %>%
+  extract_fit_parsnip() %>%
+  glance()%>%
+  select(r.squared, statistic, p.value) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+Our R Squared is .43. This indicates that 43% of the variance of time spent of death row can be attributed to the county where the crime was committed and the appeals were held.
+
+```{r}
+
+fl_ex <- death_results %>%
+  predict(new_data = fl_ex) %>%
+  rename(pred3 = .pred) %>%
+  bind_cols(fl_ex)
+
+rmse_3 <- yardstick::rmse(fl_ex,
+     truth = years_on_row,
+     estimate = pred3)
+
+rmse_3 %>% 
+  mutate(Measure = .metric, Estimate = .estimate) %>%
+  select(Measure, Estimate) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+Finally, our RMSE for county is 5.95. In other words, a univariate linear regression using method of execution results in a prediction that has a mean error of 5.95 years.
+
+## Multivariate Linear Regression (Age at Sentencing/Method of Execution/County)
+```{r}
+
+death_formula <- as.formula("years_on_row ~ age_at_sentencing + method + county")
+
+death_rec <- recipe(death_formula, data = fl_ex)
+
+death_wf <- death_wf %>%
+  update_recipe(death_rec)
+
+death_results <- fit(death_wf, fl_ex)
+
+death_results %>%
+  tidy() %>%
+  mutate(Term = term, Estimate = estimate, Standard_Error = std.error, Statistic = statistic) %>%
+  select(Term, Estimate, Standard_Error, Statistic, p.value) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+When added to a multivariate model, our estimates change for each variable. For every year increase in age at sentencing, the time spent on death row is predicted to decrease by .17 years, or roughly 2 months. The number of years an individual spends on death row is predicted to be 11.54 years longer when the method of execution is lethal injection. Again, comparing counties to Alachua County, we find that Glades, Pinellas, and Sarasota are statistically significant. Hillsborough still narrowly misses significance at .058. Miami-Dade county becomes significant at .039, as does Okaloosa at .045.
+
+```{r}
+
+death_results %>%
+  extract_fit_parsnip() %>%
+  glance() %>%
+  select(r.squared, statistic, p.value) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+The p-value of the model is very small and statistically significant. The multiple R Squared is .75, meaning 75% of the variance of time spent on death row can be attributed to age at sentencing, method of execution, and county.
+
+```{r}
+
+fl_ex <- death_results %>%
+  predict(new_data = fl_ex) %>%
+  rename(pred4 = .pred) %>%
+  bind_cols(fl_ex)
+
+rmse_3 <- yardstick::rmse(fl_ex,
+     truth = years_on_row,
+     estimate = pred4)
+
+rmse_3 %>% 
+  mutate(Measure = .metric, Estimate = .estimate) %>%
+  select(Measure, Estimate) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+Finally, the RMSE is 3.98. While our model is not as powerful as it is when utilizing conditional means, we are still able to predict time on death row to within under 4 years, on average, using linear regression.
+
+## Monte Carlo Cross-Validation:
+
+To see how our model would perform with numerous out-of-sample predictions, we ran a Monte Carlo Re-sampling cross-validation.  We chose the Monte Carlo due to the fact that we have a small dataset (99 observations).  Our training group was comprised of 80% of the data, while our testing group was comprised of the remaining 20%.  We ran the Monte Carlo cross-validation 100 times yielding a 100 different RMSE’s.
+
+
+```{r}
+
+death_fit =
+  linear_reg() %>% 
+  set_engine("lm") %>% 
+  set_mode("regression")
+
+death_formula = as.formula("years_on_row ~ county + method + age_at_sentencing")
+
+death_rec <- recipe(death_formula, data = fl_ex) %>% 
+  step_log(all_outcomes()) %>% 
+  step_zv(all_numeric()) %>% 
+  step_naomit(all_predictors())
+
+death_mc <- mc_cv(fl_ex, times = 100, prop = .80)
+
+death_wf <- workflow() %>% 
+  add_recipe(death_rec) %>% 
+  add_model(death_fit)
+
+death_mc_results =
+  fit_resamples(death_wf, death_mc, control = control_resamples(save_pred = TRUE))
+
+table <- death_mc_results %>% 
+  collect_metrics() %>%
+  mutate(Measure = .metric, Samples = n, Mean = round(mean, 2)) %>%
+    select(Measure, Samples, Mean) %>%
+    kable() %>%
+    kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+table
+
+```
+Our average RMSE was .4, meaning our model is predicted to be wrong 40% of the time. 
+```{r fig.align='left'}
+
+death_mc_results %>% 
+  unnest(.metrics) %>% 
+  filter(.metric == "rmse") %>% 
+  ggplot(aes(x = .estimate)) + theme_classic() + xlab("Estimated RMSE") + ylab("Density") + ggtitle("RMSE Range: Monte Carlo Cross Validation") + theme(plot.title = element_text(color = "black", size = 16, face = "bold", hjust = .5)) +
+  geom_density()
+
+```
+Our range was just north of .2 and just south of .6.  This gives insight into how much error our model has if we use it to predict for data outside of our sample.  
+
+Ultimately, we have a multiple linear regression model that is statistically significant, explains 75% of the variance in years on death row, and will be correct 60% of the time.
+
+# Limitations
+
+Having a dataset that contains only 99 executions over a 40-year time span creates limitations in prediction. Next steps to mitigate these limitations could include integrating data of current death row inmates and data on exonerated inmates, to provide a more comprehensive approach in predicting years spent on death row, and potentially support probabilities of execution and exoneration.
+
+Limitation 1: Some counties are limited to only 1 execution within the 40-year range. We thus decided not to split our dataset into smaller training and testing datasets, because counties with 1 observation could not be contained in both datasets. Using Monte Carlo Cross-Validation mitigated this limitation so some extent.
+
+Limitation 2: While qualitative and contextual factors may impact years on death row, they are difficult to incorporate into our analysis, as political landscapes and legislative changes are challenging to include when describing changes in our environments over a time span of 40 years. One way to integrate contextual factors could be the inclusion of data on legislative changes to capital punishment laws and significant political events such as election years over the same time span. This approach would likely require individual effort to collect and consolidate data and risks errors in omission of certain data points, as specific requirements and datasets may not be readily available. Some examples of events impacting change are below:
+```{r, echo=FALSE, fig.align='center'}
+
+include_graphics("context timeline.png")
+
+```
+During the 90s, intensive media attention to botched executions may have impacted appeals challenging method of execution and thus time spent on death row. In 1999, Florida switched to using lethal injection, as opposed to execution. As described above, a switch back could occur at any time, given the many court challenges to Florida's lethal injection protocol. In 2013, the Timely Justice Act was passed in Florida, intended to speed up the capital punishment process. The Act attempted to shorten the time frame for post-conviction appeals, which could have impacted time spent on death row as appeals progressed more quickly. In 2016, the appeal of Timothy Hurst, sentenced to death in 1998, resulted with the U.S. Supreme Court ruling Florida's death penalty violated the constitution. The State halted executions to redesign features of its death penalty regime found to be unconstitutional. 
+
+Limitation 3: When considering application to other states or the federal death penalty, variation in the procedures and processes of individual death penalty regimes would impact the validity of applying our model to other jurisdictions. However, the independent variables in our model could still prove to be predictive.
+
+# Next Steps
+
+1. Consolidate and test data from individual states.
+
+2. Integrate data of inmates still on death row and apply model to determine predictions of years spent on death row for these individuals.
+
+3. Once we consolidate the datasets, we can now move forward in predicting years on death row for current inmates in counties that have enough information to support predictions.  For example, when planning for Benjamin Smiley's defense, a man sentenced in 2018 at the age of 26 in Polk county who is most likely facing lethal injection, we can plan to incorporate Ben in our defense budget for roughly 22 years from the time of sentencing.
+```{r, echo=FALSE, fig.align='center'}
+
+include_graphics("smiley.jpg")
+
+```
+
+```{r message=FALSE, warning=FALSE}
+
+load("current_deathrow.Rdata")
+
+YODR1_pred = death_results %>% 
+  predict(new_data = fl_ex) %>% 
+  rename(pred5 = .pred) %>% 
+  bind_cols(fl_ex)
+
+#save predictions
+predictions <- YODR1_pred %>%
+    select(pred5, age_at_sentencing, method, county)
+
+currdeath_wpred <- left_join(current_deathrow, predictions)
+
+currdeath_wpredf <- currdeath_wpred %>%
+  filter(name == "Smiley, Benjamin") 
+
+currdeath_wpredf %>%
+  mutate(Name = name, Date_of_Sentence = date_of_sentence, County = county, Method = method, Prediction = pred5, Age_at_Sentencing = age_at_sentencing) %>%
+  select(Name, Date_of_Sentence, County, Method, Prediction, Age_at_Sentencing) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F, latex_options = "HOLD_position")
+
+```
+
+# Conclusion
+
+Ultimately, we have created a model that with a 1 year mean error for conditional means analysis and a less than 4 year mean error for linear regression, which is correct 60% of the time. Based on this, defense lawyers would have some meaningful basis--better than mere speculation--to argue for more appropriate funding. As a result, the quality of death row appeals could improve, and with it the constitutionality of the death penalty itself.
+
+# References
+
+American Bar Association, Death Penalty Assessment, p. 193, https://www.americanbar.org/content/dam/aba/administrative/crsj/deathpenalty/florida_report.pdf
+
+Associated Press (2006), Botched execution likely painful, doctors say, https://www.nbcnews.com/id/wbna16241245
+
+Death Penalty Information Center, Executions in the United States, https://www.kaggle.com/usdpic/execution-database
+
+Death Penalty Information Center, The 2% Death Penalty, https://files.deathpenaltyinfo.org/legacy/documents/TwoPercentReport.pdf
+
+Death Penalty Information Center, Lethal Injection Cases, https://deathpenaltyinfo.org/stories/lethal-injection-cases
+
+Death Penalty Information Center, Methods of Execution, https://deathpenaltyinfo.org/executions/methods-of-execution
+
+Florida Department of Corrections, Executions List: 1976 - present, http://www.dc.state.fl.us/ci/execlist.html
+
+Jaffe, S. (2018), ‘It’s Not You, It’s Your Caseload’: Using ‘Cronic’ to Solve Indigent Defense Underfunding, Michigan Law Review, 116.8: 1465–84
+
+Keller, L. (1990), Witness to Tafero Execution Has One Overriding Thought: The Horror of It All, South Florida Sun-Sentinel, https://www.sun-sentinel.com/news/fl-xpm-1990-05-10-9001070544-story.html
+
+Steffensmeier, D., Kramer, J., & Ulmer, J. (1995), Age differences in sentencing, Justice Quarterly, 12:3, 583-602
