@@ -106,6 +106,7 @@ Note: these are all strong examples; but that doesn't mean they are all perfect.
 * [Broadband Speeds in Louisiana](./Broadband Speeds in Louisiana_presentation.pdf)
 * [Exploring Institutional Placements in TX Child Welfare System](./Exploring Institutional Placements in TX Child Welfare System_presentation.pdf)
 * [Teacher Attrition in DC](./Teacher Attrition in DC_presentation.pdf)
+
 ##### Reports (with associated .Rmd files)
 * [Predictors of Student Vaping in TN](./Final-Project---Example.pdf), [Associated .Rmd file](./Final Project - Example.Rmd)
 * [Broadband Speeds in Louisiana](./Broadband Speeds in Louisiana_report.pdf), [Associated .Rmd file](./Broadband Speeds in Louisiana.Rmd)
