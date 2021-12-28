@@ -108,10 +108,10 @@ Note: these are all strong examples; but that doesn't mean they are all perfect.
 * [Teacher Attrition in DC](./Teacher Attrition in DC_presentation.pdf)
 
 ##### Reports (with associated .Rmd files)
-* [Predictors of Student Vaping in TN](./Final-Project---Example.pdf), [Associated .Rmd file](./Final Project - Example.Rmd)
 * [Broadband Speeds in Louisiana](./Broadband Speeds in Louisiana_report.pdf), [Associated .Rmd file](./Broadband Speeds in Louisiana.Rmd)
 * [Exploring Institutional Placements in TX Child Welfare System](./Exploring Institutional Placements in TX Child Welfare System_report.pdf), [Associated .Rmd file](./Exploring Institutional Placements in TX Child Welfare System.Rmd)
 * [Predicting Time on Death Row in Florida](./Predicting Time on Death Row in Florida_report.pdf), [Associated .Rmd file](./Predicting Time on Death Row in Florida.Rmd)
+* [Predictors of Student Vaping in TN](./Final-Project---Example.pdf), [Associated .Rmd file](./Final Project - Example.Rmd)
 
 ### Additional Resources
 Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool to help you do so. This properly weights the various course elements (note that you'll need to put in some "estimated" data for the final products to populate an average). 
