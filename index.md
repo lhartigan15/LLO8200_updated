@@ -1,39 +1,38 @@
 ## Data Science (LLO8200)
 **I am in the process of updating this for Spring 2022 - I will remove this sentence once updating is complete.**
-This is the course website for Professor Hartigan's sections of LLO 8200 Introduction to Data Science. Make sure you bookmark and check this page frequently for the most up-to-date files to use for both async and assignments. Over the course of the term code may be optimized or corrected, so please alert me if you’re going to be working ahead. (_If you do work ahead, you will be responsible for updating your work if the assignments are updated._) You should have R, RStudio, and the tidyverse package installed prior to the first day of class. Instructions for updating R and Rstudio can be found [here](./Downloading Installing Updating R and RStudio.pdf). Also, we've prepared a slide deck with helpful information for navigating and setting up R, which can be found [here](./Intro to R_final.pptx).
+This is the course website for Professor Hartigan's sections of LLO 8200, Introduction to Data Science. Make sure you bookmark and check this page frequently for the most up-to-date files to use for both async and assignments. Over the course of the term code may be optimized or corrected, so please alert me if you’re going to be working ahead. (_If you do work ahead, you will be responsible for updating your work if the assignments are updated._) You should have R, RStudio, and the tidyverse package installed and updated prior to the first day of class. Instructions for updating R and Rstudio can be found [here](./Downloading Installing Updating R and RStudio.pdf).
 
-While there are files on the "Files" section of the LMS, you should use the files from THIS page to ensure you have the most up to date information. Additionally, please reference this syllabus for information. You are responsible for reviewing and ensuring you are following the schedule included in this syllabus, found here: [Hartigan's Fall 2021 LLO8200 Syllabus - updated 9/29/21](./Hartigan_LLO8200_syllabus_fall2021.pdf). 
+All files should be accessed from THIS page (not the LMS) to ensure you have the most up to date information. You are responsible for reviewing and ensuring you are following the schedule included in this semester's syllabus, found here: [Hartigan's Spring 2022 LLO8200 Syllabus - placeholder]. 
 
-If you want to set up email alerts for updates/additions to this site, you can use the free version of a third-party program: [Distill](https://distill.io/). The free version will check for updates every 6 hours and send you alerts. Note: this is a platform that is not owned by Vanderbilt or me and you should review their data privacy and security to ensure you are comfortable with their practices.
+If you want to set up email alerts for updates/additions to this site, you can use the free version of a third-party program: [Distill](https://distill.io/). The free version will check for updates every six hours and send you alerts. Note: this is a platform that is not owned by Vanderbilt or me and you should review their data privacy and security to ensure you are comfortable with their practices.
 
 ### Async/Sync RStudio (.Rmd) Files
-These are the RStudio files and datasets that you will use in tandem with the async videos each week, listed by class week and LMS Module number. The first file below (LMS Mod 0) is a general setup file that provides a good structure for setting up your .Rmd files. Note that, if no other video links are provided, you should watch the associated async videos on the LMS. 
-0. LMS Mod 0 - [.Rmd File Setup](./00_setup.Rmd), [R Setup Slide Deck](./Intro to R_final.pptx)
-1. LMS Mod 1 - [Introduction Rmd File](./01_Intro.Rmd) 
-2. LMS Mod 2 - [Conditional Means Rmd File](./02_Conditional Means.Rmd) 
+These are the .Rmd files that you will use in tandem with the async videos each week. The leading number corresponds to the week of the semester; the LMS Mod number corresponds to the LMS Module number for asynchronous content. Note that, if no video link is provided for a given topic, you should watch the associated async video(s) on the LMS. The first file below (LMS Mod 0) is the file we use for our bootcamp meeting. The R Setup Slide Deck includes good information on R/Rstudio structure and some troubleshooting tips. 
+0. LMS Mod 0 - [.Rmd Bootcamp File - placeholder], [R Setup Slide Deck](./Intro to R_final.pptx)
+1. LMS Mod 1 - [Introduction Rmd File](./01_Introduction.Rmd) 
+2. LMS Mod 4 - [Flat data](./04_flatdata_inclass.Rmd)
+3. LMS Mod 7 - [Getting Data: Web Sources](./07_webscraping_updated.Rmd)
+  * Async Video Locations (listed by section #):
+    * Lectures 7.1-7.3 - view on LMS
+    * [Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
+    * Lecture 7.5 - view on LMS
+4. LMS Mod 2 - [Conditional Means Rmd File](./02_Conditional Means_inclass.Rmd) 
   * Async Video Locations (listed by section #):
     * Lecture 2.1 - view on LMS
     * [Lectures 2.2 through 2.5 video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
     * Lectures 2.7 and 2.8 - view on LMS
     * [Lectures 2.6 and 2.9 video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
-3. LMS Mod 3 - [Descriptive Plots](./03_DescriptivePlots.Rmd) 
-4. LMS Mod 4 - [Flat data](./04_flatdata.Rmd)
-5. LMS Mod 5 (part 1) - [Regression, part 1 - updated](./05_regression_updated.Rmd)
+5. LMS Mod 3 - [Descriptive Plots](./03_DescriptivePlots_inclass.Rmd) 
+6. LMS Mod 5 - [Regression - part 1](./05_regression_updated_inclass.Rmd), [Regression - part 2](./05_regression_part2.Rmd)
   * Async Video Locations (listed by section #):
     * Lecture 5.1 - view on LMS
     * [Lecture 5.2 video](https://youtu.be/8P5CLj5Vy70)
-    * [Lectures 5.3 & 5.4 video](https://youtu.be/6s5__DICHDg)
-6. LMS Mod 5 (part 2) - [Regression, part 2 - updated 10/6/21](./05_regression_part2.Rmd), [html lecture notes](https://raw.githack.com/wdoyle42/ll0_8200_summer_21/main/05-regression-2.html)
-  * Async Video Locations (listed by section #):
+    * [Lectures 5.3 video](https://youtu.be/6s5__DICHDg)
     * [Lecture 5.4a video](https://www.youtube.com/watch?v=llfHYO_MujY)
     * [Lecture 5.4b video](https://www.youtube.com/watch?v=hm33VbjQZMY)
     * Lecture 5.5 - view on LMS
-7. LMS Mod 6 - [Scatterplots](./06_scatterplots.Rmd)
-8. LMS Mod 7 - [Getting Data: Web Sources](./07_webscraping_updated.Rmd)
-  * Async Video Locations (listed by section #):
-    * Lectures 7.1-7.3 - view on LMS
-    * [Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
-    * Lecture 7.5 - view on LMS
+7. LMS Mod 6 - [Scatterplots](./06_scatterplots_inclass.Rmd)
+8. In-class group work
 9. LMS Mod 8 (part 1) - [Analyzing Data: Classification](./08_classification_inclass.Rmd) -- Note, we are stretching this out over two weeks! This first week will cover up to line 252 in this attached/updated code.
   * Async Video Locations (listed by section #):
     * Lecture 8.1 - view on LMS
@@ -45,7 +44,7 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * Some additional resources for logistic regression: 
     * You can find a great/succinct explanation of the process and understanding each piece [HERE.](https://medium.com/analytics-vidhya/a-guide-to-machine-learning-in-r-for-beginners-part-5-4c00f2366b90) While some of the code they use here is different than what we use, the overall principles/explanations are the same.
     * Here is a nice clear powerpoint detailing interpretations for odds ratios/output for logistic regression: [logistic regression PPT](./LogisticRegression_11-17-20.pptx)
-11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification](./09_plots_classification.Rmd)
+11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification](./09_plots_classification_inclass.Rmd)
 12. LMS Mod 10 - [Cross-Validation](./10m_cross_validation_updated.Rmd)
     * Lecture 10.1 - view on LMS
     * [Lecture 10.2.1 video](https://youtu.be/Q78A2M226z4)
@@ -55,20 +54,19 @@ These are the RStudio files and datasets that you will use in tandem with the as
     * [Lecture 10.5 video](https://www.youtube.com/watch?v=B1JpLvCXhUQ) *Note: This video is OPTIONAL. It's interesting, but somewhat complicated. 
     * Lecture 10.6 - view on LMS
 
-
 ### Datasets for the Semester (we may not use all of these)
 * [Area dataset - ACS 2019](./area_data.Rds)
 * [Attrition dataset](./attrition.Rdata)
-* [College "sc" dataset](./college.Rdata)
-* [College debt dataset](./sc_debt.Rdata)
-* [Education variables (if needed)](./educ_vars.Rdata)
+* [College "SC" dataset](./college.Rdata)
+* [College DEBT dataset](./sc_debt.Rdata)
+* [Census Education variables (if needed)](./educ_vars.Rdata)
 * [ELS full dataset](./els.Rdata)
 * [ELS testing dataset](./els_test.Rdata)
 * [ELS training dataset](./els_train.Rdata)
 * [Free excel dataset](./free.xls)
 * [FRL dataset](./frl.Rdata)
 * [HSB csv dataset](./hsbdata.csv)
-* [Income variables (if needed)](./income_vars.Rdata)
+* [Census Income variables (if needed)](./income_vars.Rdata)
 * [Lemons (car = bad buy) dataset](./lemondata.csv)
 * [PD dataset](./pd.Rdata)
 * [SF cluster dataset](./sf_cluster.RData)
@@ -87,21 +85,20 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
-| [Assignment 1 PDF](./01_Assignment_starter.pdf), [Assignment 1 Starter .Rmd](./01_Assignment_starter.Rmd) | 09/08/21 |
-| [Assignment 2 PDF](./02_Assignment.pdf), [Assignment 2 Starter .Rmd](./02_Assignment_starter.Rmd) | 09/22/21 |
-| [Assignment 3 PDF](./Assignment-3---Regression.pdf), [Assignment 3 Starter .Rmd](./Assignment 3 - Regression_starter.Rmd) | 10/13/21 |
-| [Assignment 4 PDF](./Assignment_4_LMSmod7_webscraping.pdf), [Assignment 4 Starter .Rmd](./Assignment_4_LMSmod7_webscraping.Rmd) | 10/27/21 |
-| [Assignment 5 PDF](./Assignment-5---Classification.pdf), [Assignment 5 Starter .Rmd](./Assignment 5 - Classification.Rmd) | 11/10/21 |
-| [Assignment 6 PDF](./Assignment-6---Classification-plots-and-cross-validation.pdf), [Assignment 6 Starter .Rmd](./Assignment 6 - Classification plots and cross-validation.Rmd) | 12/1/21 |
+| [Assignment 1 placeholder] | 02/02/22 |
+| [Assignment 2 placeholder] | 02/16/22 |
+| [Assignment 3 placeholder] | 03/02/22 |
+| [Assignment 4 placeholder] | 03/23/22 |
+| [Assignment 5 placeholder] | 04/06/22 |
 
 ### Final Project Materials
-* [Final Project Expectations and Rubrics](./Final Project - Expectations and Rubrics.pdf)
-* [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 
-* [Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 
-* [Progress Report 3 Instructions](./Progress Report 3 - Instructions.pdf) - due 
+* [Final Project Expectations and Rubrics placeholder]
+* [Progress Report 1 Instructions placeholder] - due 02/09/22
+* [Progress Report 2 Instructions placeholder] - due 03/09/22
+* [Progress Report 3 Instructions placeholder] - due 03/30/22
 
 #### Final Project Examples
-Note: these are all strong examples; but that doesn't mean they are all perfect. You need to use the supplied rubrics to ensure you're meeting all expectations. 
+Note: these are all strong examples; but that doesn't mean they are all perfect. You should reference the supplied rubrics to ensure you're meeting all expectations. 
 ##### Presentations
 * [Broadband Speeds in Louisiana](./Broadband Speeds in Louisiana_presentation.pdf)
 * [Exploring Institutional Placements in TX Child Welfare System](./Exploring Institutional Placements in TX Child Welfare System_presentation.pdf)
@@ -114,7 +111,7 @@ Note: these are all strong examples; but that doesn't mean they are all perfect.
 * [Predictors of Student Vaping in TN](./Final-Project---Example.pdf), [Associated .Rmd file](./Final Project - Example.Rmd)
 
 ### Additional Resources
-Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool to help you do so. This properly weights the various course elements (note that you'll need to put in some "estimated" data for the final products to populate an average). 
+Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool to help you do so. This properly weights the various course elements (note that you'll need to put in some "estimated" grades to populate an average). 
 * [Data Science Average Calculator](./Student Average Calculator.xlsx)
 
 There are a multitude of resources re. RStudio and RMarkdown on the web. Here is where I'll save some of my favorites. 
