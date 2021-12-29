@@ -1,8 +1,7 @@
 ---
 title: "Week 2: Conditional Means"
 author: "Lacey Hartigan"
-date: "5/13/21"
-
+date: "09/01/21"
 output: pdf_document
 ---
 
@@ -40,6 +39,7 @@ This week we'll use another dataset from the college scorecard, this one focused
 
 ```{r}
 df <- readRDS("sc_debt.Rdata") #read RDS reads in R datafiles
+
 names(df) #provides list of variable names from dataset
 
 #LOOK AT THE DATA!
@@ -118,7 +118,7 @@ df%>%
 df%>%
   group_by(control)%>%
   summarize(mean_debt_control=mean(grad_debt_mdn, na.rm=TRUE))%>%
-  arrange(control)%>%
+  arrange(mean_debt_control)%>%
   ungroup()
 ```
 
@@ -157,7 +157,7 @@ Grouping with multiple predictors works exactly the same way as with one predict
 df%>%
   group_by(control, preddeg)%>%
   summarize(mean_debt_control_degree=mean(grad_debt_mdn, na.rm=TRUE))%>%
-  arrange(mean_debt_control_degree)%>%
+  arrange(-mean_debt_control_degree)%>%
   ungroup()
 #How could we arrange this in descending order instead? 
 ```
@@ -188,7 +188,7 @@ df%>%
   group_by(control, preddeg, region)%>%
   summarize(mean_debt_control_degree_region=mean(grad_debt_mdn, na.rm=TRUE))%>%
   arrange(mean_debt_control_degree_region)%>%
-  print(n=100)%>%
+  print(n=50)%>%
   ungroup()
 
 #NOTE - when you look at the data - do you see anything wrong here with our regions? 
@@ -287,13 +287,6 @@ rmse_adm<-sc%>%
 rmse_adm
 ```
 We're an average of about $12,769. off when using only admission rate (quartiles) to predict eventual earnings. 
-
-
-
-
-
-
-
 
 
 

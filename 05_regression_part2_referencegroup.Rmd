@@ -5,9 +5,10 @@ output: html_document
 
 ## Load needed libraries
 ```{r}
+rm(list=ls())
+
 library(tidyverse)
 library(tidymodels)
-library(plotly)
 ```
 
 ## Add the "Area" dataset
@@ -75,7 +76,7 @@ lm_results%>%
   tidy()
 
 lm_results%>%
-  pull_workflow_fit()%>%
+  extract_fit_parsnip()%>%
   glance()
 ```
 

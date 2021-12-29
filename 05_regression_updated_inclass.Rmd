@@ -28,8 +28,7 @@ ad<-readRDS("area_data.Rds")
 ad
 ```
 
-This data comes from the American Community Survey of 2019. It covers all of the [metro or micro
-statistical areas](https://www.census.gov/programs-surveys/metro-micro/about.html#:~:text=The%20general%20concept%20of%20a,social%20integration%20with%20that%20core.) in the United States. It includes characteristics of these areas, include education, income, home ownership and others as described below.  
+This data comes from the American Community Survey of 2019. It covers all of the [metro or micro statistical areas](https://www.census.gov/programs-surveys/metro-micro/about.html#:~:text=The%20general%20concept%20of%20a,social%20integration%20with%20that%20core.) in the United States. It includes characteristics of these areas, include education, income, home ownership and others as described below.  
 
 | Name  | Description   |
 |---|---|
@@ -158,7 +157,7 @@ What this tells us is that for each additional percent of the population with a 
 ```{r}
 ad_test<-lm_results%>% ## start with the results
   predict(new_data=ad_test)%>% ## create a prediction
-  rename(pred1=.pred)%>%  ## rename the prediction
+  rename(pred_educ=.pred)%>%  ## rename the prediction
   bind_cols(ad_test) ## add the prediction to the testing dataset
 ```
 
@@ -210,13 +209,12 @@ lm_results<-
 summary(lm_results$fit)
 ```
 
-
 ## Predict using the testing dataset
 
 ```{r}
 ad_test<-lm_results%>%
   predict(new_data=ad_test)%>%
-  rename(pred2=.pred)%>%
+  rename(pred_coll_hown=.pred)%>%
   bind_cols(ad_test)
 ```
 
@@ -224,7 +222,7 @@ ad_test<-lm_results%>%
 ```{r}
 rmse_2<-rmse(ad_test,
      truth=income_75,
-     estimate=pred2)
+     estimate=pred_coll_hown)
 
 rmse_2
 ```

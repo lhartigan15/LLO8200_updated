@@ -76,7 +76,6 @@ lm_rec <- recipe(lm_formula, data = pd) %>%
   step_log(all_outcomes())%>%
   step_zv(all_numeric()) %>% # drop any zero variance
   step_naomit(all_predictors()) ## drop any missing data
-
 ```
 
 ## Specify the resampling: K fold resampling, K=10
@@ -119,13 +118,13 @@ lm_kfold_results%>%
   geom_density()
 ```
 
-## Specify the resampling: monte_carlo resampling
+## Specify the resampling: monte_carlo resampling (random partitioning)
 ```{r}
-pd_mc_rs<-mc_cv (pd,times = 100) ##1000 is usual minimum
+pd_mc_rs<-mc_cv (pd, times = 100) ##1000 is usual minimum
 ```
 
 
-## Fit Monte Carlo Reasmpling
+## Fit Monte Carlo Resampling
 ```{r}
 lm_mc_results<-
   fit_resamples(
@@ -223,7 +222,7 @@ lm_mc_results%>%
 ```
 
 
-## Cross Validation for Classification
+## Cross Validation for Classification/Logistic (outcome is binary)
 
 ```{r}
 load("za.RData")
@@ -264,7 +263,7 @@ logit_fit<-
   set_engine("glm")
 ```
 
-## Set Resampling
+## Set Resampling - Monte Carlo 
 ```{r}
 logit_mc_rs<-mc_cv(za,times=100)
 ```
@@ -277,13 +276,14 @@ logit_wf<-workflow()%>%
 ```
 
 
-## Fit Logit Model to Resampleld Data
+## Fit Logit Model to Resampled Data
 ```{r}
 logit_mc <- 
   fit_resamples(
     logit_wf,
     logit_mc_rs,
-    metrics = metric_set(roc_auc, sens, spec)
+    metrics=metric_set(roc_auc, sens, spec),
+    control=control_resamples(event_level = "second")
   )
 ```
 
@@ -348,7 +348,8 @@ lasso_logit_mc<-
     lasso_logit_wf, 
     resamples=logit_mc_rs, ##resampling plan
     grid=grid_max_entropy(parameters(lasso_logit_fit,size=9)),
-    metrics = metric_set(roc_auc, sens, spec)
+    metrics = metric_set(roc_auc, sens, spec),
+    control=control_resamples(event_level = "second")
   )
 ```
 

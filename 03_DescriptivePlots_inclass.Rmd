@@ -1,6 +1,5 @@
 ---
 title: "Week 3 - Presenting Data: Descriptive Plots"
-date: "05/25/21"
 output:
   pdf_document: default
   html_document: default
@@ -131,8 +130,8 @@ What is a factor variable? In R, factor variables are used for categorical data.
 
 ```{r}
 ## Same aesthetics, but now ordered by level
-gg<-ggplot(at_sum, aes(x=fct_reorder(BusinessTravel, -attr_avg), y=attr_avg)) #reordered by level of attrition (lowest to highest, left to right)
-gg<-gg+geom_bar(stat="identity")
+gg<-ggplot(at_sum, aes(x=fct_reorder(BusinessTravel, attr_avg), y=attr_avg)) #reordered by level of attrition (lowest to highest, left to right)
+gg<-gg+geom_bar(stat="identity", fill="gold", color="black")
 gg
 
 ## Labeling and colors
@@ -199,7 +198,8 @@ at_sum_bizgen
 
 ```{r}
 ## Plot it using a bar plot
-gg<-ggplot(at_sum_bizgen, aes(x=fct_reorder(BusinessTravel, attr_avg), y=attr_avg, color=Gender))
+gg<-ggplot(at_sum_bizgen, aes(x=fct_reorder(BusinessTravel, attr_avg), y=attr_avg, 
+                              color=Gender))
 gg<-gg+geom_bar(stat="identity", aes(fill=Gender), position="dodge")
 gg<-gg+ylab("Pr(Attrition)")+xlab("Frequency of Travel")
 
@@ -249,7 +249,7 @@ _Side_ _Note_: Colors
 What if we want to change colors? This is a little tricky for most people at first. `ggplot` thinks in terms of palettes, so you need to associate a palette with a characteristics of the graphic. Below, I replace the default palette with my own ugly one. 
 
 ```{r}
-## Changing Colors--note, this example just has TWO colors, so we need a plot that only needs two colors. Go up and re-run your bar plot for attitrion and gender code so that our "gg" only needs 2 colors. 
+## Changing Colors--note, this example just has TWO colors, so we need a plot that only needs two colors. Go up and re-run your bar plot for attrition and gender code so that our "gg" only needs 2 colors. 
 mypal<-c("cornflowerblue", "gold")
 
 gg<-gg +
@@ -279,7 +279,7 @@ at_bizgenmar
 ```{r}
 gg<-ggplot(at_bizgenmar, aes(x=reorder(BusinessTravel, attr_avg), y=attr_avg, fill=Gender))
 ## Bar plot, with unstacked (dodge)
-gg<-gg+geom_bar(stat="identity",position="dodge")
+gg<-gg+geom_bar(stat="identity", position="dodge")
 ## Separate out by Marital Status
 gg<-gg+facet_wrap(~MaritalStatus)
 ## Change orientation to sideways
@@ -337,6 +337,6 @@ gg<-gg+ggtitle("Departure by Gender and Level of Work/Life Satisfaction")
 gg
 ```
 
-There are a multitude of resources online for customizing your ggplots. This one has some good info for barplots with step-by-step directions for customizations. [Link:](http://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization)
+There are a multitude of resources online for customizing your ggplots. This one has some good info for barplots with step-by-step directions for customization. [Link:](http://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization)
 
 
