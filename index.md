@@ -1,8 +1,8 @@
 ## Data Science (LLO8200)
 **I am in the process of updating this for Spring 2022 - I will remove this sentence once updating is complete.**
-This is the course website for Professor Hartigan's sections of LLO 8200, Introduction to Data Science. Make sure you bookmark and check this page frequently for the most up-to-date files to use for both async and assignments. Over the course of the term code may be optimized or corrected, so please alert me if you’re going to be working ahead. (_If you do work ahead, you will be responsible for updating your work if the assignments are updated._) You should have R, RStudio, and the tidyverse package installed and updated prior to the first day of class. Instructions for updating R and Rstudio can be found [here](./Downloading Installing Updating R and RStudio.pdf).
+This is the course website for Professor Hartigan's sections of LLO 8200, Introduction to Data Science. Make sure you bookmark and check this page frequently for the most up-to-date files to use for both async and assignments. Over the course of the term code may be optimized or corrected. I will upload updated files here when that happens. You should have R, RStudio, and the tidyverse package installed and updated prior to the first day of class. Instructions for installing/updating R and Rstudio can be found [here](./Downloading Installing Updating R and RStudio.pdf).
 
-All files should be accessed from THIS page (not the LMS) to ensure you have the most up to date information. You are responsible for reviewing and ensuring you are following the schedule included in this semester's syllabus, found here: [Hartigan's Spring 2022 LLO8200 Syllabus - placeholder]. 
+All files should be accessed from THIS page (not the LMS) to ensure you have the most up to date information. You are responsible for reviewing and ensuring you are following the schedule included in this semester's syllabus. The most up-to-date syllabus can always be found here and I will update the date when changes are made: [Hartigan's Spring 2022 LLO8200 Syllabus - 1/4/22](./Hartigan_LLO8200_syllabus_spring2022.pdf). 
 
 If you want to set up email alerts for updates/additions to this site, you can use the free version of a third-party program: [Distill](https://distill.io/). The free version will check for updates every six hours and send you alerts. Note: this is a platform that is not owned by Vanderbilt or me and you should review their data privacy and security to ensure you are comfortable with their practices.
 
@@ -87,17 +87,17 @@ All assignments are graded on a 100-point scale. Corrections can be submitted fo
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
-| [Assignment 1 placeholder] | 02/02/22 |
-| [Assignment 2 placeholder] | 02/16/22 |
-| [Assignment 3 placeholder] | 03/02/22 |
-| [Assignment 4 placeholder] | 03/23/22 |
-| [Assignment 5 placeholder] | 04/06/22 |
+| [Assignment 1 placeholder] | 02/09/22 |
+| [Assignment 2 placeholder] | 02/23/22 |
+| [Assignment 3 placeholder] | 03/16/22 |
+| [Assignment 4 placeholder] | 04/06/22 |
+| [Assignment 5 placeholder] | 04/27/22 |
 
 ### Final Project Materials
-* [Final Project Expectations and Rubrics placeholder]
-* [Progress Report 1 Instructions placeholder] - due 02/09/22
-* [Progress Report 2 Instructions placeholder] - due 03/09/22
-* [Progress Report 3 Instructions placeholder] - due 03/30/22
+* [Final Project Expectations and Rubrics placeholder] - both final products due 05/04/22
+* [Progress Report 1 Instructions placeholder] - due 02/16/22
+* [Progress Report 2 Instructions placeholder] - due 03/23/22
+* [Progress Report 3 Instructions placeholder] - due 04/13/22
 
 #### Final Project Examples
 Note: these are all strong examples; but that doesn't mean they are all perfect. You should reference the supplied rubrics to ensure you're meeting all expectations. 
