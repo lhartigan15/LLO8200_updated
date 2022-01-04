@@ -7,8 +7,8 @@ All files should be accessed from THIS page (not the LMS) to ensure you have the
 If you want to set up email alerts for updates/additions to this site, you can use the free version of a third-party program: [Distill](https://distill.io/). The free version will check for updates every six hours and send you alerts. Note: this is a platform that is not owned by Vanderbilt or me and you should review their data privacy and security to ensure you are comfortable with their practices.
 
 ### Async/Sync RStudio (.Rmd) Files
-These are the .Rmd files that you will use in tandem with the async videos each week. The leading number corresponds to the week of the semester; the LMS Mod number corresponds to the LMS Module number for asynchronous content. Note that, if no video link is provided for a given topic, you should watch the associated async video(s) on the LMS. The first file below (LMS Mod 0) is the file we use for our bootcamp meeting. The R Setup Slide Deck includes good information on R/Rstudio structure and some troubleshooting tips. 
-LMS Mod 0 - [.Rmd Bootcamp File - placeholder], [R Setup Slide Deck](./Intro to R_final.pptx)
+These are the .Rmd files that you will use in tandem with the async videos each week. The leading number corresponds to the week of the semester; the LMS Mod number corresponds to the LMS Module number for asynchronous content. Note that, if no video link is provided for a given topic, you should watch the associated async video(s) on the LMS. The first file below (LMS Mod 0) is the file we use for our bootcamp meeting. The R Setup Slide Deck includes good information on R/Rstudio structure and some troubleshooting tips.        
+LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lecture notes](./00_Getting-Started.html), [R Setup Slide Deck](./Intro to R_final.pptx)       
 1. LMS Mod 1 - [Introduction Rmd File](./01_Introduction.Rmd) 
 2. LMS Mod 4 - [Flat data](./04_flatdata_inclass.Rmd)
 3. LMS Mod 7 - [Getting Data: Web Sources](./07_webscraping_updated.Rmd)
