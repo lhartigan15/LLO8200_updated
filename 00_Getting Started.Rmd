@@ -39,7 +39,9 @@ Here is the list of packages you'll definitely want to install for this semester
 
 What if you don't want to spend time checking to see if these packages are already installed on your system? Wouldn't it be great if you could have R check whether or not something was installed and then, if not, install it? Well - it's your lucky day! There's an R package for that! It's called `pacman`. First, install the pacman package (do this in your console). Then you can use the `p_load` function. This function checks to see if a package is installed and, if it's not, it installs it for you. I went ahead and put this in a code chunk, but you could also run it in your console. Pacman doesn't install things that are already installed, so it won't interfere with knitting (like the `install.packages` function does when you put it in your .Rmd file). 
 ```{r}
-pacman::p_load(caret,flexclust,forcats,ggpubr,glmnet,gridExtra,knitr,LICORS,lubridate,modelr,plotly,probably,readxl,rvest,stats,tidycensus,tidymodels,tidyverse,tigris,yardstick)
+pacman::p_load(caret,flexclust,forcats,ggpubr,glmnet,gridExtra,knitr, 
+               LICORS,lubridate,modelr,plotly,probably,readxl,rvest,
+               stats,tidycensus,tidymodels,tidyverse,tigris,yardstick)
 ```
 
 Once you have packages installed and you know what you're going to need for a given R session, you can go ahead and load them using the library function. Remember, the order you load them in matters. Pay attention to package conflicts. Go ahead and load the following three packages (in this order): `forcats`, `knitr`, `tidyverse`. Did you have any package conflicts? 
@@ -62,11 +64,16 @@ collegesc<-as.data.frame(sc)
 
 # IF the data is saved elsewhere, I need to tell R where it is:
 #setwd("C:/Users/lacey/Google Drive/Teaching/Vanderbilt/LLO 8200 - Data Science/Async .Rmd files")
+#Note - I typically don't set the working directory in a code chunk - I do it in the console.
 
 #I can run the function getwd() to confirm that it's what I want it to be
-#getwd()
+#getwd() 
+#again, I rarely put this in my code file (run it in the console)
 
 #you can also use drop downs under the FILES tab to the right OR you can use the "Session" tab at the top. Note that any time you use a point-and-click method and it isn't in code in your .Rmd when you go to knit, R will NOT point and click for you. 
+
+#Another foolproof way to read in the data - use the file path
+load("G:/My Drive/Teaching/Vanderbilt/LLO 8200 - Data Science/Async .Rmd files/college.Rdata")
 ```
 
 Let's plot a univariate graphic for one of the variables in our dataset. I'm interested in the distribution of admission rates across the 125 colleges in our dataset. We're going to use ggplot this term A LOT. Let's start now. 
