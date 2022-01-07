@@ -37,11 +37,11 @@ Here is the list of packages you'll definitely want to install for this semester
 -tigris
 -yardstick
 
-But what if you don't want to spend time checking to see if these packages are already installed on your system? Wouldn't it be great if you could have R check whether or not something was installed and then, if not, install it? Well - it's your lucky day! There's an R package for that! It's called `pacman`. First, install the pacman package (do this in your console). Then you can use the `p_load` function. This function checks to see if a package is installed and, if it's not, it installs it for you. I went ahead and put this in a code chunk, but you could also run it in your console. Pacman doesn't install things that are already installed, so it won't interfere with knitting (like the `install.packages` function can). 
+But what if you don't want to spend time checking to see if these packages are already installed on your system? Wouldn't it be great if you could have R check whether or not something was installed and then, if not, install it? Well - it's your lucky day! There's an R package for that! It's called `pacman`. First, install the pacman package (do this in your console). Then you can use the `p_load` function. This function checks to see if a package is installed and, if it's not, it installs it for you. I went ahead and put this in a code chunk, but you could also run it in your console (preferred). 
 ```{r}
 pacman::p_load(caret,flexclust,forcats,ggpubr,glmnet,gridExtra,knitr, 
                LICORS,lubridate,modelr,plotly,probably,readxl,rvest,
-               stats,tidycensus,tidymodels,tidyverse,tigris,yardstick)
+               tidycensus,tidymodels,tidyverse,tigris,yardstick)
 ```
 
 Once you have packages installed and you know what you're going to need for a given R session, you can go ahead and load them using the library function. Remember, the order you load them in matters. Pay attention to package conflicts. Go ahead and load the following three packages (in this order): `forcats`, `knitr`, `tidyverse`. Did you have any package conflicts? 
@@ -63,7 +63,7 @@ load("college.Rdata")
 ```
 
 If the data is saved somewhere other than my working directory, I need to tell R where it is. I can do this a couple of ways. I could change my working directory using the setwd() function. Again, I typically set this outside of a code chunk (in the console). The working directory is the location you want R to look for your dataset. On my system, for this session, that is:
-"C:/Users/lacey/Google Drive/Teaching/Vanderbilt/LLO 8200 - Data Science/Async .Rmd files"
+"G:/My Drive/Teaching/Vanderbilt/LLO 8200 - Data Science/Async .Rmd files"
 
 I'm going to demonstrate resetting the working directory using setwd() in the console right now. 
 
@@ -72,6 +72,7 @@ You can also set the working directory using dropdowns; I'll demonstrate that no
 Here's another foolproof way to read in the data: using a file path. This is particularly great if you're going to want to read in multiple data files from different folders. 
 ```{r}
 load("G:/My Drive/Teaching/Vanderbilt/LLO 8200 - Data Science/Async .Rmd files/college.Rdata")
+#NOTE: You MUST comment out line 74 OR change this to a path on your computer before knitting - don't forget, you still need the file name at the end
 ```
 
 When you use the `load` function to import an R dataset, R brings in the name from when the file was saved (this was determined by whoever saved it). Let's say we want to rename it. 
