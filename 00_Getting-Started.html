@@ -173,7 +173,7 @@ pre code {
 <p>You’ll be off to a great start if you go ahead and install the packages we’ll be using this term. We may always add more (and you will undoubtedly end up installing more for your group projects), but why not get ahead at the beginning? Recall that, in order to install packages, you’ll need to use the <code>install.packages</code> function. If you want to install more than one packages at once, you can pass them in a vector together. Like so:</p>
 <p><code>install.packages(c(&quot;tidyverse&quot;, &quot;haven&quot;, &quot;readxl&quot;))</code></p>
 <p>Remember, it’s always recommended to put installation code in the console (NOT in your .Rmd script file) because we don’t want R to install the package over and over. It wastes time AND can interfere with knitting.</p>
-<p>Here is the list of packages you’ll definitely want to install for this semester: -caret -flexclust -forcats -ggpubr -glmnet -gridExtra -knitr -LICORS -lubridate -modelr -plotly -probably -readxl -rvest -stats -tidycensus -tidymodels -tidyverse -tigris -yardstick</p>
+<p>Here is the list of packages you’ll definitely want to install for this semester: -caret -flexclust -forcats -ggpubr -glmnet -gridExtra -knitr -LICORS -lubridate -modelr -plotly -probably -readxl -rvest -tidycensus -tidymodels -tidyverse -tigris -yardstick</p>
 <p>But what if you don’t want to spend time checking to see if these packages are already installed on your system? Wouldn’t it be great if you could have R check whether or not something was installed and then, if not, install it? Well - it’s your lucky day! There’s an R package for that! It’s called <code>pacman</code>. First, install the pacman package (do this in your console). Then you can use the <code>p_load</code> function. This function checks to see if a package is installed and, if it’s not, it installs it for you. I went ahead and put this in a code chunk, but you could also run it in your console (preferred).</p>
 <pre class="r"><code>pacman::p_load(caret,flexclust,forcats,ggpubr,glmnet,gridExtra,knitr, 
                LICORS,lubridate,modelr,plotly,probably,readxl,rvest,
@@ -194,7 +194,7 @@ load(&quot;college.Rdata&quot;)
 <p>You can also set the working directory using dropdowns; I’ll demonstrate that now as well.</p>
 <p>Here’s another foolproof way to read in the data: using a file path. This is particularly great if you’re going to want to read in multiple data files from different folders.</p>
 <pre class="r"><code>load(&quot;G:/My Drive/Teaching/Vanderbilt/LLO 8200 - Data Science/Async .Rmd files/college.Rdata&quot;)
-#NOTE: You MUST comment out line 74 OR change this to a path on your computer before knitting - don&#39;t forget, you still need the file name at the end</code></pre>
+#NOTE: You MUST comment out the code here OR change this to a path on your computer before knitting - and don&#39;t forget the file name at the end.</code></pre>
 <p>When you use the <code>load</code> function to import an R dataset, R brings in the name from when the file was saved (this was determined by whoever saved it). Let’s say we want to rename it.</p>
 <pre class="r"><code>#I want to rename the dataset as collegesc
 collegesc&lt;-as.data.frame(sc)</code></pre>

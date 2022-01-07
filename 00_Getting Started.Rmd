@@ -30,7 +30,6 @@ Here is the list of packages you'll definitely want to install for this semester
 -probably
 -readxl
 -rvest
--stats
 -tidycensus
 -tidymodels
 -tidyverse
@@ -72,7 +71,7 @@ You can also set the working directory using dropdowns; I'll demonstrate that no
 Here's another foolproof way to read in the data: using a file path. This is particularly great if you're going to want to read in multiple data files from different folders. 
 ```{r}
 load("G:/My Drive/Teaching/Vanderbilt/LLO 8200 - Data Science/Async .Rmd files/college.Rdata")
-#NOTE: You MUST comment out line 74 OR change this to a path on your computer before knitting - don't forget, you still need the file name at the end
+#NOTE: You MUST comment out the code here OR change this to a path on your computer before knitting - and don't forget the file name at the end.
 ```
 
 When you use the `load` function to import an R dataset, R brings in the name from when the file was saved (this was determined by whoever saved it). Let's say we want to rename it. 
