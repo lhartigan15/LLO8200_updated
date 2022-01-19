@@ -1,5 +1,4 @@
 ## Data Science (LLO8200)
-**I am in the process of updating this for Spring 2022 - I will remove this sentence once updating is complete.**
 This is the course website for Professor Hartigan's sections of LLO 8200, Introduction to Data Science. Make sure you bookmark and check this page frequently for the most up-to-date files to use for both async and assignments. Over the course of the term code may be optimized or corrected. I will upload updated files here when that happens. You should have R, RStudio, and the tidyverse package installed and updated prior to the first day of class. Instructions for installing/updating R and Rstudio can be found [here](./Downloading Installing Updating R and RStudio.pdf).
 
 All files should be accessed from THIS page (not the LMS) to ensure you have the most up to date information. You are responsible for reviewing and ensuring you are following the schedule included in this semester's syllabus. The most up-to-date syllabus can always be found here and I will update the date when changes are made: [Hartigan's Spring 2022 LLO8200 Syllabus - 1/6/22](./Hartigan_LLO8200_syllabus_spring2022.pdf). 
@@ -10,7 +9,7 @@ If you want to set up email alerts for updates/additions to this site, you can u
 These are the .Rmd files that you will use in tandem with the async videos each week. The leading number corresponds to the week of the semester; the LMS Mod number corresponds to the LMS Module number for asynchronous content. Note that, if no video link is provided for a given topic, you should watch the associated async video(s) on the LMS. The first file below (LMS Mod 0) is the file we use for our bootcamp meeting. The R Setup Slide Deck includes good information on R/Rstudio structure and some troubleshooting tips.        
            
 LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lecture notes](./00_Getting-Started.html), [R Setup Slide Deck](./Intro to R_final.pptx)       
-1. LMS Mod 1 - [Introduction Rmd File](./01_Introduction.Rmd) 
+1. LMS Mod 1 - [Introduction Rmd File](./01_Introduction.Rmd); [Introduction knit File](./01_Introduction.html)
 2. LMS Mod 4 - [Flat data](./04_flatdata_inclass.Rmd)
 3. LMS Mod 7 - [Getting Data: Web Sources](./07_webscraping_updated.Rmd)
   * Async Video Locations (listed by section #):
