@@ -116,7 +116,8 @@ Note: these are all strong examples; but that doesn't mean they are all perfect.
 Because our syllabus differs slightly from what's in the LMS, the gradebook calculations won't be entirely accurate. If you'd like to keep track of your current average, here is a tool to help you do so. This properly weights the various course elements (note that you'll need to put in some "estimated" grades to populate an average). 
 * [Data Science Average Calculator](./Student Average Calculator.xlsx)
 
-The YAML headers conundrum... When you download an .Rmd file from this site, the YAML header will be removed (for some reason). Here is a sample header that you can reference when adding the header at the top of your .Rmd file. Remember, your header MUST begin on line 1 of your .Rmd file and the formatting must stay consistent in order for it to work (e.g., must begin with three dashes and end with three dashes).
+The YAML header conundrum... When you download an .Rmd file from this site, the YAML header will be removed (for some reason). Here is a sample header that you can reference when adding the header at the top of your .Rmd file. Remember, your header MUST begin on line 1 of your .Rmd file and the formatting must stay consistent in order for it to work (e.g., must begin with three dashes and end with three dashes).       
+
 ![YAML header](./YAML_header.JPG)
 
 There are a multitude of resources re. RStudio and RMarkdown on the web. Here is where I'll save some of my favorites. 
