@@ -122,6 +122,12 @@ We can look at the whole dataset using View.
 ## What does this data look like? Look at the first few rows, first few variables
 sc
 
+#what if I wanted to look at the first 20 rows? we can use the "head" function
+head(sc, 20)
+
+#what if I want to see the last 20 rows? there's a "tail" function for that
+tail(sc, 20)
+
 ## This is commented as you might not always want to run it, particularly when you're knitting your file. Delete the "#" sign below in order to run the command. 
 #View(sc)
 ```
@@ -198,4 +204,4 @@ sc%>%
   filter(instnm=="University of North Carolina at Chapel Hill")%>%
   select(instnm, adm_rate) 
 ```
-
+Note: The answer in the async is incorrect. The right answer for the admission rate @ UNC Chapel Hill is: 0.3396. 
