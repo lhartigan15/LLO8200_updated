@@ -76,22 +76,22 @@ LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lectu
 * [SFO dataset](./sfo.RData)
 * [Za full dataset](./za.RData)
 
-### Assignments
-Each assignment (problem set) should be uploaded to the LMS _before_ we meet for live session on the given due date. All assignment submissions must include two files to receive credit:
+### Problem Set
+Each problem set should be uploaded to the LMS _before_ we meet for live session on the given due date. All submissions must include two files to receive credit:
 1. .Rmd code file.
-2. "Knit" assignment file. The knit file can be in pdf or html (pdf is preferred). 
+2. "Knit" file. The knit file can be in pdf or html (pdf is preferred). 
 
 Note that you must upload BOTH files BEFORE you hit "submit" in the LMS; if you try to submit them one at a time, it will only allow you to upload one. Also, you are responsible for reviewing the files before uploading (check formatting, output, etc.). I will not accept submissions via email (unless there are extenuating circumstances). **There will be a penalty for submissions not meeting these requirements.**
 
-All assignments are graded on a 100-point scale. Corrections can be submitted for any assignment and you can earn up to half of the deducted points back. You have one week from the time you receive feedback on the assignment to submit corrections.
+All problem sets are graded on a 100-point scale. Corrections can be submitted for any problem set and you can earn up to half of the deducted points back. You have one week from the time you receive feedback to submit corrections.
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
-| [Assignment 1 placeholder] | 02/09/22 |
-| [Assignment 2 placeholder] | 02/23/22 |
-| [Assignment 3 placeholder] | 03/16/22 |
-| [Assignment 4 placeholder] | 04/06/22 |
-| [Assignment 5 placeholder] | 04/27/22 |
+| [Problem Set 1 Rmd File](./01_ProblemSet_Mods1_4_7_starter.Rmd); [PS1 pdf](./01_ProblemSet_Mods1_4_7_starter.pdf) | 02/09/22 |
+| [Problem Set 2 placeholder] | 02/23/22 |
+| [Problem Set 3 placeholder] | 03/16/22 |
+| [Problem Set 4 placeholder] | 04/06/22 |
+| [Problem Set 5 placeholder] | 04/27/22 |
 
 ### Final Project Materials
 * [Final Project Expectations and Rubrics placeholder] - both final products due 05/04/22
