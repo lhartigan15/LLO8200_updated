@@ -1,5 +1,5 @@
 ## Data Science (LLO8200)
-This is the course website for Professor Hartigan's sections of LLO 8200, Introduction to Data Science. Make sure you bookmark and check this page frequently for the most up-to-date files to use for both async and assignments. Over the course of the term code may be optimized or corrected. I will upload updated files here when that happens. You should have R, RStudio, and the tidyverse package installed and updated prior to the first day of class. Instructions for installing/updating R and Rstudio can be found [here](./Downloading Installing Updating R and RStudio.pdf).
+This is the course website for Professor Hartigan's sections of LLO 8200, Introduction to Data Science. Make sure you bookmark and check this page frequently for the most up-to-date files to use for both async and problem sets. Over the course of the term code may be optimized or corrected. I will upload updated files here when that happens. You should have R, RStudio, and the tidyverse package installed and updated prior to the first day of class. Instructions for installing/updating R and Rstudio can be found [here](./Downloading Installing Updating R and RStudio.pdf).
 
 All files should be accessed from THIS page (not the LMS) to ensure you have the most up to date information. You are responsible for reviewing and ensuring you are following the schedule included in this semester's syllabus. The most up-to-date syllabus can always be found here and I will update the date when changes are made: [Hartigan's Spring 2022 LLO8200 Syllabus - 1/6/22](./Hartigan_LLO8200_syllabus_spring2022.pdf). 
 
@@ -9,21 +9,21 @@ If you want to set up email alerts for updates/additions to this site, you can u
 These are the .Rmd files that you will use in tandem with the async videos each week. The leading number corresponds to the week of the semester; the LMS Mod number corresponds to the LMS Module number for asynchronous content. Note that, if no video link is provided for a given topic, you should watch the associated async video(s) on the LMS. The first file below (LMS Mod 0) is the file we use for our bootcamp meeting. The R Setup Slide Deck includes good information on R/Rstudio structure and some troubleshooting tips.        
            
 LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lecture notes](./00_Getting-Started.html), [R Setup Slide Deck](./Intro to R_final.pptx)       
-1. LMS Mod 1 - [Introduction Rmd File](./01_Introduction.Rmd); [Introduction knit File](./01_Introduction.html)
-2. LMS Mod 4 - [Flat data](./04_flatdata_inclass.Rmd)
-3. LMS Mod 7 - [Getting Data: Web Sources](./07_webscraping_updated.Rmd)
+1. LMS Mod 1 - [Introduction .Rmd File](./01_Introduction.Rmd); [Introduction knit File](./01_Introduction.html)
+2. LMS Mod 4 - [Flat data .Rmd File](./04_flatdata_inclass.Rmd)
+3. LMS Mod 7 - [Getting Data: Web Sources .Rmd File](./07_webscraping_updated.Rmd)
   * Async Video Locations (listed by section #):
     * Lectures 7.1-7.3 - view on LMS
     * [Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
     * Lecture 7.5 - view on LMS
-4. LMS Mod 2 - [Conditional Means Rmd File](./02_Conditional Means_inclass.Rmd) 
+4. LMS Mod 2 - [Conditional Means .Rmd File](./02_Conditional Means_inclass.Rmd) 
   * Async Video Locations (listed by section #):
     * Lecture 2.1 - view on LMS
     * [Lectures 2.2 through 2.5 video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
     * Lectures 2.7 and 2.8 - view on LMS
     * [Lectures 2.6 and 2.9 video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
-5. LMS Mod 3 - [Descriptive Plots](./03_DescriptivePlots_inclass.Rmd) 
-6. LMS Mod 5 - [Regression - part 1](./05_regression_updated_inclass.Rmd), [Regression - part 2](./05_regression_part2.Rmd)
+5. LMS Mod 3 - [Descriptive Plots .Rmd File](./03_DescriptivePlots_inclass.Rmd) 
+6. LMS Mod 5 - [Regression - part 1 .Rmd File](./05_regression_updated_inclass.Rmd), [Regression - part 2 .Rmd File](./05_regression_part2.Rmd)
   * Async Video Locations (listed by section #):
     * Lecture 5.1 - view on LMS
     * [Lecture 5.2 video](https://youtu.be/8P5CLj5Vy70)
@@ -31,9 +31,9 @@ LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lectu
     * [Lecture 5.4a video](https://www.youtube.com/watch?v=llfHYO_MujY)
     * [Lecture 5.4b video](https://www.youtube.com/watch?v=hm33VbjQZMY)
     * Lecture 5.5 - view on LMS
-7. LMS Mod 6 - [Scatterplots](./06_scatterplots_inclass.Rmd)
+7. LMS Mod 6 - [Scatterplots .Rmd File](./06_scatterplots_inclass.Rmd)
 8. In-class group work
-9. LMS Mod 8 (part 1) - [Analyzing Data: Classification](./08_classification_inclass.Rmd) -- Note, we are stretching this out over two weeks! This first week will cover up to line 252 in this attached/updated code.
+9. LMS Mod 8 (part 1) - [Analyzing Data: Classification .Rmd File](./08_classification_inclass.Rmd) -- Note, we are stretching this out over two weeks! This first week will cover up to line 252 in this attached/updated code.
   * Async Video Locations (listed by section #):
     * Lecture 8.1 - view on LMS
     * [Lecture 8.2 & 8.3 video](https://www.youtube.com/watch?v=IIEvyvsVO7Q)
@@ -44,8 +44,8 @@ LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lectu
     * Some additional resources for logistic regression: 
     * You can find a great/succinct explanation of the process and understanding each piece [HERE.](https://medium.com/analytics-vidhya/a-guide-to-machine-learning-in-r-for-beginners-part-5-4c00f2366b90) While some of the code they use here is different than what we use, the overall principles/explanations are the same.
     * Here is a nice clear powerpoint detailing interpretations for odds ratios/output for logistic regression: [logistic regression PPT](./LogisticRegression_11-17-20.pptx)
-11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification](./09_plots_classification_inclass.Rmd)
-12. LMS Mod 10 - [Cross-Validation](./10m_cross_validation_updated.Rmd)
+11. LMS Mod 9 - [Presenting Data: Plots and Tables for Classification .Rmd File](./09_plots_classification_inclass.Rmd)
+12. LMS Mod 10 - [Cross-Validation .Rmd File](./10m_cross_validation_updated.Rmd)
     * Lecture 10.1 - view on LMS
     * [Lecture 10.2.1 video](https://youtu.be/Q78A2M226z4)
     * [Lecture 10.2.2 video](https://youtu.be/i1wi9DhC9Jc)
@@ -87,7 +87,7 @@ All problem sets are graded on a 100-point scale. Corrections can be submitted f
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
-| [Problem Set 1 Rmd File](./01_ProblemSet_Mods1_4_7_starter.Rmd); [PS1 pdf](./01_ProblemSet_Mods1_4_7_starter.pdf) | 02/09/22 |
+| [Problem Set 1 .Rmd File](./01_ProblemSet_Mods1_4_7_starter.Rmd); [Problem Set 1 pdf](./01_ProblemSet_Mods1_4_7_starter.pdf) | 02/09/22 |
 | [Problem Set 2 placeholder] | 02/23/22 |
 | [Problem Set 3 placeholder] | 03/16/22 |
 | [Problem Set 4 placeholder] | 04/06/22 |
