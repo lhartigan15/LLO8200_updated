@@ -76,7 +76,7 @@ LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lectu
 * [SFO dataset](./sfo.RData)
 * [Za full dataset](./za.RData)
 
-### Problem Set
+### Problem Sets
 Each problem set should be uploaded to the LMS _before_ we meet for live session on the given due date. All submissions must include two files to receive credit:
 1. .Rmd code file.
 2. "Knit" file. The knit file can be in pdf or html (pdf is preferred). 
