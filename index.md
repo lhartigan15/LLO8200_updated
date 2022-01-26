@@ -11,7 +11,7 @@ These are the .Rmd files that you will use in tandem with the async videos each 
 LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lecture notes](./00_Getting-Started.html), [R Setup Slide Deck](./Intro to R_final.pptx)       
 1. LMS Mod 1 - [Introduction .Rmd File](./01_Introduction.Rmd); [Introduction knit File](./01_Introduction.html)
 2. LMS Mod 4 - [Flat data .Rmd File](./04_flatdata_inclass.Rmd)
-3. LMS Mod 7 - [Getting Data: Web Sources .Rmd File](./07_webscraping_updated.Rmd)
+3. LMS Mod 7 - [Getting Data: Web Sources .Rmd File - added more API key instructions 1/26/22](./07_webscraping_updated.Rmd)
   * Async Video Locations (listed by section #):
     * Lectures 7.1-7.3 - view on LMS
     * [Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
