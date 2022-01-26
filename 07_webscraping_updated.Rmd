@@ -172,10 +172,20 @@ v18%>%
 
 You'll need to add the key you received from the Census bureau below. ONLY INSTALL YOUR API KEY ONE TIME! After you've installed it, re-comment out the code in the code chunk below. Pay attention to the alerts you get while installing, you may need to run one additional line of code. 
 ```{r}
-# Get your own key and insert that in for the XXXX below
+# I'm going to try to outline this step-by-step here.
+#1. Get your own key (using the link provided at the beginning of this .Rmd file) and insert that in for the XXXX in the code below that starts with acs_key. Make sure you keep the quotation marks and only replace the XXXX. Run this in your console, rather than in a code chunk. Remember to remove the # when you paste it into your console, before hitting "enter" to run it.
+
 #acs_key<-"XXXX"
 
+#2. Run the next code line (also run this in your console - remember to remove the #). 
+
 #census_api_key(acs_key, install=T)
+
+#3. R will HOPEFULLY give you this message after running the census_api_key code above: "Your API key has been stored in your .Renviron and can be accessed by Sys.getenv("CENSUS_API_KEY"). To use now, restart R or run `readRenviron("~/.Renviron")` 
+
+#4. Per R's instruction, you either need to restart R OR, you can run the code line below (again, in the console and, again, remove the # before running):
+
+#readRenviron("~/.Renviron")
 ```
 
 
