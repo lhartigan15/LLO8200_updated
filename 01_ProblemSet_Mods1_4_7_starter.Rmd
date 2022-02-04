@@ -26,7 +26,7 @@ This assignment is comprised of three parts: Part 1 (Mod #1), Part 2 (Mod #4), a
 
 ### Part 1.
 
-For this part, you'll be working with another piece of the College Scorecard dataset ("College DEBT dataset" from the course website) to predict the debt of college graduates using conditional means. You'll need to select the college-level characteristics that you think might be related to eventual debt.  
+For this part, you'll be reading in a dataset (be sure it's the right one!) and answering a few questions about it below.  
 
 1. Import/load the "sc_debt" R dataset here. 
 ```{r}
@@ -50,9 +50,12 @@ For this part, you'll be working with another piece of the College Scorecard dat
 
 1d. How many variables are in this dataset? 
 
+
+
+
 ### Part 2. 
 
-For this part, you'll need to open up, clean, and save datasets using the tools we've gone over in class. For each dataset, make sure that when you're done you have a nice, neatly labeled dataset that would be easy for you or another analyst to open and analyze. Some of the datasets may need no/minimal cleaning. Some may need cleaning. Save each dataset as an `RData` file. You will upload each saved R dataset to the LMS with your knit pdf and .Rmd file. 
+For this part, you'll need to open up, clean, and save datasets using the tools we've gone over in class. For each dataset, make sure that when you're done you have a nice, neat dataset that would be easy for you or another analyst to open and analyze. Some of the datasets may need no/minimal cleaning. Some may need cleaning. Save each dataset as an `RData` file. You will need to upload each saved R dataset to the LMS with your knit pdf and .Rmd file. 
 
 **PLEASE NOTE: You can't just copy these links into your code. You need to figure out the format for the data. Take a look at the website to figure out what kind of data is there; then use the appropriate code in R to import it. Additionally, a CLEAN dataset means one that could be easily opened by another analyst and used immediately (e.g., has variable names, one observation per row, etc.).**
 
@@ -78,17 +81,19 @@ For this part, you will be accessing the American Community Survey (ACS) data. Y
 
 ```
 
-4a. How many observations are in your dataset? 
-
-4b. What does each observation in this dataset represent? 
-
-
-5. Compute the proportion of the population that has an associate’s degree or above in each TN county. Print the first several rows of your new dataset (hint: use the head() function). Do NOT print the whole dataset, please.
+5. Compute the proportion of the population that has an associate’s degree or above in each TN county (Hint: first you need to "spread" the data out). Print the first several rows of your new dataset (hint: use the head() function). Do NOT print the whole dataset, please.
 ```{r}
 
 ```
 
-5a. Which county has the highest proportion of the population with an associate's degree or above? 
+5a. How many observations are in your dataset now? 
+
+
+5b. What does each observation in this dataset represent? 
+
+
+5c. Which county has the highest proportion of the population with an associate's degree or above? 
+
 
 
 6. Download data for all of the counties in TN on household income.
@@ -96,15 +101,17 @@ For this part, you will be accessing the American Community Survey (ACS) data. Y
 
 ```
 
-6a. How many observations are in this dataset?
 
-
-6b. What does each observation in this dataset represent?
-
-
-7. Compute the proportion of the population that has a household income above $50,000 in each TN county. Print the first several rows of your new dataset (hint: use the head() function). Do NOT print the whole dataset, please.
+7. Compute the proportion of the population that has a household income above $50,000 in each TN county (Hint: again, you need to "spread" the data out). Print the first several rows of your new dataset (hint: use the head() function). Do NOT print the whole dataset, please.
 ```{r}
 
 ```
 
-7a. Which county has the highest proportion of the population with a household income above $50k? 
+
+7a. How many observations are in this dataset now?
+
+
+7b. What does each observation in this dataset represent?
+
+
+7c. Which county has the highest proportion of the population with a household income above $50k? 
