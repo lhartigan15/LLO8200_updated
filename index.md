@@ -87,7 +87,7 @@ All problem sets are graded on a 100-point scale. Corrections can be submitted f
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
-| [Problem Set 1 .Rmd File](./01_ProblemSet_Mods1_4_7_starter.Rmd); [Problem Set 1 pdf] | 02/09/22 |
+| [Problem Set 1 .Rmd File](./01_ProblemSet_Mods1_4_7_starter.Rmd); [Problem Set 1 pdf](./01_ProblemSet_Mods1_4_7_starter.pdf) | 02/09/22 |
 | [Problem Set 2 placeholder] | 02/23/22 |
 | [Problem Set 3 placeholder] | 03/16/22 |
 | [Problem Set 4 placeholder] | 04/06/22 |
