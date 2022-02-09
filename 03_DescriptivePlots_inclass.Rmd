@@ -1,8 +1,8 @@
 ---
 title: "Week 3 - Presenting Data: Descriptive Plots"
 output:
-  pdf_document: default
-  html_document: default
+    html_document: 
+        theme: cerulean
 ---
 
 # Presenting Data: Plotting Conditional Means {#plot_means}
@@ -207,9 +207,10 @@ gg
 
 #fun with colors - you can customize EVERYTHING on your ggplot - you can remove things, add things; make your plot look how you want it to! A simple custom color example (note, here I have TWO groups, so I need TWO colors): I'm using dark blue for female; dark green for male (mostly because I really like these colors)
 mycolors<-c("#1c4869", "#48691c")
+
 gg<-gg +
-  scale_fill_manual(values=mycolors) +
-  scale_color_manual(values=mycolors)
+  scale_fill_manual(values=mycolors) + #changes fill of bars color
+  scale_color_manual(values=mycolors) #changes border color
 gg
 ```
 
@@ -241,24 +242,6 @@ gg<-ggplot(at_sum2, aes(x=fct_reorder(Department, attr_avg), y=attr_avg, color=E
   geom_bar(stat="identity", aes(fill=EducationField), position="dodge") + 
   ylab("Pr(Attrition)") +
   xlab("Department")
-gg
-```
-
-_Side_ _Note_: Colors
-
-What if we want to change colors? This is a little tricky for most people at first. `ggplot` thinks in terms of palettes, so you need to associate a palette with a characteristics of the graphic. Below, I replace the default palette with my own ugly one. 
-
-```{r}
-## Changing Colors--note, this example just has TWO colors, so we need a plot that only needs two colors. Go up and re-run your bar plot for attrition and gender code so that our "gg" only needs 2 colors. 
-mypal<-c("cornflowerblue", "gold")
-
-gg<-gg +
-  scale_fill_manual(values=mypal) #changes interior of bars (or FILL)
-
-gg<-gg +
-  scale_color_manual(values=mypal) #changes bar borders
-
-## Print
 gg
 ```
 
