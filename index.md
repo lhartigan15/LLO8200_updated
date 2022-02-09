@@ -9,20 +9,20 @@ If you want to set up email alerts for updates/additions to this site, you can u
 These are the .Rmd files that you will use in tandem with the async videos each week. The leading number corresponds to the week of the semester; the LMS Mod number corresponds to the LMS Module number for asynchronous content. Note that, if no video link is provided for a given topic, you should watch the associated async video(s) on the LMS. The first file below (LMS Mod 0) is the file we use for our bootcamp meeting. The R Setup Slide Deck includes good information on R/Rstudio structure and some troubleshooting tips.        
            
 LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lecture notes](./00_Getting-Started.html), [R Setup Slide Deck](./Intro to R_final.pptx)       
-1. LMS Mod 1 - [Introduction .Rmd File](./01_Introduction.Rmd); [Introduction knit File](./01_Introduction.html)
+1. LMS Mod 1 - [Introduction .Rmd File](./01_Introduction.Rmd); [Introduction Lecture Notes](./01_Introduction.html)
 2. LMS Mod 4 - [Flat data .Rmd File](./04_flatdata_inclass.Rmd)
 3. LMS Mod 7 - [Getting Data: Web Sources .Rmd File - added more API key instructions 1/26/22](./07_webscraping_updated.Rmd)
   * Async Video Locations (listed by section #):
     * Lectures 7.1-7.3 - view on LMS
     * [Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
     * Lecture 7.5 - view on LMS
-4. LMS Mod 2 - [Conditional Means .Rmd File](./02_Conditional Means_inclass.Rmd), [Conditional Means knit File](./02_Conditional-Means_inclass.html)
+4. LMS Mod 2 - [Conditional Means .Rmd File](./02_Conditional Means_inclass.Rmd), [Conditional Means Lecture Notes](./02_Conditional-Means_inclass.html)
   * Async Video Locations (listed by section #):
     * Lecture 2.1 - view on LMS
     * [Lectures 2.2 through 2.5 video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
     * Lectures 2.7 and 2.8 - view on LMS
     * [Lectures 2.6 and 2.9 video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
-5. LMS Mod 3 - [Descriptive Plots .Rmd File](./03_DescriptivePlots_inclass.Rmd), [Descriptive Plots knit File](./03_DescriptivePlots_inclass.html)
+5. LMS Mod 3 - [Descriptive Plots .Rmd File](./03_DescriptivePlots_inclass.Rmd), [Descriptive Plots Lecture Notes](./03_DescriptivePlots_inclass.html)
 6. LMS Mod 5 - [Regression - part 1 .Rmd File](./05_regression_updated_inclass.Rmd), [Regression - part 2 .Rmd File](./05_regression_part2.Rmd)
   * Async Video Locations (listed by section #):
     * Lecture 5.1 - view on LMS
