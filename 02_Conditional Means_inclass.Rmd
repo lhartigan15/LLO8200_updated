@@ -1,8 +1,9 @@
 ---
 title: "Week 2: Conditional Means"
 author: "Lacey Hartigan"
-date: "09/01/21"
-output: pdf_document
+output:
+    html_document: 
+        theme: cerulean
 ---
 
 # Analyzing Data: Conditional Means
@@ -38,7 +39,12 @@ library(yardstick)
 This week we'll use another dataset from the college scorecard, this one focused on student debt. Here are the variable names and definitions:
 
 ```{r}
-df <- readRDS("sc_debt.Rdata") #read RDS reads in R datafiles
+#df <- readRDS("sc_debt.Rdata") #read RDS reads in R datafiles
+#because we updated the datafile earlier this term - we need to use load() to import
+load("sc_debt.Rdata")
+
+#now I'm going to rename it so that I don't have to modify the rest of the code
+df<-as.data.frame(sc_debt)
 
 names(df) #provides list of variable names from dataset
 
@@ -137,7 +143,6 @@ df<-df%>%
 I added one more step: I ungrouped the dataset using `ungroup()`. It's good practice to do this at the end of an code chunk that uses the group function, otherwise other steps might be grouped in ways that were unintended. 
 
 We can then calculate the RMSE using our new prediction based on the conditional mean:
-
 ```{r}
 rmse_control<-df%>%
   rmse(grad_debt_mdn, mean_debt_control)
@@ -157,7 +162,7 @@ Grouping with multiple predictors works exactly the same way as with one predict
 df%>%
   group_by(control, preddeg)%>%
   summarize(mean_debt_control_degree=mean(grad_debt_mdn, na.rm=TRUE))%>%
-  arrange(-mean_debt_control_degree)%>%
+  arrange(mean_debt_control_degree)%>%
   ungroup()
 #How could we arrange this in descending order instead? 
 ```
