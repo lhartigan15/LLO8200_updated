@@ -16,13 +16,13 @@ LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lectu
     * Lectures 7.1-7.3 - view on LMS
     * [Lecture 7.4 video](https://www.youtube.com/watch?v=NHbs55PTb-g)
     * Lecture 7.5 - view on LMS
-4. LMS Mod 2 - [Conditional Means .Rmd File](./02_Conditional Means_inclass.Rmd) 
+4. LMS Mod 2 - [Conditional Means .Rmd File](./02_Conditional Means_inclass.Rmd), [Conditional Means knit File](./02_Conditional-Means_inclass.html)
   * Async Video Locations (listed by section #):
     * Lecture 2.1 - view on LMS
     * [Lectures 2.2 through 2.5 video](https://www.youtube.com/watch?v=NQtvxw9CNCU)
     * Lectures 2.7 and 2.8 - view on LMS
     * [Lectures 2.6 and 2.9 video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
-5. LMS Mod 3 - [Descriptive Plots .Rmd File](./03_DescriptivePlots_inclass.Rmd) 
+5. LMS Mod 3 - [Descriptive Plots .Rmd File](./03_DescriptivePlots_inclass.Rmd), [Descriptive Plots knit File](./03_DescriptivePlots_inclass.html)
 6. LMS Mod 5 - [Regression - part 1 .Rmd File](./05_regression_updated_inclass.Rmd), [Regression - part 2 .Rmd File](./05_regression_part2.Rmd)
   * Async Video Locations (listed by section #):
     * Lecture 5.1 - view on LMS
