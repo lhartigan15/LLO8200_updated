@@ -141,7 +141,7 @@ For this research question, we're interested in understanding more about what pr
 
 
 
-14a. Did your updated two-predictor conditional model show an improvement over your last two models (unconditional and one-predictor)? How do you know? 
+14b. Did your updated two-predictor conditional model show an improvement over your last two models (unconditional and one-predictor)? How do you know? 
 
 
 
