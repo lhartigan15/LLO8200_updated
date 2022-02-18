@@ -13,7 +13,7 @@ output: pdf_document
 5. I expect that the .Rmd file you submit will run cleanly, and that the knit file won't contain any errors (LOOK at the knit file after you create it - if questions/text are running into each other, if you see error messages, etc., you're not done).      
 6. You can use comments to tell me what you are doing either in text or in code chunks, but remove "old" code that didn't run/work.      
 
-```{r}
+```{r, include=F}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(yardstick)
@@ -22,7 +22,7 @@ library(tidyverse)
 
 This assignment includes questions from Module 2 (conditional means) and Module 3 (descriptive plots). The questions are interspersed below - all plotting questions are from Module 3 and everything else is from Module 2. 
 
-For this research question, we're interested in understanding more about what predicts alumni earnings for a set of postsecondary institutions. We have a limited dataset (only 125 institutions) but we hope that (eventually) we could use the information about potential predictors from this study to inform predictions about a larger set of colleges. This analysis serves as our exploration of the data and our outcome of interest (md_earn_wne_p6 - the median earnings of graduates 6 years post graduation). 
+For this research question, we're interested in understanding more about what predicts alumni earnings for a set of postsecondary institutions. We hope that (eventually) we could use the information about potential predictors from this study to inform predictions about a larger set of colleges. This analysis serves as our exploration of the data and our outcome of interest (md_earn_wne_p6 - the median earnings of graduates 6 years post graduation). 
 
 1. Import/load the "sc_debt.Rdata" dataset here. 
 ```{r}
