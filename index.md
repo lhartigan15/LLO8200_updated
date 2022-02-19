@@ -23,7 +23,7 @@ LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lectu
     * Lectures 2.7 and 2.8 - view on LMS
     * [Lectures 2.6 and 2.9 video](https://www.youtube.com/watch?v=K3f-5fb-lL0)
 5. LMS Mod 3 - [Descriptive Plots .Rmd File](./03_DescriptivePlots_inclass.Rmd), [Descriptive Plots Lecture Notes](./03_DescriptivePlots_inclass.html)
-6. LMS Mod 5 - [Regression - part 1 .Rmd File](./05_regression_updated_inclass.Rmd), [Regression - part 2 .Rmd File](./05_regression_part2.Rmd)
+6. LMS Mod 5 - [Regression - part 1 .Rmd File](./05_regression_updated_inclass.Rmd), [Regression - part 1 Lecture Notes](./05_regression_updated_inclass.html), [Regression - part 2 .Rmd File](./05_regression_part2.Rmd), [Regression - part 2 Lecture Notes](./05_regression_part2.html)
   * Async Video Locations (listed by section #):
     * Lecture 5.1 - view on LMS
     * [Lecture 5.2 video](https://youtu.be/8P5CLj5Vy70)
