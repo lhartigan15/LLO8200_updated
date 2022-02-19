@@ -31,7 +31,7 @@ LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lectu
     * [Lecture 5.4a video](https://www.youtube.com/watch?v=llfHYO_MujY)
     * [Lecture 5.4b video](https://www.youtube.com/watch?v=hm33VbjQZMY)
     * Lecture 5.5 - view on LMS
-7. LMS Mod 6 - [Scatterplots .Rmd File](./06_scatterplots_inclass.Rmd)
+7. LMS Mod 6 - [Scatterplots .Rmd File](./06_scatterplots_inclass.Rmd), [Scatterplots Lecture Notes](./06_scatterplots_inclass.html)
 8. In-class group work
 9. LMS Mod 8 (part 1) - [Analyzing Data: Classification .Rmd File](./08_classification_inclass.Rmd) -- Note, we are stretching this out over two weeks! This first week will cover up to line 252 in this attached/updated code.
   * Async Video Locations (listed by section #):
