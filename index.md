@@ -122,6 +122,10 @@ The YAML header conundrum... When you download an .Rmd file from this site, the 
 
 ![YAML header](./YAML_header.JPG)
 
+Training & Testing & Workflows, OH MY! To help picture the workflow process we use to provide structure to our model-building-processes, Dr. Garcia drafted this excellent graphic. This will be useful for Modules 5, on. 
+
+![Workflow Graphic](./Workflow Chart Lesson 5.png)
+
 There are a multitude of resources re. RStudio and RMarkdown on the web. Here is where I'll save some of my favorites. 
 * [R Markdown Reference Guide](./rmarkdown-reference.pdf)
 * [R Markdown Cheat Sheet](./rmarkdown-cheatsheet.pdf)
