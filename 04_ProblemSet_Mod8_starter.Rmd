@@ -54,7 +54,7 @@ Research Topic: For this exercise, we are taking on the role of advisor at a loc
 ```
 
 
-4. Calculate the proportion of lemons by our first independent variable of interest: Make (4pts). 
+4. Calculate the proportion of lemons by our first independent variable of interest: `Make` (4pts). 
 ```{r}
 
 ```
@@ -86,7 +86,7 @@ Research Topic: For this exercise, we are taking on the role of advisor at a loc
 
 
 
-6. Let's plot the proportion of lemons by a third independent variable of interest: odometer reading (`VehOdo`). Because this variable is continuous, we should use a scatterplot to examine a possible association with our outcome. (6pts)
+6. Let's examine the proportion of lemons by a third independent variable of interest: odometer reading (`VehOdo`). Because this variable is continuous, let's break it into quintiles, or 5 groups (hint: use the ntiles code from the Module 2 .Rmd file) and then calculate conditional mean/proportions for those 5 groups. (6pts)
 ```{r}
 
 ```
