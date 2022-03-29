@@ -97,7 +97,7 @@ All problem sets are graded on a 100-point scale. Corrections can be submitted f
 * [Final Project Expectations](./Expectations for final presentation and product.pdf), [Final Project Rubrics](./Final Project Grader Report.pdf) - final products due 05/04/22
 * [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 02/16/22
 * [Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 03/23/22
-* [Progress Report 3 Instructions placeholder] - due 04/13/22
+* [Progress Report 3 Instructions](./Progress Report 3 - Instructions.pdf) - due 04/13/22
 
 #### Final Project Examples
 Note: these are all strong examples; but that doesn't mean they are all perfect. You should reference the supplied rubrics to ensure you're meeting all expectations. 
