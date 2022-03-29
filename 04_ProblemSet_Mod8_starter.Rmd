@@ -112,7 +112,7 @@ Research Topic: For this exercise, we are taking on the role of advisor at a loc
 ```
 
 
-9. Now, let's predict the probability of being a lemon using a logistic regression/classification model and the three independent variables we examined above (Make, Vehicle Year, and Odometer Reading). Run this model using your training data. In this chunk you should set the model, set up the recipe, define the model, put the workflow together, fit the results, and then present your tidy table (these are all the steps we went through together in the code - nothing new here). NOTE: PLEASE PUT `MAKE` as the LAST variable in your regression equation (so that the estimated for Vehicle Year and Odometer Reading are first in your results table). (10pts)
+9. Now, let's predict the probability of being a lemon using a logistic regression/classification model and the three independent variables we examined above (Make, Vehicle Age, and Odometer Reading). Run this model using your training data. In this chunk you should set the model, set up the recipe, define the model, put the workflow together, fit the results, and then present your tidy table (these are all the steps we went through together in the code - nothing new here). NOTE: PLEASE PUT `MAKE` as the LAST variable in your regression equation (so that the estimated for Vehicle Age and Odometer Reading are first in your results table). (10pts)
 ```{r}
 
 ```
