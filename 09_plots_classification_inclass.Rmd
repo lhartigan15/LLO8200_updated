@@ -8,8 +8,6 @@ Plots are rarely used in the context of classification, but they can aid underst
 
 We'll continue working with the random acts of pizza dataset. 
 ```{r}
-rm(list=ls())
-
 library(tidyverse)
 library(modelr)
 library(knitr)
@@ -46,11 +44,11 @@ kable(round(tab_student_prop*100, 1)) #this rounds this to the tenths place beca
 
 If you want to include a third variable in a cross tab, that requires splitting the dataset. For instance, if we want to know the proportion of posts that include "student" AND "grateful" that received pizza, we would do this:
 ```{r}
+#makes table filtered for ONLY those who had grateful in their post
 tab_student_grateful<-with(filter(za,
                            as.character(grateful)=="Grateful in post"),
                            table(student, got_pizza))
 tab_student_grateful
-#makes table filtered for ONLY those who had grateful in their post
 ```
 
 # Set up the code for the people who did NOT include grateful in post
@@ -83,17 +81,23 @@ za_sum
 
 Then we can plot this using our familiar ggplot commands:
 ```{r}
+#simple plot
 gg1<-ggplot(za_sum, aes(y=prob_pizza, x=student, fill=poor))+
+  geom_bar(stat="identity", position="dodge")
+gg1
+
+#prettying it up!
+gg1plus<-ggplot(za_sum, aes(y=prob_pizza, x=student, fill=poor))+
   geom_bar(stat="identity", position="dodge")+ 
   xlab("Student Status") + ylab("Probability of Receiving a Pizza")+ 
   theme(legend.title=element_blank())+#removes title from legend 
   scale_fill_manual(values=c("Poor not in post"="light blue", "Poor in post"="dark green"))+ 
   geom_text(aes(label=round(prob_pizza, 2)), #add data labels to bars
-                   position=position_dodge(width=.9), #matches positioning we originally specified above (see line 87); change the width# to adjust
+                   position=position_dodge(width=.9), #matches positioning we originally specified above (position="dodge"); change the width# to adjust
                    vjust=-.25)+ #adjusts the height of the labels relative to the bars
-  theme_classic() 
-
-  gg1
+  theme_classic()+ #removes the gray background and grid/etc. 
+    scale_y_continuous(expand=c(0,0), limits=c(0, max(za_sum$prob_pizza)+.01)) #do you hate the "floating" bars like I do? If so, this line will stop the floating madness (the expand part) and it also ensures that you can see all data labels (the limits part)
+gg1plus
 ```
 
 ## Heat Maps
@@ -109,7 +113,6 @@ za<-za%>%
 ```
 
 Then we'll create a summary dataset that shows the probabilities of the outcome across all of the combined categories of the two independent variables. 
-
 ```{R}
 za_sum<-za%>%
   group_by(score_quintile, karma_quintile)%>% #group by two IVs
@@ -117,9 +120,18 @@ za_sum<-za%>%
   arrange(-prob_pizza)%>% #arrange data by pred.probabilities (descending order)
   ungroup() 
 za_sum
+
+#notice that we have some data that are missing on our score/karma quintiles (this is because they were missing on the original variables). I don't want them in my final table/displays/etc. so I'm going to modify the code above to drop them
+za_sum2<-za%>%
+  group_by(score_quintile, karma_quintile)%>% 
+  drop_na()%>% #this is going to drop anything that's missing on my two group_by variables
+  dplyr::summarize(prob_pizza=mean(got_pizza, na.rm=TRUE))%>% 
+  arrange(-prob_pizza)%>% 
+  ungroup() 
+za_sum2
 ```
 
-Missing data isn't important, so we'll drop it. 
+Another way we could have dropped missing data is using filter 
 ```{r}
 za_sum<-za_sum%>%
   filter(!(is.na(score_quintile)),!(is.na(karma_quintile))) #!is.na = not missing
@@ -157,6 +169,7 @@ logit_mod<-glm(got_pizza ~ karma + total_posts + raop_posts + student + grateful
                family=binomial(link="logit"),
                y=TRUE)
 
+#GENERAL CODE:
 #logit_mod<-glm(y~x1+x2,
 #               family=binomial(link="logit"))
 
@@ -180,16 +193,15 @@ hypo_data<-data_grid(za,
 ```
 
 And now we're ready to plot. 
-
 ```{r}
-gg<-ggplot(hypo_data,
+gg_student_ttlposts<-ggplot(hypo_data,
            aes(x=total_posts, y=pred, color=student))+ 
   geom_line()+ 
   xlab("Total Posts") + ylab("Predicted Probability of Pizza")+ 
   scale_color_manual(values=c("No student"="magenta", "Student"="black"))+ 
   theme(legend.title=element_blank()) #remove legend title - not needed in this case
 
-gg
+gg_student_ttlposts
 ```
 
 ## How to do the same with Random Acts of Pizza posts (raop) varying
@@ -206,14 +218,14 @@ hypo_data2<-data_grid(za,
 
 
 ```{r}
-gg<-ggplot(hypo_data2,
+gg_student_raopposts<-ggplot(hypo_data2,
            aes(x=raop_posts, y=pred, color=student))+ 
   geom_line()+ 
   xlab("RAOP Posts") + ylab("Predicted Probability of Pizza")+ 
   scale_color_manual(values=c("No student"="cyan", "Student"="black"))+ 
   theme(legend.title=element_blank())
 
-gg
+gg_student_raopposts
 
 #This is the plot of predicted probability of Pizza Received by RAOP posts and whether poster was student or not (holding ttl posts, karma, and grateful constant).
 ```
