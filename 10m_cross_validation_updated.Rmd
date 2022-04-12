@@ -10,14 +10,13 @@ The essence of prediction is discovering the extent to which our models can pred
 
 This process does not have to be temporal. We can also have data that is out of sample because it hadn't yet been collected when our first data was collected, or we can also have data that is out of sample because we designated it as out of sample.
 
-The data that is used to generate our predictions is known as 
-*training* data. The idea is that this is the data used to train our model, to let it know what the relationship is between our predictors and our outcome. So far, we have worked mostly with training data. 
+The data that is used to generate our predictions is known as *training* data. The idea is that this is the data used to train our model, to let it know what the relationship is between our predictors and our outcome. So far, we have worked mostly with training data. 
 
 That data that is used to validate our predictions is known as *testing* data. With testing data, we take our trained model and see how good it is at predicting outcomes using out of sample data. 
 
 One very simple approach to this would be to cut our data in half. This is what we've done so far.  We could then train our model on half the data, then test it on the other half. This would tell us whether our measure of model fit (e.g. rmse, auc) is similar or different when we apply our model to out of sample data. 
 
-But this would only be a "one-shot" approach. It would be better to do this multiple times, cutting the data into two parts: training and testing, then fitting the model to the training data, and then checking its predictions against the testing data. That way, we could generate a large number of rmse's to see how well the model fits on lots of different possible out-of-sample predictions. 
+But this would only be a "one-shot" approach. It would be better to do this multiple times, cutting the data into two parts: training and testing, then fitting the model to the training data, and then checking its predictions against the testing data. That way, we could generate a large number of rmses to see how well the model fits on lots of different possible out-of-sample predictions. 
 
 This process is called *cross-fold validation*, and it involves two important decisions: first, how will the data be cut, and how many times will the validation run. 
 
@@ -40,17 +39,28 @@ pd<-pd%>%
 
 A quick look at this outcome lets us know it needs to be logged. 
 ```{r}
+#let's just look at outcome BEFORE we run the scatterplot
 pd%>%
-ggplot(aes(x=coll_grad_pc, y=median_home_val))+
-geom_point()
+  ggplot(aes(x=median_home_val))+
+  geom_density() #note that this is skewed right - logging it can help make it normal!
+
+pd%>%
+  ggplot(aes(x=coll_grad_pc, y=median_home_val))+
+  geom_point()
 ```
 
 
 ```{r}
+#just plotting outcome here with log transform -- note that I apply transform to x-axis here b/c we're using density plot
 pd%>%
-ggplot(aes(x=coll_grad_pc, y=median_home_val))+
-geom_point()+
-scale_y_continuous(trans="log")
+  ggplot(aes(x=median_home_val))+
+  geom_density()+
+  scale_x_continuous(trans="log") #this helped! Looks much more normal now
+
+pd%>%
+  ggplot(aes(x=coll_grad_pc, y=median_home_val))+
+  geom_point()+
+  scale_y_continuous(trans="log")
 ```
 
 
@@ -192,7 +202,7 @@ lasso_wf<-workflow()%>%
 lasso_mc_results<-
   fit_resamples(
     lasso_wf, ## Recipe: preps the data
-    pd_mc, ##resampling plan
+    pd_mc_rs, ##resampling plan
     control=control_resamples(save_pred = TRUE)
   )
 ```
@@ -265,7 +275,7 @@ logit_fit<-
 
 ## Set Resampling - Monte Carlo 
 ```{r}
-logit_mc_rs<-mc_cv(za,times=100)
+logit_mc_rs<-mc_cv(za, times=100)
 ```
 
 ## Creat Workflow for Logit Model
@@ -274,7 +284,6 @@ logit_wf<-workflow()%>%
   add_recipe(logit_rec)%>%
   add_model(logit_fit)
 ```
-
 
 ## Fit Logit Model to Resampled Data
 ```{r}
@@ -347,7 +356,7 @@ lasso_logit_mc<-
   tune_grid(
     lasso_logit_wf, 
     resamples=logit_mc_rs, ##resampling plan
-    grid=grid_max_entropy(parameters(lasso_logit_fit,size=9)),
+    grid=grid_max_entropy(parameters(lasso_logit_fit, size=9)),
     metrics = metric_set(roc_auc, sens, spec),
     control=control_resamples(event_level = "second")
   )
