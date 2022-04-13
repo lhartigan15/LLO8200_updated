@@ -91,7 +91,7 @@ All problem sets are graded on a 100-point scale. Corrections can be submitted f
 | [Problem Set 2 .Rmd File](./02_ProblemSet_Mods2_3_starter.Rmd); [Problem Set 2 pdf](./02_ProblemSet_Mods2_3_starter.pdf) | 02/23/22 |
 | [Problem Set 3 .Rmd File](./03_ProblemSet_Mods5_6_starter.Rmd); [Problem Set 3 pdf](./03_ProblemSet_Mods5_6_starter.pdf) | 03/16/22 |
 | [Problem Set 4 .Rmd File](./04_ProblemSet_Mod8_starter.Rmd); [Problem Set 4 pdf](./04_ProblemSet_Mod8_starter.pdf) | 04/06/22 |
-| [Problem Set 5 placeholder] | 04/27/22 |
+| [Problem Set 5 .Rmd File](./05_ProblemSet_Mod9and10_starter.Rmd); [Problem Set 5 pdf](./05_ProblemSet_Mod9and10_starter.pdf) | 04/27/22 |
 
 ### Final Project Materials
 * [Final Project Expectations](./Expectations for final presentation and product.pdf), [Final Project Rubrics](./Final Project Grader Report.pdf) - final products due 05/04/22
