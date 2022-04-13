@@ -39,11 +39,12 @@ pd<-pd%>%
 
 A quick look at this outcome lets us know it needs to be logged. 
 ```{r}
-#let's just look at outcome BEFORE we run the scatterplot
+#let's just look at outcome by itself BEFORE we run the scatterplot
 pd%>%
   ggplot(aes(x=median_home_val))+
   geom_density() #note that this is skewed right - logging it can help make it normal!
 
+#scatterplot of college grad and median home val
 pd%>%
   ggplot(aes(x=coll_grad_pc, y=median_home_val))+
   geom_point()
@@ -57,12 +58,12 @@ pd%>%
   geom_density()+
   scale_x_continuous(trans="log") #this helped! Looks much more normal now
 
+#scatterplot of college grad and median home val
 pd%>%
   ggplot(aes(x=coll_grad_pc, y=median_home_val))+
   geom_point()+
   scale_y_continuous(trans="log")
 ```
-
 
 ## Set the kind of model to run
 ```{r}
@@ -82,15 +83,15 @@ lm_formula<-as.formula("median_home_val~
 
 ## Define a recipe
 ```{r}
-lm_rec <- recipe(lm_formula, data = pd) %>%
-  step_log(all_outcomes())%>%
+lm_rec<-recipe(lm_formula, data = pd) %>%
+  step_log(all_outcomes())%>% #to adjust for skew of outcome
   step_zv(all_numeric()) %>% # drop any zero variance
   step_naomit(all_predictors()) ## drop any missing data
 ```
 
-## Specify the resampling: K fold resampling, K=10
+## Specify the resampling: K-fold resampling, K=10 (divides data into 9/10 training & 1/10 testing; repeats 10 times)
 ```{r}
-folds <- vfold_cv(pd, v = 10)
+folds<-vfold_cv(pd, v = 10)
 ```
 
 ```{r}
@@ -99,15 +100,14 @@ lm_workflow<-workflow()%>%
   add_model(lm_fit)
 ```
 
-
 ## Fit Model and Cross Validate
 ```{r}
 lm_kfold_results<-
   fit_resamples(
-    lm_workflow, ## Recipe: preps the data
+    lm_workflow, ## workflow brings in the recipe (prepping the data)
     folds, ##resampling plan
     control=control_resamples(save_pred = TRUE)
-  )
+)
 ```
 
 ```{r}
@@ -130,9 +130,8 @@ lm_kfold_results%>%
 
 ## Specify the resampling: monte_carlo resampling (random partitioning)
 ```{r}
-pd_mc_rs<-mc_cv (pd, times = 100) ##1000 is usual minimum
+pd_mc_rs<-mc_cv(pd, times = 100, prop=.8) ##1000 is usual minimum - just putting 100 here to save processing time
 ```
-
 
 ## Fit Monte Carlo Resampling
 ```{r}
@@ -141,7 +140,7 @@ lm_mc_results<-
     lm_workflow,
     pd_mc_rs, ##resampling plan
     control=control_resamples(save_pred = TRUE)
-  )
+)
 ```
 
 ## Get Metrics
@@ -149,8 +148,14 @@ lm_mc_results<-
 lm_mc_results%>%
   collect_metrics()
 ```
+```{r}
+results<-lm_mc_results%>%
+  collect_metrics()%>%
+  filter(.metric=="rmse")
+```
+The overall average rmse (across the 100 repeated samples) was `results$mean`. 
 
-## Plot bootsrap resampling results
+## Plot Monte Carlo resampling results
 ```{r}
 lm_mc_results%>%
   unnest(.metrics)%>%
@@ -159,8 +164,7 @@ lm_mc_results%>%
   geom_density()
 ```
 
-
-## Feature Selection
+## Feature Selection - (not-Ted) Lasso
 
 Of course, we can also just let the computer choose a model from a set of candidate variables. Below, I use lasso regression, which involves proposing candidate variables and evaluating their ability to lower RMSE, as the basis for choosing a "best" model. 
 
@@ -177,7 +181,6 @@ lasso_rec <- recipe(lasso_formula, data = pd) %>%
   step_naomit(all_predictors()) ## drop any missing data
 ```
 
-
 ## Specify Lasso Model
 ```{r}
 penalty_spec<-.1
@@ -189,13 +192,11 @@ lasso_fit<-
   set_engine("glmnet")
 ```
 
-
 ```{r}
 lasso_wf<-workflow()%>%
   add_recipe(lasso_rec)%>%
   add_model(lasso_fit)
 ```
-
 
 ## Fit Bootstrap Resamples from Lasso
 ```{r}
@@ -207,7 +208,6 @@ lasso_mc_results<-
   )
 ```
 
-
 ```{r}
 lasso_mc_results%>%
   unnest(.metrics)%>%
@@ -215,7 +215,6 @@ lasso_mc_results%>%
   ggplot(aes(x=.estimate))+
   geom_density()
 ```
-
 
 ## Comparing Performance of Models
 ```{r}
@@ -232,8 +231,8 @@ lm_mc_results%>%
 ```
 
 
-## Cross Validation for Classification/Logistic (outcome is binary)
 
+## Cross Validation for Classification/Logistic regression model (outcome is binary)
 ```{r}
 load("za.RData")
 
@@ -242,7 +241,6 @@ za<-za%>%
   mutate(got_pizza_f=fct_relevel(got_pizza_f,"Yes","No"))%>%
   select(-got_pizza)
 ```
-
 
 ```{r}
 #  Model terms
@@ -264,7 +262,6 @@ logit_rec <- recipe(za_formula, data = za) %>%
   step_dummy(all_nominal(),-all_outcomes())%>%
   step_naomit(all_predictors(),all_outcomes()) 
 ```
-
 
 ## Specify Model
 ```{r}
@@ -293,7 +290,7 @@ logit_mc <-
     logit_mc_rs,
     metrics=metric_set(roc_auc, sens, spec),
     control=control_resamples(event_level = "second")
-  )
+)
 ```
 
 ## Collect Metrics from Logit model
@@ -301,7 +298,6 @@ logit_mc <-
 logit_mc%>%
   collect_metrics()
 ```
-
 
 ## Plot distribution of AUC
 ```{r}
@@ -312,6 +308,8 @@ logit_mc%>%
   geom_density()
 ```
 
+
+## Lasso code for Logit Models
 
 ## Set Lasso Formula
 ```{r}
@@ -329,7 +327,6 @@ lasso_logit_rec <- recipe(lasso_logit_formula, data = za) %>%
   step_center(all_predictors())
 ```
 
-
 ## Specify Elastic Net Model
 ```{r}
 lasso_logit_fit<- 
@@ -337,10 +334,8 @@ lasso_logit_fit<-
              penalty=tune(),
              mixture=tune()) %>% 
   set_engine("glmnet")
-
 ## NB: tuning shows very low penalty, very high mixture
 ```
-
 
 ## Create Workflow for Lasso Logit Model
 ```{r}
@@ -348,7 +343,6 @@ lasso_logit_wf<-workflow()%>%
   add_recipe(lasso_logit_rec)%>%
   add_model(lasso_logit_fit)
 ```
-
 
 ## Fit Bootstrap Resamples from Elastic Net
 ```{r}
@@ -362,7 +356,6 @@ lasso_logit_mc<-
   )
 ```
 
-
 ```{r}
 lasso_logit_mc%>%
   collect_metrics()%>%
@@ -370,7 +363,6 @@ lasso_logit_mc%>%
   select(penalty, mixture,mean)%>%
   arrange(-mean)
 ```
-
 
 ## Comparing Performance of Models
 ```{r}
