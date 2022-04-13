@@ -144,4 +144,5 @@ Additional Practice
 * [Logistic regression/classification](https://rpubs.com/AIventurer/datacamp_R_ML_TB_Ch2)
 * [K-fold cross validation](https://drsimonj.svbtle.com/k-fold-cross-validation-with-modelr-and-broom)
 * [Random partititioning/Monte Carlo approach to cross validation](https://ijlyttle.github.io/model_cv_selection.html)
+* [Additional Cross Validation for Classification Models .Rmd File](./10_additional_cross_validate_logit.Rmd)
 * ["For" loops](https://www.datamentor.io/r-programming/for-loop/)
