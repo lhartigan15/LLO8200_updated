@@ -1,7 +1,6 @@
 ---
 title: "Cross Validating Logistic Regression"
 author: "Doyle"
-date: "7/22/2020"
 output: html_document
 ---
 
@@ -15,9 +14,7 @@ library(caret)
 load("attrition.Rdata")
 ```
 
-## Important: for this to work you need to define your outcome as a factor
-## with descriptive factor levels. If nothing else, just use "Yes" and "No" to describe 
-## outcome names. 
+## Important: for this to work you need to define your outcome as a factor with descriptive factor levels. If nothing else, just use "Yes" and "No" to describe outcome names. 
 
 ```{r}
 at<-at%>%
@@ -39,13 +36,11 @@ mod1_formula<-as.formula(Attrition~
 ```
 
 ```{r}
-
 fitControl<-trainControl(method="boot",
                          p=.2,
                          savePredictions = TRUE,
                          classProbs = TRUE,
                          number = 1000)
-
 ```
 
 
@@ -67,7 +62,6 @@ summary(mod1_results$finalModel)
 ##Plot Accuracy (already calculated)
 
 ```{r}
-
 ## Mean Accuracy
 mod1_results$results$Accuracy
 
@@ -108,7 +102,7 @@ mod1_spec<-mod1_results$pred%>%
                              reference=as.factor(obs),
                              negative="No"))
 
-## Mean Specificty
+## Mean Specificity
 mod1_spec%>%summarize(mean_spec=mean(spec))
 
 ## SD specificity
@@ -117,6 +111,5 @@ mod1_spec%>%summarize(sd_sense=sd(spec))
 gg<-ggplot(data=mod1_spec,aes(x=spec))
 gg<-gg+geom_density(fill="blue",alpha=.5)
 gg
-
 ```
 
