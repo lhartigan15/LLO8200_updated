@@ -13,41 +13,38 @@ You'll be off to a great start if you go ahead and install the packages we'll be
 
 `install.packages(c("tidyverse", "haven", "readxl"))`
 
-Remember, it's always recommended to put installation code in the console (NOT in your .Rmd script file) because we don't want R to install the package over and over. It wastes time AND can interfere with knitting. 
+Remember, it's always recommended to put installation code in the CONSOLE (NOT in your .Rmd script file) because we don't want R to install the package over and over. It wastes time AND can interfere with knitting. 
 
 Here is the list of packages you'll definitely want to install for this semester:
 -caret
 -flexclust
--forcats
 -ggpubr
 -glmnet
 -gridExtra
 -knitr
--LICORS
 -lubridate
 -modelr
 -plotly
 -probably
 -readxl
+-rgdal
 -rvest
+-sf
 -tidycensus
 -tidymodels
 -tidyverse
 -tigris
 -yardstick
 
-But what if you don't want to spend time checking to see if these packages are already installed on your system? Wouldn't it be great if you could have R check whether or not something was installed and then, if not, install it? Well - it's your lucky day! There's an R package for that! It's called `pacman`. First, install the pacman package (do this in your console). Then you can use the `p_load` function. This function checks to see if a package is installed and, if it's not, it installs it for you. I went ahead and put this in a code chunk, but you could also run it in your console (preferred). 
-```{r}
-pacman::p_load(caret,flexclust,forcats,ggpubr,glmnet,gridExtra,knitr, 
-               LICORS,lubridate,modelr,plotly,probably,readxl,rvest,
-               tidycensus,tidymodels,tidyverse,tigris,yardstick)
-```
+But what if you don't want to spend time checking to see if these packages are already installed on your system? Wouldn't it be great if you could have R check whether or not something was installed and then, if not, install it? Well - it's your lucky day! There's an R package for that! It's called `pacman`. First, install the pacman package (do this in your console). Then you can use the `p_load` function. This function checks to see if a package is installed and, if it's not, it installs it for you. Just like all installation code, we do NOT want to run this from our .Rmd. Run it from the console.
 
-Once you have packages installed and you know what you're going to need for a given R session, you can go ahead and load them using the library function. Remember, the order you load them in matters. Pay attention to package conflicts. Go ahead and load the following three packages (in this order): `forcats`, `knitr`, `tidyverse`. Did you have any package conflicts? 
+pacman::p_load(caret, flexclust, ggpubr, glmnet, gridExtra, knitr, lubridate, modelr, plotly, probably, readxl, rvest, sf, tidycensus, tidymodels, tidyverse, tigris, yardstick)
+
+Once you have packages installed and you know what you're going to need for a given R session, you can go ahead and load them using the library function. Remember, the order you load them in matters. Pay attention to package conflicts. Go ahead and load the following three packages (in this order): `knitr`,`sf`, `tidyverse`. Did you have any package conflicts? 
+
 ```{r}
-library(forcats)
 library(knitr)
-library(ggpubr)
+library(sf)
 library(tidyverse)
 ```
 
@@ -71,7 +68,7 @@ You can also set the working directory using dropdowns; I'll demonstrate that no
 Here's another foolproof way to read in the data: using a file path. This is particularly great if you're going to want to read in multiple data files from different folders. 
 ```{r}
 load("G:/My Drive/Teaching/Vanderbilt/LLO 8200 - Data Science/Async .Rmd files/college.Rdata")
-#NOTE: You MUST comment out the code here OR change this to a path on your computer before knitting - and don't forget the file name at the end.
+#NOTE: You MUST comment out the code here OR change this to a path on your computer before knitting (you can't knit while trying to read in a file from Lacey's computer!)
 ```
 
 When you use the `load` function to import an R dataset, R brings in the name from when the file was saved (this was determined by whoever saved it). Let's say we want to rename it. 
@@ -80,20 +77,41 @@ When you use the `load` function to import an R dataset, R brings in the name fr
 collegesc<-as.data.frame(sc)
 ```
 
-Let's plot a univariate graphic for one of the variables in our dataset. I'm interested in the distribution of admission rates across the 125 colleges in our dataset. We're going to use ggplot this term A LOT. Let's start now. 
+# Now let's talk census data and the API key. 
+
+Census data will likely come in handy at some point during the semester (or at least during your lifetime). In order to import census data - we need to obtain and install a census API key. Here's the thing... you ONLY want to do this ONE TIME... otherwise, R gets agitated... and if R isn't happy, we're not happy!
+
+Let's get your census API key installed so that we don't have to worry about it during the term. We'll need to load the tidycensus library to do this. First, load the tidycensus library. Then, for each line of code that appears after "Code line #" below, run that line of code IN YOU CONSOLE (NOT in a chunk/.Rmd).
+
 ```{r}
-admplot<-ggplot(collegesc, aes(x=adm_rate)) +  
-    geom_density(color="black", fill="gold") +
-    xlab("Admission Rate")
-
-admplot2 <- ggplot(collegesc, aes(x=adm_rate)) 
-admplot2 <- admplot2 + geom_density(color="blue", fill="lightblue") 
-admplot2 <- admplot2 + xlab("Admission Rate")
-
-admplot
-admplot2
-
-both<-ggarrange(admplot, admplot2); both
+library(tidycensus)
 ```
 
+1. Hopefully you already obtained a census API key. If you didn't, please see the email that was sent out in preparation for bootcamp. You'll want to take your key and insert that in place of "YOUR KEY HERE" in the line below. Make sure you keep the quotation marks and only replace the YOUR KEY HERE text. Note: ALL the code detailed below should be run in your console, rather than in a code chunk/in your .Rmd file. 
 
+code line 1 (insert your key, then copy/paste the whole line into your console and hit enter to run):
+acs_key<-"YOUR KEY HERE"
+
+*check -- did an acs_key object appear in your global environment? If so, proceed.
+
+2. Run the next code line
+
+code line 2 (copy/paste into your console):
+census_api_key(acs_key, install=T)
+
+3. R will HOPEFULLY give you this message after running the census_api_key code above: "Your API key has been stored in your .Renviron and can be accessed by Sys.getenv("CENSUS_API_KEY"). To use now, restart R or run `readRenviron("~/.Renviron")`". Per R's instruction, you either need to restart R OR, you can run the code below:
+
+code line 3 (copy/paste into your console):
+readRenviron("~/.Renviron")
+
+5. Check to see that it installed properly by running:
+
+code line 4 (copy/paste into your console exactly as is - do not modify):
+Sys.getenv("CENSUS_API_KEY")
+
+
+Once that's sorted out, try to knit to html and then try to knit to pdf. You MUST either comment out, remove, or change the file path above (line 70) before knitting (as that path is to my computer... if you changed it to your computer already, you're all set).
+
+If you're unable to knit to html and/or pdf, please see the Intro to R slide deck I shared before bootcamp (slides 18/19) for some troubleshooting steps. If you still can't knit after those steps, please reach out to your data science instructor for additional help. 
+
+Thanks, everyone!
