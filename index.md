@@ -12,25 +12,7 @@ LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lectu
 LMS Mod 1 - no updates\
 
 ### Datasets for the Semester     
-*we may not use all of these - make sure you pay attention as some datasets have similar names*     
-* [Area dataset - ACS 2019](./area_data.Rds)
-* [Attrition dataset](./attrition.Rdata)
-* [College "SC" dataset](./college.Rdata)
-* [College DEBT dataset](./sc_debt.Rdata)
-* [Census Education variables (if needed)](./educ_vars.Rdata)
-* [ELS full dataset](./els.Rdata)
-* [ELS testing dataset](./els_test.Rdata)
-* [ELS training dataset](./els_train.Rdata)
-* [Free excel dataset](./free.xls)
-* [FRL dataset](./frl.Rdata)
-* [HSB csv dataset](./hsbdata.csv)
-* [Census Income variables (if needed)](./income_vars.Rdata)
-* [Lemons (car = bad buy) dataset](./lemondata.csv)
-* [PD dataset](./pd.Rdata)
-* [SF cluster dataset](./sf_cluster.RData)
-* [SF complete dataset](./sf_complete.RData)
-* [SFO dataset](./sfo.RData)
-* [Za full dataset](./za.RData)
+*these are all available on the LMS - removing from here to avoid confusion*     
 
 ### Problem Sets
 Each problem set should be uploaded to the LMS _before_ we meet for live session on the given due date. All submissions must include two files to receive credit:
