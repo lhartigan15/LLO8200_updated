@@ -8,8 +8,10 @@ If you want to set up email alerts for updates/additions to this site, you can u
 ### Async/Sync RStudio (.Rmd) Files
 I will upload .Rmd files here in weeks that code has been optimized/updated. You should check here weekly to see if there is updated code before completing your async. If you don't see an .Rmd file for a given week, the file on the LMS is current. The first file below (LMS Mod 0) is the file we use for our bootcamp meeting. The R Setup Slide Deck includes good information on R/Rstudio structure and some troubleshooting tips. Reference these if you experience errors (particularly with knitting).        
            
-LMS Mod 0 - [.Rmd Bootcamp File](./00_Getting Started.Rmd), [Bootcamp knit lecture notes](./00_Getting-Started.html), [R Setup Slide Deck](./Intro to R_final.pptx)\
-LMS Mod 1 - no updates\
+LMS Mod 0 - [.Rmd Bootcamp File](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/00_Getting Started.Rmd), [Bootcamp knit lecture notes](./00_Getting-Started.html), [R Setup Slide Deck](./Intro to R_final.pptx)\
+LMS Mod 1 - no updates \
+LMS Mod 2 - no updates \
+LMS Mod 3 - [Updated .Rmd file](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod3_webscraping_updated.Rmd)
 
 ### Datasets for the Semester     
 *these are all available on the LMS - removing from here to avoid confusion*     
