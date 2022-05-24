@@ -55,7 +55,7 @@ Note: these are all strong examples; but that doesn't mean they are all perfect.
 ### Additional Resources
 "Common R Errors" doc: We've created a shared Box document and added everyone in this class as an editor. Please use this as a resource (and add to it when you figure out how to address an R error you've gotten). You can access it [HERE](https://vanderbilt.box.com/s/4v3frpekn0p1k2tpv3r06xmyha5zce3h) (you will need to login with your Vandy email). 
 
-The YAML header conundrum... When you download an .Rmd file from this site, the YAML header will be removed (for some reason). Here is a sample header that you can reference when adding the header at the top of your .Rmd file. Remember, your header MUST begin on line 1 of your .Rmd file and the formatting must stay consistent in order for it to work (e.g., must begin with three dashes and end with three dashes).       
+YAML headers: Sometimes, when you download an .Rmd file from a website, the YAML header will be removed. Here is a sample header that you can reference when adding the header at the top of your .Rmd file. Remember, your header MUST begin on line 1 of your .Rmd file and the formatting must stay consistent in order for it to work (e.g., must begin with three dashes and end with three dashes).       
 
 ![YAML header](./YAML_header.JPG)
 
