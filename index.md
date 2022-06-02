@@ -29,7 +29,7 @@ All problem sets are graded on a 100-point scale. Corrections can be submitted f
 | File(s)      | Due Date          |
 |:-------------|:------------------|
 | [Problem Set 1 .Rmd File](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/01_ProblemSet_Mods1_2_3_starter.Rmd); [Problem Set 1 pdf](./01_ProblemSet_Mods1_2_3_starter.pdf) | 06/01/22 |
-| [Problem Set 2 .Rmd File] | 06/15/22 |
+| [Problem Set 2 .Rmd File](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/02_ProblemSet_Mods2_3_starter.Rmd); [Problem Set 2 pdf](./02_ProblemSet_Mods2_3_starter.pdf) | 06/15/22 |
 | [Problem Set 3 placeholder] | 06/29/22 |
 | [Problem Set 4 placeholder] | 07/20/22 |
 | [Problem Set 5 placeholder] | 08/10/22 |
