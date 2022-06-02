@@ -12,9 +12,10 @@ LMS Mod 0 - [.Rmd Bootcamp File](https://raw.githubusercontent.com/lhartigan15/L
 LMS Mod 1 - no updates \
 LMS Mod 2 - no updates \
 LMS Mod 3 - [Updated .Rmd file](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod3_webscraping_updated.Rmd)
+LMS Mod 4 - no updates \
 
 ### Datasets for the Semester     
-*these are all available on the LMS - removing from here to avoid confusion*     
+*these are all available on the LMS - if we need to add any this term, I'll put them here*     
 
 ### Problem Sets
 Each problem set should be uploaded to the LMS _before_ we meet for live session on the given due date. All submissions must include two files to receive credit:
@@ -28,7 +29,7 @@ All problem sets are graded on a 100-point scale. Corrections can be submitted f
 | File(s)      | Due Date          |
 |:-------------|:------------------|
 | [Problem Set 1 .Rmd File](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/01_ProblemSet_Mods1_2_3_starter.Rmd); [Problem Set 1 pdf](./01_ProblemSet_Mods1_2_3_starter.pdf) | 06/01/22 |
-| [Problem Set 2 placeholder] | 06/15/22 |
+| [Problem Set 2 .Rmd File] | 06/15/22 |
 | [Problem Set 3 placeholder] | 06/29/22 |
 | [Problem Set 4 placeholder] | 07/20/22 |
 | [Problem Set 5 placeholder] | 08/10/22 |
