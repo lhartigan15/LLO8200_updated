@@ -8,7 +8,7 @@ output: pdf_document
 ***Structural stuff:***      
 1. Be sure to change the "author" above to your name. Also insert the due date for this term/assignment.
 2. Save your .Rmd file as LastName_FirstName.Rmd (do this before you knit).    
-3. You need to submit your .Rmd code file AND a knit file (upload both simultaneously to the course webpage; you can't upload them one-by-one). You will only receive full credit if you upload both files. 
+3. You need to submit your .Rmd code file AND a knit file (upload both simultaneously to the course webpage; you can't upload them one-by-one). You will only receive full credit if you upload both files (note: you get 20 points JUST for uploading both). 
 4. Below I have set up the file for you with the libraries you'll need. I have also inserted code chunks for you (note, I won't do this every time).        
 5. I expect that the .Rmd file you submit will run cleanly, and that the knit file won't contain any errors (LOOK at the knit file after you create it - if questions/text are running into each other, if you see error messages, etc., you're not done).      
 6. You can use comments to tell me what you are doing either in text or in code chunks, but remove "old" code that didn't run/work.      
@@ -24,124 +24,124 @@ This assignment includes questions from Module 2 (conditional means) and Module 
 
 For this research question, we're interested in understanding more about what predicts alumni earnings for a set of postsecondary institutions. We hope that (eventually) we could use the information about potential predictors from this study to inform predictions about a larger set of colleges. This analysis serves as our exploration of the data and our outcome of interest (md_earn_wne_p6 - the median earnings of graduates 6 years post graduation). 
 
-1. Import/load the "sc_debt.Rdata" dataset here. 
+1. Import/load the "sc_debt.Rdata" dataset here. (4pts)
 ```{r}
 
 ```
 
-2. Plot the distribution of our outcome: `md_earn_wne_p6`. Make sure you choose an appropriate univariate plot.
+2. Plot the distribution of our outcome: `md_earn_wne_p6`. Make sure you choose an appropriate univariate plot. (3pts)
 ```{r}
 
 ```
 
-2a. What does this distribution show you about the outcome? 
+2a. Tell me two things (or more) that this distribution shows you about the outcome. (2pts)
 
 
 
-3. Calculate the unconditional mean of the outcome: `md_earn_wne_p6`
+3. Calculate the unconditional mean of the outcome: `md_earn_wne_p6` (4pts)
 ```{r}
 
 ```
 
-4. Use your mean as a prediction (i.e., create a new variable that consists of the unconditional mean of the outcome and add it to your dataset). 
+4. Use your mean as a prediction (i.e., create a new variable that consists of the unconditional mean of the outcome and add it to your dataset). (4pts)
 ```{r}
 
 ```
 
-5. Calculate the summary measure of the errors for each observation---the difference between your prediction and the outcome (hint: RMSE).
+5. Calculate the summary measure of the errors for each observation---the average difference between your prediction and the outcome (RMSE). (5pts)
 ```{r}
 
 ```
 
-5a. Provide one sentence interpreting this RMSE. 
+5a. Provide one sentence interpreting this RMSE. (2pts)
 
 
 
 
-6. Let's look at one potential predictor: public vs. private (`control`). We know that, on average, private schools tend to cost more. If a school costs more, we would hope its alumni eventually earn more, right? First, let's examine the distribution of this predictor. Plot this variable using the appropriate univariate plot. 
+6. Let's look at one potential predictor: public vs. private (`control`). We know that, on average, private schools tend to cost more. If a school costs more, we would hope its alumni eventually earn more, right? First, let's examine the distribution of this predictor. Plot this variable using the appropriate univariate plot. (3pts)
 ```{r}
 
 ```
 
-6a. Describe the distribution of this potential predictor variable.  
+6a. Describe the distribution of this potential predictor variable. (2pts)
 
 
 
-7. Calculate the mean of our outcome for each level of this predictor variable.
+7. Calculate the mean of our outcome for each level of this predictor variable. (5pts)
 ```{r}
 
 ```
 
-7a. What does the data tell you about this variable? Do you think it might be a good predictor? Why or why not? 
+7a. What does the data tell you about this variable? Do you think it might be a good predictor? Why or why not? (2pts)
 
 
 
-8. Use these conditional means as a prediction for our outcome (i.e., add them to your dataset so that we can provide a "best guess" as to each college's level of the outcome).  
+8. Use these conditional means as a prediction for our outcome (i.e., add them to your dataset so that we can provide a "best guess" as to each college's level of the outcome). (5pts)  
 ```{r}
 
 ```
 
-9. Calculate a summary measure of the error in your predictions using this one predictor. 
+9. Calculate a summary measure of the error in your predictions using this one predictor. (5pts) 
 ```{r}
 
 ```
 
-9a. Interpret this RMSE. 
+9a. Interpret this RMSE. (2pts) 
 
 
 
-9b. Did your updated conditional/one-predictor model show an improvement over the unconditional model? How do you know?
-
-
-
-
-10. Now, I want you to add in a second predictor of your choosing. For this question, list the variable and why you think it might be a good predictor for our outcome. 
-
-
-
-11. Plot your new predictor variable using the appropriate *univariate* plot (you're just plotting the new predictor alone here; nothing combined yet) 
-```{r}
-
-```
-
-
-11a. Describe the distribution of this potential predictor variable.  
+9b. Did your updated conditional/one-predictor model show an improvement over the unconditional model? How do you know? (2pts)
 
 
 
 
-
-11b. Does it seem like this might be a good predictor? How come? (Note: if your answer is no, then try a different variable, repeating the steps for questions 10-11a above until you get one that you think is a good one. For your answers here, just include the "good" one, but you can let me know others you tried). 
-
-
-
-12. Calculate the mean of our outcome for each level of our *combined* predictor variables.
-```{r}
-
-```
-
-12a. What does the data tell you about these variables? Do you think, together, they might give us good predictions? Why or why not? 
+10. Now, I want you to add in a second predictor of your choosing. For this question, list the variable and why you think it might be a good predictor for our outcome. (2pts) 
 
 
 
-13. Use these conditional means as a prediction for our outcome (i.e., add them to your dataset so that we can provide a "best guess" as to each college's level of the outcome).  
+11. Plot your new predictor variable using the appropriate *univariate* plot (you're just plotting the new predictor alone here; nothing combined yet) (4pts) 
 ```{r}
 
 ```
 
 
-14. Calculate a summary measure of the error in your predictions using these two predictors. 
+11a. Describe the distribution of this potential predictor variable. (2pts)  
+
+
+
+
+
+11b. Does it seem like this might be a good predictor? How come? (Note: if your answer is no, then try a different variable, repeating the steps for questions 10-11a above until you get one that you think is a good one. For your answers here, just include the "good" one, but you can let me know others you tried). (2pts) 
+
+
+
+12. Calculate the mean of our outcome for each level of our *combined* predictor variables. (5pts)
+```{r}
+
+```
+
+12a. What does the data tell you about these variables? Do you think, together, they might give us good predictions? Why or why not? (2pts)
+
+
+
+13. Use these conditional means as a prediction for our outcome (i.e., add them to your dataset so that we can provide a "best guess" as to each college's level of the outcome). (5pts) 
 ```{r}
 
 ```
 
 
-14a. What does this RMSE tell you? 
+14. Calculate a summary measure of the error in your predictions using these two predictors. (4pts) 
+```{r}
+
+```
+
+
+14a. What does this RMSE tell you? (2pts) 
 
 
 
 
-14b. Did your updated two-predictor conditional model show an improvement over your last two models (unconditional and one-predictor)? How do you know? 
+14b. Did your updated two-predictor conditional model show an improvement over your last two models (unconditional and one-predictor)? How do you know? (2pts)
 
 
 
