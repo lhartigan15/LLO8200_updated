@@ -13,7 +13,7 @@ I will upload .Rmd files here in weeks that code has been optimized/updated. You
 LMS Mod 0 - [.Rmd Bootcamp File](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/00_Getting Started.Rmd), [Bootcamp knit lecture notes](./00_Getting-Started.html), [R Setup Slide Deck](./Intro to R_final.pptx)\
 LMS Mod 1 - no updates \
 LMS Mod 2 - no updates \
-LMS Mod 3 - [Updated .Rmd file](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod3_webscraping_updated.Rmd)
+LMS Mod 3 - [Updated .Rmd file](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod3_webscraping_updated.Rmd)\
 LMS Mod 4 - no updates \
 
 ### Datasets for the Semester     
