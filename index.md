@@ -6,7 +6,9 @@ You are responsible for reviewing and ensuring you are following the schedule in
 If you want to set up email alerts for updates/additions to this site, you can use the free version of a third-party program: [Distill](https://distill.io/). The free version will check for updates every six hours and send you alerts. Note: this is a platform that is not owned by Vanderbilt or me and you should review their data privacy and security to ensure you are comfortable with their practices.
 
 ### Async/Sync RStudio (.Rmd) Files
-I will upload .Rmd files here in weeks that code has been optimized/updated. You should check here weekly to see if there is updated code before completing your async. If you don't see an .Rmd file for a given week, the file on the LMS is current. The first file below (LMS Mod 0) is the file we use for our bootcamp meeting. The R Setup Slide Deck includes good information on R/Rstudio structure and some troubleshooting tips. Reference these if you experience errors (particularly with knitting).        
+I will upload .Rmd files here in weeks that code has been optimized/updated. You should check here weekly to see if there is updated code before completing your async. If you don't see an .Rmd file for a given week, the file on the LMS is current. The first file below (LMS Mod 0) is the file we use for our bootcamp meeting. The R Setup Slide Deck includes good information on R/Rstudio structure and some troubleshooting tips. Reference these if you experience errors (particularly with knitting).      
+
+*Note: To access and save RMD files from this site to your computer, access the link using: (Mac) ctrl+click or (PC) right click. Then click "save link as" and save to a folder on your computer (NOT the downloads folder).*
            
 LMS Mod 0 - [.Rmd Bootcamp File](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/00_Getting Started.Rmd), [Bootcamp knit lecture notes](./00_Getting-Started.html), [R Setup Slide Deck](./Intro to R_final.pptx)\
 LMS Mod 1 - no updates \
@@ -25,6 +27,8 @@ Each problem set should be uploaded to the LMS _before_ we meet for live session
 Note that you must upload BOTH files BEFORE you hit "submit" in the LMS; if you try to submit them one at a time, it will only allow you to upload one. Also, you are responsible for reviewing the files before uploading (check formatting, output, etc.). I will not accept submissions via email (unless there are extenuating circumstances). **There will be a penalty for submissions not meeting these requirements.**
 
 All problem sets are graded on a 100-point scale. Corrections can be submitted for any problem set and you can earn up to half of the deducted points back. You have one week from the time you receive feedback to submit corrections (while you can work with study buddies for the original problem set submission, corrections must be done on your own).
+
+*Note: To access and save RMD files from this site to your computer, access the link using: (Mac) ctrl+click or (PC) right click. Then click "save link as" and save to a folder on your computer (NOT the downloads folder).*
 
 | File(s)      | Due Date          |
 |:-------------|:------------------|
