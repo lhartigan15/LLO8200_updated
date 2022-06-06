@@ -1,5 +1,5 @@
 ---
-title: "Problem Set 2: Modules 2 & 3"
+title: "Problem Set 2: Modules 4 & 5"
 author: "YOUR NAME HERE"
 date: "due INSERT DATE HERE"
 output: pdf_document
@@ -20,7 +20,7 @@ library(yardstick)
 library(tidyverse)
 ```
 
-This assignment includes questions from Module 2 (conditional means) and Module 3 (descriptive plots). The questions are interspersed below - all plotting questions are from Module 3 and everything else is from Module 2. 
+This assignment includes questions from Module 4 (conditional means) and Module 5 (descriptive plots). The questions are interspersed below - all plotting questions are from Module 5 and everything else is from Module 4. 
 
 For this research question, we're interested in understanding more about what predicts alumni earnings for a set of postsecondary institutions. We hope that (eventually) we could use the information about potential predictors from this study to inform predictions about a larger set of colleges. This analysis serves as our exploration of the data and our outcome of interest (md_earn_wne_p6 - the median earnings of graduates 6 years post graduation). 
 
