@@ -15,6 +15,7 @@ LMS Mod 1 - no updates \
 LMS Mod 2 - no updates \
 LMS Mod 3 - [Updated .Rmd file](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod3_webscraping_updated.Rmd)\
 LMS Mod 4 - no updates \
+LMS Mod 5 - no updates \
 
 ### Datasets for the Semester     
 *these are all available on the LMS - if we need to add any this term, I'll put them here*  
