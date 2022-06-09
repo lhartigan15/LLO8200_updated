@@ -17,7 +17,8 @@ LMS Mod 3 - [Updated .Rmd file](https://raw.githubusercontent.com/lhartigan15/LL
 LMS Mod 4 - no updates \
 
 ### Datasets for the Semester     
-*these are all available on the LMS - if we need to add any this term, I'll put them here*     
+*these are all available on the LMS - if we need to add any this term, I'll put them here*  
+[LMS Mod 6 - area dataset](./area_data.Rdata)
 
 ### Problem Sets
 Each problem set should be uploaded to the LMS _before_ we meet for live session on the given due date. All submissions must include two files to receive credit:
