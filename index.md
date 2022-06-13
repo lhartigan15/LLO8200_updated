@@ -72,6 +72,7 @@ Training & Testing & Workflows, OH MY! To help picture the workflow process we u
 ![Workflow Graphic](./Workflow Chart Lesson 5.png)
 
 There are a multitude of resources re. RStudio and RMarkdown on the web. Here is where I'll save some of my favorites. 
+* [Basic Usage of TidyCensus](https://walker-data.com/tidycensus/articles/basic-usage.html)
 * [R Markdown Reference Guide](./rmarkdown-reference.pdf)
 * [R Markdown Cheat Sheet](./rmarkdown-cheatsheet.pdf)
 * [R Color Palette Cheat Sheet](./colorPaletteCheatsheet.pdf)
