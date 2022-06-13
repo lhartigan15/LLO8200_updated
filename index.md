@@ -43,7 +43,7 @@ All problem sets are graded on a 100-point scale. Corrections can be submitted f
 ### Final Project Materials
 * [Final Project Expectations placeholder], [Final Project Rubrics placeholder] - final products due 08/12/22
 * [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 06/08/22
-* [Progress Report 2 Instructions placeholder] - due 07/06/22
+* [Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 07/06/22
 * [Progress Report 3 Instructions placeholder] - due 07/27/22
 
 #### Final Project Examples
