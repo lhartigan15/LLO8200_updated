@@ -16,7 +16,8 @@ LMS Mod 2 - no updates \
 LMS Mod 3 - [Updated .Rmd file](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod3_webscraping_updated.Rmd)\
 LMS Mod 4 - no updates \
 LMS Mod 5 - no updates \
-LMS Mod 6 - no updates \
+LMS Mod 6 - [Updated .Rmd file (updates to code starting on line 244 - final code chunk)](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod6_regression_updated_inclass.Rmd)\
+LMS Mod 7 - [Updated .Rmd file (updates to code loading data - line 28)](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod6b_regression_part2.Rmd)\
 
 ### Datasets for the Semester     
 *these are all available on the LMS - if we need to add any this term, I'll put them here*  
