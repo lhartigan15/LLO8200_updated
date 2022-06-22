@@ -1,0 +1,256 @@
+---
+title: "Using Linear Regression for Prediction (Part 1)"
+output:
+    html_document: 
+        theme: cerulean
+---
+
+## Overview
+
+So far, we've been using just the simple mean to make predictions. Today, we'll continue using the simple mean to make predictions, but now in a complicated way. Before, when we calculated conditional means, we did so in certain "groupings" of variables. When we run linear regression, we no longer need to do so. Instead, linear regression allows us to calculate the conditional mean of the outcome at _every_ value of the predictor. If the predictor takes on just a few values, then that's the number of conditional means that will be calculated. If the predictor is continuous and takes on a large number of values, we'll still be able to calculate the conditional mean at every one of those values. 
+
+The model we posit for regression is as follows:
+
+$$Y=\beta_0+\beta_1 x_1 +\beta_2 x_2+ ... \beta_k x_k + \epsilon$$
+
+It's just a linear, additive model. Y increases or decreases as a function of x, with multiple x's included. $\epsilon$ is the extent to which an individual value is above or below the line created. $\beta$ is the amount that $Y$ increases or decreases for a one unit change in $x$.  
+
+```{r, echo=FALSE, include=F}
+rm(list=ls())
+
+library(tidyverse)
+library(tidymodels)
+library(plotly)
+```
+
+## The Data
+
+```{r}
+load("area_data.Rdata")
+#readRDS("area_data.Rds")
+
+ad<-as.data.frame(area_data)
+```
+
+This data comes from the American Community Survey of 2019. It covers all of the [metro or micro statistical areas](https://www.census.gov/programs-surveys/metro-micro/about.html#:~:text=The%20general%20concept%20of%20a,social%20integration%20with%20that%20core.) in the United States. It includes characteristics of these areas, include education, income, home ownership and others as described below.  
+
+| Name  | Description   |
+|---|---|
+| name   | Name of Micro/Metro Area   |
+| college_educ   | Percent of population with at least a bachelor's degree   |
+| perc_commute_30p   | Percent of population with commute to work of 30 minutes or more   |
+| perc_insured  | Percent of population with health insurance   |
+| perc_homeown  | Percent of housing units owned by occupier   |
+| geoid | Geographic FIPS Code (id) |
+| income_75  | Percent of population with income over 75,000   |
+| perc_moved_in   | Percent of population that moved from another state in last year   |
+| perc_in_labor force  | Percent of population in labor force   |
+| metro | Metropolitan Area? Yes/No |
+| state  | State Abbreviation |
+| region  | Census Region |
+| division | Census Division|
+
+
+## Dependent Variable
+
+Our dependent variable will be the percent of the population that has a yearly income over $75,000.  Let's take a look at this variable.
+
+```{r}
+ad%>%
+  ggplot(aes(x=income_75))+
+  geom_density()
+```
+
+
+This variable has a nice symmetric distribution. It looks approximately normal, which will help in interpreting the results. 
+
+## Testing and Training
+
+The essence of prediction is discovering the extent to which our models can predict outcomes for data that *does not come from our sample*. Many times this process is temporal. We fit a model to data from one time period, then take predictors from a subsequent time period to come up with a prediction in the future. For instance, we might use data on team performance to predict the likely winners and losers for upcoming soccer games. 
+
+This process does not have to be temporal. We can also have data that is out of sample because it hadn't yet been collected when our first data was collected, or we can also have data that is out of sample because we designated it as out of sample.
+
+The data that is used to generate our predictions is known as *training*  data. The idea is that this is the data used to train our model, to let it know what the relationship is between our predictors and our outcome. So far, we have only worked with training data. 
+
+That data that is used to validate our predictions is known as *testing* data. With testing data, we take our trained model and see how good it is at predicting outcomes using out of sample data. 
+
+One very simple approach to this would be to cut our data in half. We could then train our model on half the data, then test it on the other half. This would tell us whether our measure of model fit (e.g. rmse) is similar or different when we apply our model to out of sample data. That's what we're going to do in this lesson. We'll split the data randomly in half, with one half used to train our models and the other half used to test the model against out of sample data. 
+
+I use the `initial_split` command to designate the way that the data should be split-- in this case in half (.5). The testing data (which is a random half of the original dataset) is stored as `ad_test`. The training data is stored as `ad_train`. We'll run our models on `ad_train`. 
+
+Note: the `set.seed` command ensures that  your random split should be the same as my random split. 
+
+## Training and Testing Data
+```{r}
+set.seed(35202)
+
+split_data<-ad%>%
+  initial_split(prop=.5)
+
+ad_train<-training(split_data)
+ad_test<-testing(split_data)
+```
+
+## Visualizing the Relationship - potential predictor (college_educ)
+```{r}
+ad%>%
+  ggplot(aes(x=college_educ, y=income_75)) +
+  geom_point() + #produces scatterplot of % college ed by % income over 75
+  geom_smooth(method="lm") #adds linear model line of best fit
+
+#THINK about what each dot represents on this plot. 
+```
+
+It's a good idea to plot the data before running a regression. The scatterplot above shows the percent of the population with incomes above 75,000 on the y axis and the percent of the population with a bachelor's degree on the x axis. I always like to be able to identify the individual units in datasets like this. To do that I use the `ggplotly` command below. 
+
+## An Interactive Approach
+```{r}
+gg<-ad%>%
+  ggplot(aes(x=college_educ, y=income_75, label=name))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+ggplotly(gg)
+```
+
+
+By using the `plotly` command, we can identify the individual units. Try it out, seeing which units have high or low incomes or higher or lower percentages of the population with a bachelor's degree. 
+
+## Set Formula
+
+To start training our model, we need to specify a formula. The dependent variable always goes on the left hand side, while the independent variable or variables always go on the right hand side. The formula below is for a model with the percent of the population with incomes above 75,000 on the left hand side, and the percent of the population with a college education on the right hand side. 
+
+```{r}
+income_formula<-as.formula("income_75 ~ college_educ")
+```
+
+## Define Model
+
+The next step is to define the model. The type of model I want is a linear regression, which I specify below. This is also sometimes called "ordinary least squares" regression. 
+
+```{r}
+lm_fit <- 
+  linear_reg() %>% 
+  set_engine("lm")%>%
+  set_mode("regression")
+```
+
+## Fit Model to the Data
+
+Now we're ready to actually fit the model to the data. In the `fit` command below I specify which formula should be used and which dataset to fit the linear regression specified above. 
+
+```{r}
+lm_results<-
+  lm_fit%>%
+  fit(income_formula, data=ad_train) #we build/tweak our model in the TRAINING dataset
+```
+
+
+## Look at the Results
+
+To examine the results, we can use the `summary` command.
+
+```{r}
+summary(lm_results$fit)
+```
+
+What this tells us is that for each additional percent of the population with a bachelor's degree, the percent of the population with incomes above 75,000 is predicted to increase by `r prettyNum(lm_results$fit$coefficients[2], digits=2)`
+
+## Predict using the testing dataset
+
+```{r}
+ad_test<-lm_results%>% ## start with the results
+  predict(new_data=ad_test)%>% ## create a prediction
+  rename(pred_educ=.pred)%>% ## rename the prediction- I'm using a more descriptive name than just "pred" here
+  bind_cols(ad_test) ## add the prediction to the testing dataset
+```
+
+Now we have the prediction in our testing dataset, named `pred_educ` using the rename command. We can compare the actual value with the predicted value in the testing data using rmse.
+
+## Calculate RMSE
+```{r}
+rmse_1<-yardstick::rmse(ad_test,
+     truth=income_75,
+     estimate=pred_educ)
+
+rmse_1
+```
+
+
+The rmse of `r prettyNum(rmse_1$.estimate,digits=2)` indicates how close our prediction is to the actual value in the *testing* dataset. This is important because it gives a sense of how the model we trained performs when trying to make predictions using new-- or out of sample-- data. 
+
+
+_Quick Exercise_ Run a regression using a different predictor. Calculate rmse and see if you can beat my score. 
+
+
+## Multiple regression
+
+We can continue refining our model by adding more variables. Regression with more than one predictor is called multiple regression. The nice thing is that the steps will all be the same, we just need to change the formula and the rest stays pretty much as it was. 
+
+## Set Formula
+```{r}
+income_formula<-as.formula("income_75 ~ college_educ + perc_homeown")
+```
+
+## Define model
+```{r}
+lm_fit <- 
+  linear_reg() %>% 
+  set_engine("lm")%>%
+  set_mode("regression")
+```
+
+## Fit Model to the Data
+```{r}
+lm_results<-
+  lm_fit%>%
+  fit(income_formula, data=ad_train)
+```
+
+## Look at the results
+```{r}
+summary(lm_results$fit)
+```
+
+## Predict using the testing dataset
+
+```{r}
+ad_test<-lm_results%>%
+  predict(new_data=ad_test)%>%
+  rename(pred_coll_hown=.pred)%>%
+  bind_cols(ad_test)
+```
+
+## Calculate RMSE
+```{r}
+rmse_2<-yardstick::rmse(ad_test,
+     truth=income_75,
+     estimate=pred_coll_hown)
+
+rmse_2
+```
+
+The rmse of `r  prettyNum(rmse_2$.estimate,digits=2)` shows that we do get a more accurate prediction in the testing dataset using two predictors. 
+
+_Quick Exercise_ Run a regression using two different predictors. Calculate rmse and see if you can beat my score. 
+
+You MUST remember: correlation is not causation. All you can pick up on using this tool is associations, or common patterns. You can't know whether one thing causes another. Remember that the left hand side variable could just as easily be on the right hand side. 
+
+A note on multiple linear regression:
+Typically, before running an MLR we want to check the correlations between our IVs and our DV as well as the correlations across our IVs. 
+1. If an IV isn't correlated to your DV, it will not be SS in a regression model (without correlation, you can't show prediction). 
+2. If two (or more) IVs are TOO highly correlated, then you may run into issues with multicollinearity. [Here's a good/brief explanation of what that is and why it's a problem](https://www.statisticshowto.com/multicollinearity/).
+
+```{r}
+library(sjPlot)
+
+cormat<-tab_corr(ad%>%select(income_75, college_educ, perc_homeown), triangle = "lower", string.diag = c("1","1","1"))
+cormat
+```
+We WANT our IVs to be highly correlated with our DV (this indicates they might be good predictors, right?) -- both of these IVs are correlated. 
+
+Now, let's look at the correlation between IVs. Here's where we do NOT want super high correlations. We see the correlation between percent homeown & college education is only about -.2 (although that is SS at the .001 level, the actual correlation value is fairly low).  
+
+
+
+
