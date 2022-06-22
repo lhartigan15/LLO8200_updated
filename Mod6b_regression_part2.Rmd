@@ -1,0 +1,223 @@
+---
+title: "Using Linear Regression for Prediction (Part 2)"
+output:
+    html_document: 
+        theme: cerulean
+---
+
+NOTE: This file begins with the Module 6.4 video on the LMS.
+
+## Introduction
+
+In this section we're going to continue fitting regression to the training data and
+testing the predictions against the testing data. We're also going to add some new elements.
+
+We'll be using independent variables or predictor variables that are binary or categorical. In addition, we'll start using `workflows` that put the various steps of our modeling workflow together. 
+
+We'll need the same libraries as last week:
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(plotly)
+```
+
+And the same dataset, which includes data on a variety of metropolitan and micropolitan areas in the United States. 
+
+```{r}
+load("area_data.Rdata")
+
+ad<-as.data.frame(area_data)
+```
+
+## Training and Testing Data
+
+As before, I'm going to split the data into training and testing versions. 
+```{r}
+set.seed(524)
+
+split_data<-ad%>%
+  initial_split(prop=.5)
+
+ad_train<-training(split_data)
+
+ad_test<-testing(split_data)
+```
+
+## Set Model
+
+We're going to use the same linear model as last time, so I'll specify that here. 
+```{r}
+lm_fit <- 
+  linear_reg() %>% 
+  set_engine("lm")%>%
+  set_mode("regression")
+```
+
+## Begin Workflow
+
+Now I start my workflow. A workflow is pretty much what it sounds like. It's a set of steps in a modeling process. To start with, let's add our model as defined above to the workflow.
+```{r}
+income_wf<-workflow()%>%
+  add_model(lm_fit)
+```
+
+## Regression with a binary variable
+
+The next variable I want to include is `metro`, which is a binary variable set to "Yes" if the area is a metropolitan area and "No" if it is not a metropolitan area. The code below shows the number and proportion of metropolitan and non-metropolitan areas in the dataset. 
+```{r}
+ad%>%
+  filter(!is.na(metro))%>%
+  group_by(metro)%>%
+  summarise(`Number of Areas`=n())%>%
+  mutate(`Proportion of total`=`Number of Areas`/sum(`Number of Areas`))
+```
+
+This shows that about 58% of areas are not metro areas, while 42% are metro areas. Question: WHY bother filtering out the NAs on my metro area? What would happen to my proportions had I not filtered them out? 
+
+## Set Formula
+
+Next, I add the variable `metro` to the formula. 
+```{r}
+income_formula<-as.formula("income_75 ~ college_educ + perc_homeown + metro")
+```
+
+The variable `metro` is now added to our formula. But we need to tell the model how to handle this variable, since it is a binary variable. 
+
+## Set Recipe
+```{r}
+income_rec<-recipe(income_formula, data=ad_train)%>%
+  step_dummy(metro) #this is ONLY for categorical variables!!
+```
+
+The `recipe` function allows us to get the data ready for analysis, a step that is called [pre-processing](https://towardsdatascience.com/data-preprocessing-concepts-fa946d11c825). In the code above, I create a recipe from the formula and the dataset, then add a pre-processing step, `step_dummy`. This tells R that I want the metro variable to be understood as 0/1 variable. 
+
+## Add recipe to workflow
+
+We can now add the recipe to the previously existing workflow. 
+
+```{r}
+income_wf<-income_wf%>%
+  add_recipe(income_rec)
+```
+
+## Fit to training data
+
+Now we can fit the processed data to the training dataset and take a look at the results. 
+
+```{r}
+lm_results<-fit(income_wf, ad_train)
+
+lm_results%>%
+  tidy()
+
+lm_results%>%
+  extract_fit_parsnip()%>% #old function was pull_workflow_fit()
+  glance()
+```
+
+The `tidy` command allows us to see the coefficients from the model fit to the training data. 
+
+The results show that the percent of individuals with incomes about $75,000 is `r round(tidy(lm_results)[4,2],2)` percentage points higher in metro areas than non-metro areas. This is really important: we always interpret binary variables as a comparison between the group that is set to 1 (metropolitan areas in this case) and the group that is set to 0 (non-metropolitan areas). 
+
+## Predict on testing data and calculate rmse
+
+We can add predictions to the testing dataset in the same way we did before. 
+
+```{r}
+ad_test<-
+  predict(lm_results, ad_test)%>%
+  rename(pred1=.pred)%>%
+  bind_cols(ad_test)
+```
+
+## Calculate RMSE
+
+Calculating rmse works the same as well. 
+
+```{r}
+rmse_1<-ad_test%>%
+  yardstick::rmse(truth=income_75, estimate=pred1)  
+rmse_1
+```
+
+So, what we've done at this point is to include a new kind of predictor-- a binary variable-- and include it in a workflow that has both pre-processing and model fitting. 
+
+## Regression with a categorical variable
+
+We can also include categorical variables in our model using much the same process. 
+
+## Set Formula
+```{r}
+income_formula<-as.formula("income_75 ~ college_educ + perc_homeown + metro + region")
+```
+
+## Set Recipe
+
+Because our formula now includes two variables that are categorical, we need to change our recipe to reflect that. Below, `step_dummy` is applied to both the `metro` and `region` variables. 
+
+```{r}
+income_rec<-recipe(income_formula, data=ad)%>%
+  step_dummy(metro, region)
+```
+
+## Update workflow with new recipe
+
+Because we've already created the workflow `income_wf` we can update it with our new recipe, using the command `update_recipe`.
+
+```{r}
+income_wf<-income_wf%>%
+  update_recipe(income_rec)
+```
+
+## Fit to training data and look at coefficients and model fit
+
+Now we're ready to fit our linear model. The fit command below tells it to fit the model, with results stored in the object `lm_results`. We can then pipe the lm_results to the `tidy` command to see the coefficients. To see measures of model fit we can use `pull_workflow_fit` and then pipe those results to the `glance` command. 
+
+```{r}
+lm_results<-fit(income_wf, ad_train)
+
+lm_results%>%
+  tidy()
+
+lm_results%>%
+  extract_fit_parsnip()%>%
+  glance()
+```
+
+The results in this case show that the percent of individuals with incomes about \$75,000 is `r round(tidy(lm_results)[4,2],2)` higher in metro areas than non-metro areas. The results for region include results for three of the four regions. One region is excluded-- this is called the reference category. The way we interpret this is to say that the percent of individuals in the South with incomes above \$75,000 is predicted to be `r abs(round(tidy(lm_results)[6,2],2))` percentage points lower than incomes of individuals in the Midwest. Where did the Midwest come from? It's the excluded category-- so all comparisons are made relative to it. For instance we would also say that the percent of individuals with incomes about \$75,000 is predicted to  be `r round(tidy(lm_results)[7,2],2)` percentage points higher for individuals in the West as compared with the Midwest. This is the key thing to remember about including categorical variables-- all comparisons are made relative to the reference category-- the excluded category. 
+
+## Predict on testing data and calculate rmse
+
+With our new variable included, we can do our normal steps of generating a prediction and adding it to the testing dataset. 
+```{r}
+ad_test<-
+  predict(lm_results, ad_test)%>%
+  rename(pred2=.pred)%>%
+  bind_cols(ad_test)
+```
+
+## Calculate RMSE
+
+With the data in the testing dataset, we can then generate the RMSE from our new model.
+
+```{r}
+rmse_2<-ad_test%>%
+  yardstick::rmse(truth=income_75, estimate=pred2)  
+rmse_2
+```
+
+## Using `last_fit`
+
+The `tidymodels` package has a function that automates the steps of running the model, generating predictions in the testing dataset and then generating metrics of model fit from the testing dataset. It's called `last_fit`. This accomplishes the same steps above, but does it all at once.
+
+```{r}
+lf<-last_fit(income_wf, split=split_data)
+lf$.metrics
+```
+
+As you can see we get the same RMSE from last fit as when we did it "by hand."
+
+## Last Note
+
+Remember that we need to carefully distinguish between categorical variables and continuous variables when including them in our models. If we're using categorical variables we'll need to pre-process the data in order to let the model know that these variables should be included as categorical variables, with an excluded reference category. 
