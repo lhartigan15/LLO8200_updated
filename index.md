@@ -18,7 +18,7 @@ LMS Mod 4 - no updates \
 LMS Mod 5 - no updates \
 LMS Mod 6 - [Updated .Rmd file (updates to code starting on line 244 - final code chunk)](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod6_regression_updated_inclass.Rmd)\
 LMS Mod 7 - [Updated .Rmd file (updates to code loading data - line 28)](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/Mod6b_regression_part2.Rmd)\
-LMS Mod 8 - no code updates [Supplemental material - Interpreting Logisitic Regression Coefficients](.\LogisticRegression_Interpreting Estimates.pptx)\
+LMS Mod 8 - no code updates [Slide deck - Interpreting Logisitic Regression Coefficients (updated to add intercept interpretation)](.\LogisticRegression_Interpreting Estimates.pptx)\
 
 ### Datasets for the Semester     
 *these are all available on the LMS - if we need to add any this term, I'll put them here*  
