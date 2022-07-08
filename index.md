@@ -23,6 +23,7 @@ LMS Mod 8 - no code updates [Slide deck - Interpreting Logisitic Regression Coef
 ### Datasets for the Semester     
 *these are all available on the LMS - if we need to add any this term, I'll put them here*  
 [LMS Mod 6 - area dataset](./area_data.Rdata)
+[PS4 - CVDD dataset](./cvdd.rdata)
 
 ### Problem Sets
 Each problem set should be uploaded to the LMS _before_ we meet for live session on the given due date. All submissions must include two files to receive credit:
