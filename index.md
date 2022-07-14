@@ -49,7 +49,7 @@ All problem sets are graded on a 100-point scale. Corrections can be submitted f
 * [Final Project Rubrics](./Final Project Grader Report.pdf) - final products due 08/12/22
 * [Progress Report 1 Instructions](./Progress Report 1 - Instructions.pdf) - due 06/08/22
 * [Progress Report 2 Instructions](./Progress Report 2 - Instructions.pdf) - due 07/06/22
-* [Progress Report 3 Instructions placeholder] - due 07/27/22
+* [Progress Report 3 Instructions](./Progress Report 3 - Instructions.pdf) - due 07/27/22
 * [Tips to help with Final Report .Rmd file](https://raw.githubusercontent.com/lhartigan15/LLO8200_updated/main/TipsToHelpWithFinalReport.Rmd); [associated knit PDF](./TipsToHelpWithFinalReport.pdf)
 
 #### Final Project Examples
